@@ -19,3 +19,11 @@
 - `lab2/broken_line.py` — реализация + демо
 - `lab2/lab2_demo_sin.png`, `lab2/lab2_demo_rastrigin.png` — визуализация
 - `lab2/requirements.txt` — зависимости
+
+## lab3
+
+Метод множителей Лагранжа, вариант 7.
+
+- `lab3/lagrange_v7.py` — программная реализация
+- `lab3/report.pdf` — итоговый отчёт
+- `lab3/requirements.txt` — зависимости
