@@ -22,6 +22,5 @@ python3 lagrange_v7.py
 | Файл | Назначение |
 |------|------------|
 | `lagrange_v7.py` | программа |
-| `report.docx` | отчёт (формулы Word) |
-| `report.pdf` | отчёт PDF |
+| `report.pdf` | отчёт |
 | `requirements.txt` | зависимости |
