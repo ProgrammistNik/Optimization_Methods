@@ -3,6 +3,7 @@ from __future__ import annotations
 from dataclasses import dataclass
 from itertools import product
 from typing import Callable
+import random
 
 
 def to_cents(x: float) -> int:
@@ -72,6 +73,38 @@ def default_problem() -> ProblemData:
     )
 
 
+def tiny_problem() -> ProblemData:
+    initial = State(to_cents(50), to_cents(200), to_cents(100), to_cents(60))
+    stages = [
+        StageMarket((0.5, 0.3, 0.2), (1.30, 1.00, 0.70), (1.10, 1.00, 0.90), (1.05, 1.00, 1.00)),
+        StageMarket((0.4, 0.4, 0.2), (1.20, 1.00, 0.80), (1.08, 1.00, 0.92), (1.03, 1.00, 1.00)),
+    ]
+    return ProblemData(
+        initial=initial,
+        packet=(to_cents(25), to_cents(200), to_cents(100)),
+        mins=(to_cents(30), to_cents(150), to_cents(100)),
+        commission=(0.04, 0.07, 0.05),
+        stages=stages,
+        w0=initial.wealth(),
+    )
+
+
+def tiny_problem_nonzero_last() -> ProblemData:
+    initial = State(to_cents(100), to_cents(200), to_cents(100), to_cents(0))
+    stages = [
+        StageMarket((1.0, 0.0, 0.0), (1.0, 1.0, 1.0), (1.0, 1.0, 1.0), (1.0, 1.0, 1.0)),
+        StageMarket((1.0, 0.0, 0.0), (0.5, 1.0, 1.0), (1.0, 1.0, 1.0), (1.0, 1.0, 1.0)),
+    ]
+    return ProblemData(
+        initial=initial,
+        packet=(to_cents(25), to_cents(200), to_cents(100)),
+        mins=(to_cents(30), to_cents(150), to_cents(100)),
+        commission=(0.04, 0.07, 0.05),
+        stages=stages,
+        w0=initial.wealth(),
+    )
+
+
 def apply_action(state: State, action: Action, data: ProblemData) -> State | None:
     vals = [state.v1, state.v2, state.v3]
     ks = action.as_tuple()
@@ -106,6 +139,16 @@ def apply_market(state: State, stage: StageMarket, scenario: int) -> State:
         int(round(state.v3 * stage.r3[scenario])),
         state.cash,
     )
+
+
+def trade_commission_cents(action: Action, data: ProblemData) -> int:
+    total = 0
+    for i, k in enumerate(action.as_tuple()):
+        if k == 0:
+            continue
+        vol = abs(k) * data.packet[i]
+        total += int(round(vol * data.commission[i]))
+    return total
 
 
 def feasible_actions(state: State, data: ProblemData) -> list[Action]:
@@ -192,6 +235,79 @@ class SolveResult:
     policy_by_state: list[dict[State, Action]]
 
 
+@dataclass
+class MemoryReport:
+    n_value: int
+    n_policy: int
+    n_action_states: int
+    n_actions_total: int
+    bytes_est: int
+
+
+def terminal_income(state: State, w0: int) -> float:
+    return (state.wealth() - w0) / 100.0
+
+
+def expected_terminal_after_market(state: State, stage: StageMarket, w0: int) -> float:
+    return sum(
+        p * terminal_income(apply_market(state, stage, sc), w0)
+        for sc, p in enumerate(stage.probs)
+    )
+
+
+def best_last_action_expectation(state: State, data: ProblemData) -> tuple[Action, float]:
+    stage = data.stages[-1]
+    best_a = Action(0, 0, 0)
+    best_v = expected_terminal_after_market(state, stage, data.w0)
+    for action in feasible_actions(state, data):
+        after = apply_action(state, action, data)
+        assert after is not None
+        score = expected_terminal_after_market(after, stage, data.w0)
+        if score > best_v + 1e-12:
+            best_v = score
+            best_a = action
+    return best_a, best_v
+
+
+def margins_last_stage_expectation(data: ProblemData) -> list[tuple[float, float]]:
+    stage = data.stages[-1]
+    er = [
+        sum(p * r for p, r in zip(stage.probs, stage.r1)),
+        sum(p * r for p, r in zip(stage.probs, stage.r2)),
+        sum(p * r for p, r in zip(stage.probs, stage.r3)),
+    ]
+    out = []
+    for i in range(3):
+        packet = data.packet[i] / 100.0
+        buy = er[i] * packet - packet * (1.0 + data.commission[i])
+        sell = packet * (1.0 - data.commission[i]) - er[i] * packet
+        out.append((buy, sell))
+    return out
+
+
+def can_accelerate_last_no_trade(data: ProblemData) -> bool:
+    if len(data.stages) < 1:
+        return False
+    for buy, sell in margins_last_stage_expectation(data):
+        if buy > 1e-9 or sell > 1e-9:
+            return False
+    samples = [data.initial]
+    rng = random.Random(0)
+    for _ in range(40):
+        s = State(
+            rng.randint(data.mins[0], data.mins[0] + 50_000),
+            rng.randint(data.mins[1], data.mins[1] + 200_000),
+            rng.randint(data.mins[2], data.mins[2] + 80_000),
+            rng.randint(0, 100_000),
+        )
+        samples.append(s)
+    for s in samples:
+        a, _ = best_last_action_expectation(s, data)
+        if a.as_tuple() != (0, 0, 0):
+            return False
+    return True
+
+
 class BellmanSolver:
     def __init__(self, data: ProblemData, criterion_name: str = "expectation"):
         self.data = data
@@ -201,12 +317,11 @@ class BellmanSolver:
         self.value_cache: dict[tuple[int, State], float] = {}
         self._actions_cache: dict[State, tuple[Action, ...]] = {}
         self.n_stages = len(data.stages)
-        st = data.stages[2]
-        self._er3 = (
-            sum(p * r for p, r in zip(st.probs, st.r1)),
-            sum(p * r for p, r in zip(st.probs, st.r2)),
-            sum(p * r for p, r in zip(st.probs, st.r3)),
+        self.accelerate_last_no_trade = (
+            criterion_name == "expectation" and can_accelerate_last_no_trade(data)
         )
+        self.acceleration_checks = 0
+        self.acceleration_failures = 0
 
     def _actions(self, state: State) -> tuple[Action, ...]:
         cached = self._actions_cache.get(state)
@@ -215,13 +330,6 @@ class BellmanSolver:
             self._actions_cache[state] = cached
         return cached
 
-    def _terminal_income(self, state: State) -> float:
-        return (state.wealth() - self.data.w0) / 100.0
-
-    def _expected_v3_no_trade(self, state: State) -> float:
-        e1, e2, e3 = self._er3
-        return (e1 * state.v1 + e2 * state.v2 + e3 * state.v3 + state.cash - self.data.w0) / 100.0
-
     def value(self, stage_idx: int, state: State) -> float:
         key = (stage_idx, state)
         hit = self.value_cache.get(key)
@@ -229,44 +337,47 @@ class BellmanSolver:
             return hit
 
         if stage_idx >= self.n_stages:
-            val = self._terminal_income(state)
+            val = terminal_income(state, self.data.w0)
             self.value_cache[key] = val
             return val
 
-        if self.criterion_name == "expectation" and stage_idx == 2:
-            best_action = Action(0, 0, 0)
-            best_val = self._expected_v3_no_trade(state)
-            for action in self._actions(state):
-                after = apply_action(state, action, self.data)
-                assert after is not None
-                score = self._expected_v3_no_trade(after)
-                if score > best_val + 1e-12:
-                    best_val = score
-                    best_action = action
+        stage = self.data.stages[stage_idx]
+        last = stage_idx == self.n_stages - 1
+        best_val = float("-inf")
+        best_action: Action | None = None
+
+        if last and self.criterion_name == "expectation":
+            best_action, best_val = best_last_action_expectation(state, self.data)
+            if self.accelerate_last_no_trade:
+                self.acceleration_checks += 1
+                if best_action.as_tuple() != (0, 0, 0):
+                    self.acceleration_failures += 1
+                    self.accelerate_last_no_trade = False
             self.policy_cache[key] = best_action
             self.value_cache[key] = best_val
             return best_val
 
-        stage = self.data.stages[stage_idx]
-        best_val = float("-inf")
-        best_action: Action | None = None
-
         for action in self._actions(state):
             after = apply_action(state, action, self.data)
             assert after is not None
-            if self.criterion_name == "expectation" and stage_idx == 1:
-                score = criterion_expectation(
-                    [self._expected_v3_no_trade(apply_market(after, stage, sc)) for sc in range(3)],
-                    stage.probs,
-                )
-            elif stage_idx == self.n_stages - 1:
+            if (
+                self.criterion_name == "expectation"
+                and self.accelerate_last_no_trade
+                and stage_idx == self.n_stages - 2
+            ):
                 scenario_vals = [
-                    self._terminal_income(apply_market(after, stage, sc)) for sc in range(3)
+                    expected_terminal_after_market(
+                        apply_market(after, stage, sc),
+                        self.data.stages[-1],
+                        self.data.w0,
+                    )
+                    for sc in range(3)
                 ]
-                score = self.criterion(scenario_vals, stage.probs)
+                score = criterion_expectation(scenario_vals, stage.probs)
             else:
                 scenario_vals = [
-                    self.value(stage_idx + 1, apply_market(after, stage, sc)) for sc in range(3)
+                    self.value(stage_idx + 1, apply_market(after, stage, sc))
+                    for sc in range(3)
                 ]
                 score = self.criterion(scenario_vals, stage.probs)
             if score > best_val:
@@ -295,10 +406,32 @@ class BellmanSolver:
             frontier = nxt
         return by_stage
 
+    def memory_report(self) -> MemoryReport:
+        n_actions_total = sum(len(v) for v in self._actions_cache.values())
+        bytes_est = (
+            len(self.value_cache) * 80
+            + len(self.policy_cache) * 96
+            + len(self._actions_cache) * 64
+            + n_actions_total * 48
+        )
+        return MemoryReport(
+            n_value=len(self.value_cache),
+            n_policy=len(self.policy_cache),
+            n_action_states=len(self._actions_cache),
+            n_actions_total=n_actions_total,
+            bytes_est=bytes_est,
+        )
+
     def solve(self) -> SolveResult:
         start = self.data.initial
         best = self.value(0, start)
         policy_by_state = self._collect_policy_tree(start)
+
+        if self.criterion_name == "expectation" and len(policy_by_state) >= 1:
+            for st, act in policy_by_state[-1].items():
+                a2, _ = best_last_action_expectation(st, self.data)
+                if a2.as_tuple() != act.as_tuple():
+                    raise RuntimeError("policy last stage mismatch with direct check")
 
         policy: list[Action] = []
         path = [start]
@@ -370,52 +503,76 @@ def run_tests(data: ProblemData) -> None:
     ok += 1
 
     solver = BellmanSolver(data, "expectation")
-    assert abs(solver.value(3, s0) - 0.0) < 1e-9
-    print("T5 V4(s0)=0: OK")
+    assert abs(solver.value(len(data.stages), s0) - 0.0) < 1e-9
+    print("T5 V_terminal(s0)=0: OK")
     ok += 1
 
     assert apply_action(s0, Action(-3, 0, 0), data) is None
     print("T6 минимум ЦБ1: OK")
     ok += 1
 
-    print(f"Пройдено тестов: {ok}/6")
+    tiny = tiny_problem()
+    s_tiny = BellmanSolver(tiny, "expectation")
+    v_dp = s_tiny.solve().best_income
+
+    def full_tree_best(stage_idx: int, state: State) -> float:
+        if stage_idx >= len(tiny.stages):
+            return terminal_income(state, tiny.w0)
+        best = float("-inf")
+        stage = tiny.stages[stage_idx]
+        for action in feasible_actions(state, tiny):
+            after = apply_action(state, action, tiny)
+            assert after is not None
+            vals = [
+                full_tree_best(stage_idx + 1, apply_market(after, stage, sc))
+                for sc in range(3)
+            ]
+            score = criterion_expectation(vals, stage.probs)
+            if score > best:
+                best = score
+        return best
+
+    v_bf = full_tree_best(0, tiny.initial)
+    assert abs(v_dp - v_bf) < 1e-6
+    print(f"T7 tiny DP == полный перебор: {v_dp:.4f}: OK")
+    ok += 1
+
+    nz = tiny_problem_nonzero_last()
+    assert can_accelerate_last_no_trade(nz) is False
+    s_nz = BellmanSolver(nz, "expectation")
+    assert s_nz.accelerate_last_no_trade is False
+    r_nz = s_nz.solve()
+    last_nonzero = any(a.as_tuple() != (0, 0, 0) for a in r_nz.policy_by_state[-1].values())
+    assert last_nonzero
+    print("T8 last-stage ненулевое u + без ускорения: OK")
+    ok += 1
+
+    assert can_accelerate_last_no_trade(data) is True
+    print("T9 условие ускорения для исходных данных: OK")
+    ok += 1
+
+    print(f"Пройдено тестов: {ok}/9")
 
 
-def demo_manual_bellman(data: ProblemData) -> None:
-    print("\n=== Ручной фрагмент Беллмана (этап 3) ===")
-    s = data.initial
-    stage = data.stages[2]
-    print("s = (100, 800, 400, 600), W0 = 1900")
-    print("V4(s') = W(s') - W0")
-    print("V3(s) = max_u Σ_ξ p3(ξ)·V4(f(s,u,ξ))")
-    candidates = [
-        Action(0, 0, 0),
-        Action(-1, 0, 0),
-        Action(-2, 0, 0),
-        Action(0, 1, 0),
-        Action(-1, 1, 0),
-    ]
-    best = float("-inf")
-    best_a = None
-    for action in candidates:
-        after = apply_action(s, action, data)
-        if after is None:
-            print(f"  u={action.as_tuple()}: недопустимо")
-            continue
-        vals = [
-            (apply_market(after, stage, sc).wealth() - data.w0) / 100.0 for sc in range(3)
-        ]
-        score = criterion_expectation(vals, stage.probs)
-        print(f"  u={action.as_tuple()}: {[round(v, 2) for v in vals]}, E={score:.4f}")
-        if score > best:
-            best, best_a = score, action
-    print(f"Лучшее в фрагменте: u={best_a.as_tuple()}, E={best:.4f}")
-
-
-def estimate_complexity(n_actions: int, n_states: int, n_stages: int = 3) -> None:
-    print("\n=== Оценка сложности ===")
-    print(f"K={n_stages}, |Ξ|=3, |A(s0)|={n_actions}, |S|≈{n_states}")
-    print("Время O(K·|S|·|A|·|Ξ|), память O(|S|)")
+def estimate_complexity(solver: BellmanSolver, n_actions_s0: int) -> None:
+    mem = solver.memory_report()
+    print("\n=== Оценка сложности и памяти ===")
+    print(f"K={solver.n_stages}, |Ξ|=3, |A(s0)|={n_actions_s0}")
+    print(f"value_cache: {mem.n_value} ключей")
+    print(f"policy_cache: {mem.n_policy} ключей")
+    print(
+        f"_actions_cache: {mem.n_action_states} состояний, "
+        f"всего закэшированных действий {mem.n_actions_total}"
+    )
+    print(
+        f"Оценка памяти ≈ {mem.bytes_est} байт (~{mem.bytes_est/1024:.1f} КиБ): "
+        f"values + policy + actions"
+    )
+    print("Время O(K·|S|·|A|·|Ξ|)")
+    print(
+        f"Ускорение last-no-trade: {solver.accelerate_last_no_trade}, "
+        f"проверок={solver.acceleration_checks}, сбоев={solver.acceleration_failures}"
+    )
 
 
 def main() -> None:
@@ -433,9 +590,12 @@ def main() -> None:
         f"  пакеты={[rub(x) for x in data.packet]}, "
         f"минимумы={[rub(x) for x in data.mins]}, комиссии={list(data.commission)}"
     )
+    print(
+        "Алгоритм: рекурсия Беллмана с мемоизацией; на последнем этапе полный перебор u; "
+        "ускорение E[V4(market(s))] только если доказано и проверяется, что u*=(0,0,0)."
+    )
 
     run_tests(data)
-    demo_manual_bellman(data)
 
     n_a0 = len(feasible_actions(data.initial, data))
     print(f"\n|A(s0)| = {n_a0}")
@@ -447,7 +607,6 @@ def main() -> None:
     print(f"Время счёта: {time.time() - t0:.1f} с")
     print(f"I* = {res.best_income:.4f} д.е.")
     print(f"E[W_final] = {res.expected_final_wealth:.4f} д.е.")
-    print(f"Состояний в кэше: {len(solver.value_cache)}")
 
     print("\n--- Политика A_k(s) для достижимых состояний ---")
     for k, mapping in enumerate(res.policy_by_state, start=1):
@@ -466,7 +625,7 @@ def main() -> None:
     for i, st in enumerate(res.path_states):
         print(f"  t={i}: {format_state(st)}")
 
-    estimate_complexity(n_a0, len(solver.value_cache))
+    estimate_complexity(solver, n_a0)
 
     if "--all-criteria" in sys.argv:
         print("\n=== Сравнение критериев ===")

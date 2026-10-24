@@ -7,13 +7,21 @@
 ```bash
 cd lab4
 python3 portfolio_dp.py
-python3 portfolio_dp.py --all-criteria
+python3 outcome_tree.py
 ```
 
 ## Файлы
 
 | Файл | Назначение |
 |------|------------|
-| `portfolio_dp.py` | программа |
+| `portfolio_dp.py` | основная программа (Беллман, тесты) |
+| `outcome_tree.py` | доп. задание: дерево исходов стратегии |
+| `outcome_tree.md` / `.txt` / `.csv` | дерево и метрики |
 | `report.pdf` | отчёт |
 | `class_diagram.png` | диаграмма классов |
+| `podcast.m4a` | подкаст-рефлексия (до 1.5 мин) |
+| `podcast_script.txt` | текст подкаста |
+
+## Ответ
+
+Критерий ожидания: **I\* ≈ 134.24 д.е.**
