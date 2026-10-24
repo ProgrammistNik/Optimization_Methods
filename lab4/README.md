@@ -14,13 +14,11 @@ python3 outcome_tree.py
 
 | Файл | Назначение |
 |------|------------|
-| `portfolio_dp.py` | основная программа (Беллман, тесты) |
-| `outcome_tree.py` | доп. задание: дерево исходов стратегии |
-| `outcome_tree.md` / `.txt` / `.csv` | дерево и метрики |
+| `portfolio_dp.py` | программа (Беллман, тесты) |
 | `report.pdf` | отчёт |
 | `class_diagram.png` | диаграмма классов |
-| `podcast.m4a` | подкаст-рефлексия (до 1.5 мин) |
-| `podcast_script.txt` | текст подкаста |
+| `outcome_tree.py` | доп.: дерево исходов |
+| `outcome_tree.txt` | результат дерева |
 
 ## Ответ
 

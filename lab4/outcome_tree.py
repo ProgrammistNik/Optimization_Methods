@@ -88,75 +88,25 @@ def build_outcome_tree(data: ProblemData, solver: BellmanSolver) -> list[Leaf]:
 
 
 def summarize(leaves: list[Leaf]) -> dict:
-    e_w = sum(L.probability * L.final_wealth for L in leaves)
-    e_i = sum(L.probability * L.income for L in leaves)
-    e_r = sum(L.probability * L.return_rate for L in leaves)
-    p_loss = sum(L.probability for L in leaves if L.income < 0)
     return {
         "n_leaves": len(leaves),
-        "E_W": e_w,
-        "E_income": e_i,
-        "E_return": e_r,
-        "P_loss": p_loss,
+        "E_W": sum(L.probability * L.final_wealth for L in leaves),
+        "E_income": sum(L.probability * L.income for L in leaves),
+        "E_return": sum(L.probability * L.return_rate for L in leaves),
+        "P_loss": sum(L.probability for L in leaves if L.income < 0),
         "min_income": min(L.income for L in leaves),
         "max_income": max(L.income for L in leaves),
     }
 
 
-def write_reports(
-    data: ProblemData, solver: BellmanSolver, leaves: list[Leaf], out_dir: Path
+def write_tree_txt(
+    data: ProblemData, solver: BellmanSolver, leaves: list[Leaf], out_path: Path
 ) -> None:
     summary = summarize(leaves)
-    lines = []
-    lines.append("# Дерево исходов оптимальной стратегии")
-    lines.append("")
-    lines.append(
-        f"W0 = {rub(data.w0):g} д.е., число листьев = {summary['n_leaves']} "
-        f"(= 3^{len(data.stages)})."
-    )
-    lines.append("")
-    lines.append("## Сводка")
-    lines.append("")
-    lines.append(f"- E[W_final] = {summary['E_W']:.4f}")
-    lines.append(f"- E[чистый доход] = {summary['E_income']:.4f}")
-    lines.append(f"- E[доходность] = {summary['E_return']*100:.4f}%")
-    lines.append(f"- P(убыток) = {summary['P_loss']:.4f}")
-    lines.append(f"- min доход = {summary['min_income']:.4f}")
-    lines.append(f"- max доход = {summary['max_income']:.4f}")
-    lines.append("")
-    lines.append("## Листья")
-    lines.append("")
-    for i, L in enumerate(leaves, start=1):
-        seq = " → ".join(SCENARIO_NAMES[s] for s in L.scenarios)
-        ops = " | ".join(format_action(a, data) for a in L.actions)
-        fees = ", ".join(f"{c:.2f}" for c in L.commissions)
-        lines.append(f"### Лист {i}")
-        lines.append(f"- Сценарии: {seq}")
-        lines.append(f"- Вероятность: {L.probability:.6f}")
-        lines.append(f"- Операции: {ops}")
-        lines.append(f"- Комиссии по этапам: {fees} (сумма {sum(L.commissions):.2f})")
-        lines.append(f"- Конечный капитал W = {L.final_wealth:.4f}")
-        lines.append(f"- Чистый доход = {L.income:.4f}")
-        lines.append(f"- Доходность = {L.return_rate*100:.4f}%")
-        lines.append("")
-
-    (out_dir / "outcome_tree.md").write_text("\n".join(lines), encoding="utf-8")
-
-    csv_lines = [
-        "leaf,scenarios,probability,actions,commission_sum,W_final,income,return"
-    ]
-    for i, L in enumerate(leaves, start=1):
-        seq = "-".join(str(s) for s in L.scenarios)
-        acts = ";".join(str(a.as_tuple()) for a in L.actions)
-        csv_lines.append(
-            f"{i},{seq},{L.probability:.8f},\"{acts}\",{sum(L.commissions):.4f},"
-            f"{L.final_wealth:.4f},{L.income:.4f},{L.return_rate:.8f}"
-        )
-    (out_dir / "outcome_tree.csv").write_text("\n".join(csv_lines) + "\n", encoding="utf-8")
-
     text = []
     text.append("ДЕРЕВО ИСХОДОВ (оптимальная политика, критерий ожидания)")
     text.append(f"s0 = {format_state(data.initial)}")
+    text.append(f"листьев = {summary['n_leaves']}")
     text.append("")
 
     def print_node(stage_idx: int, state: State, prefix: str, prob: float) -> None:
@@ -166,8 +116,7 @@ def write_reports(
                 f"{prefix}ЛИСТ W={rub(state.wealth()):g}, доход={income:.2f}, P={prob:.6f}"
             )
             return
-        key = (stage_idx, state)
-        action = solver.policy_cache[key]
+        action = solver.policy_cache[(stage_idx, state)]
         text.append(
             f"{prefix}этап {stage_idx+1}: s={format_state(state)} | "
             f"u={action.as_tuple()} {format_action(action, data)}"
@@ -184,12 +133,23 @@ def write_reports(
 
     print_node(0, data.initial, "", 1.0)
     text.append("")
+    text.append("ЛИСТЬЯ (подробно)")
+    for i, L in enumerate(leaves, start=1):
+        seq = " -> ".join(SCENARIO_NAMES[s] for s in L.scenarios)
+        ops = " | ".join(format_action(a, data) for a in L.actions)
+        fees = sum(L.commissions)
+        text.append(
+            f"{i}. {seq}; P={L.probability:.6f}; ops: {ops}; "
+            f"комиссии={fees:.2f}; W={L.final_wealth:.2f}; "
+            f"I={L.income:.2f}; r={L.return_rate*100:.2f}%"
+        )
+    text.append("")
     text.append(
         f"E[W]={summary['E_W']:.4f}, E[I]={summary['E_income']:.4f}, "
         f"E[r]={summary['E_return']*100:.4f}%, P(loss)={summary['P_loss']:.4f}, "
         f"minI={summary['min_income']:.4f}, maxI={summary['max_income']:.4f}"
     )
-    (out_dir / "outcome_tree.txt").write_text("\n".join(text), encoding="utf-8")
+    out_path.write_text("\n".join(text) + "\n", encoding="utf-8")
 
 
 def main() -> None:
@@ -200,13 +160,13 @@ def main() -> None:
     print(f"I* = {res.best_income:.4f}")
     leaves = build_outcome_tree(data, solver)
     summary = summarize(leaves)
-    out = Path(__file__).resolve().parent
-    write_reports(data, solver, leaves, out)
+    out = Path(__file__).resolve().parent / "outcome_tree.txt"
+    write_tree_txt(data, solver, leaves, out)
     print(f"Листьев: {summary['n_leaves']}")
     print(f"E[W]={summary['E_W']:.4f}, E[I]={summary['E_income']:.4f}")
     print(f"E[r]={summary['E_return']*100:.4f}%, P(loss)={summary['P_loss']:.4f}")
     print(f"minI={summary['min_income']:.4f}, maxI={summary['max_income']:.4f}")
-    print("Файлы: outcome_tree.md, outcome_tree.csv, outcome_tree.txt")
+    print(f"Файл: {out.name}")
 
 
 if __name__ == "__main__":
