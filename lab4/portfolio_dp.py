@@ -4,6 +4,7 @@ from dataclasses import dataclass
 from itertools import product
 from typing import Callable
 import random
+import tracemalloc
 
 
 def to_cents(x: float) -> int:
@@ -105,6 +106,22 @@ def tiny_problem_nonzero_last() -> ProblemData:
     )
 
 
+def identity_one_stage(cash: int = 600) -> ProblemData:
+    """Identity market: all r=1 — оптимально не торговать (комиссии)."""
+    initial = State(to_cents(100), to_cents(800), to_cents(400), to_cents(cash))
+    stages = [
+        StageMarket((1.0, 0.0, 0.0), (1.0, 1.0, 1.0), (1.0, 1.0, 1.0), (1.0, 1.0, 1.0)),
+    ]
+    return ProblemData(
+        initial=initial,
+        packet=(to_cents(25), to_cents(200), to_cents(100)),
+        mins=(to_cents(30), to_cents(150), to_cents(100)),
+        commission=(0.04, 0.07, 0.05),
+        stages=stages,
+        w0=initial.wealth(),
+    )
+
+
 def apply_action(state: State, action: Action, data: ProblemData) -> State | None:
     vals = [state.v1, state.v2, state.v3]
     ks = action.as_tuple()
@@ -127,6 +144,7 @@ def apply_action(state: State, action: Action, data: ProblemData) -> State | Non
     for i in range(3):
         if vals[i] < 0:
             return None
+        # Минимум проверяется ТОЛЬКО при продаже; после рынка vi может быть < mins[i].
         if ks[i] < 0 and vals[i] < data.mins[i]:
             return None
     return State(vals[0], vals[1], vals[2], cash)
@@ -256,6 +274,7 @@ def expected_terminal_after_market(state: State, stage: StageMarket, w0: int) ->
 
 
 def best_last_action_expectation(state: State, data: ProblemData) -> tuple[Action, float]:
+    """Полный перебор на последнем этапе. Tie-break: первый с лучшим score (строгое >)."""
     stage = data.stages[-1]
     best_a = Action(0, 0, 0)
     best_v = expected_terminal_after_market(state, stage, data.w0)
@@ -263,7 +282,8 @@ def best_last_action_expectation(state: State, data: ProblemData) -> tuple[Actio
         after = apply_action(state, action, data)
         assert after is not None
         score = expected_terminal_after_market(after, stage, data.w0)
-        if score > best_v + 1e-12:
+        # Строгое >: при равенстве оставляем ранее найденное (первое) действие.
+        if score > best_v:
             best_v = score
             best_a = action
     return best_a, best_v
@@ -380,6 +400,7 @@ class BellmanSolver:
                     for sc in range(3)
                 ]
                 score = self.criterion(scenario_vals, stage.probs)
+            # Tie-break: строгое > — при равенстве сохраняем первое найденное u.
             if score > best_val:
                 best_val = score
                 best_action = action
@@ -421,6 +442,38 @@ class BellmanSolver:
             n_actions_total=n_actions_total,
             bytes_est=bytes_est,
         )
+
+    def score_action_at_stage0(self, action: Action) -> float | None:
+        """Оценка u в s0 через уже заполненный value_cache (после solve)."""
+        after = apply_action(self.data.initial, action, self.data)
+        if after is None:
+            return None
+        stage = self.data.stages[0]
+        vals = []
+        for sc in range(3):
+            nxt = apply_market(after, stage, sc)
+            key = (1, nxt)
+            if key not in self.value_cache:
+                vals.append(self.value(1, nxt))
+            else:
+                vals.append(self.value_cache[key])
+        return criterion_expectation(vals, stage.probs)
+
+    def uniqueness_at_s0(self) -> tuple[float, list[Action], int]:
+        """Среди всех допустимых A(s0): максимум и число оптимумов. Переиспользует кэши."""
+        start = self.data.initial
+        acts = self._actions(start)
+        best_val = float("-inf")
+        best_actions: list[Action] = []
+        for action in acts:
+            score = self.score_action_at_stage0(action)
+            assert score is not None
+            if score > best_val:
+                best_val = score
+                best_actions = [action]
+            elif abs(score - best_val) <= 1e-12:
+                best_actions.append(action)
+        return best_val, best_actions, len(acts)
 
     def solve(self) -> SolveResult:
         start = self.data.initial
@@ -474,42 +527,73 @@ def format_state(state: State) -> str:
     )
 
 
+def _print_test(tid: str, title: str, inp: str, expected: str, actual: str, ok: bool) -> None:
+    status = "OK" if ok else "FAIL"
+    print(f"{tid} {title}: {status}")
+    print(f"  Вход:      {inp}")
+    print(f"  Ожидаемо:  {expected}")
+    print(f"  Факт:      {actual}")
+    if not ok:
+        raise AssertionError(f"{tid} failed")
+
+
 def run_tests(data: ProblemData) -> None:
     print("\n=== Независимые тесты ===")
-    ok = 0
+    ok_n = 0
     s0 = data.initial
 
     after = apply_action(s0, Action(-1, 0, 0), data)
-    assert after is not None
-    assert after.cash == s0.cash + int(round(data.packet[0] * 0.96))
-    assert after.v1 == s0.v1 - data.packet[0]
-    print("T1 продажа ЦБ1: OK")
-    ok += 1
+    exp_cash = s0.cash + int(round(data.packet[0] * 0.96))
+    exp_v1 = s0.v1 - data.packet[0]
+    actual = f"cash={after.cash if after else None}, v1={after.v1 if after else None}"
+    _print_test(
+        "T1", "продажа ЦБ1", "s0, u=(-1,0,0)",
+        f"cash={exp_cash}, v1={exp_v1}", actual,
+        after is not None and after.cash == exp_cash and after.v1 == exp_v1,
+    )
+    ok_n += 1
 
     after2 = apply_action(s0, Action(-2, 3, 0), data)
-    assert after2 is not None
-    assert after2.v2 == s0.v2 + 3 * data.packet[1]
-    print("T2 покупка за счёт продаж: OK")
-    ok += 1
+    exp_v2 = s0.v2 + 3 * data.packet[1]
+    _print_test(
+        "T2", "покупка за счёт продаж", "s0, u=(-2,3,0)",
+        f"v2={exp_v2}", f"v2={after2.v2 if after2 else None}",
+        after2 is not None and after2.v2 == exp_v2,
+    )
+    ok_n += 1
 
-    assert apply_action(s0, Action(0, 3, 0), data) is None
-    print("T3 запрет кредита: OK")
-    ok += 1
+    bad = apply_action(s0, Action(0, 3, 0), data)
+    _print_test(
+        "T3", "запрет кредита", "s0, u=(0,3,0) без продаж",
+        "None (cash<0)", str(bad), bad is None,
+    )
+    ok_n += 1
 
     acts = feasible_actions(s0, data)
-    assert Action(-2, 3, 0) in acts
-    assert Action(0, 3, 0) not in acts
-    print("T4 генерация действий с учётом продаж: OK")
-    ok += 1
+    has_ok = Action(-2, 3, 0) in acts
+    has_bad = Action(0, 3, 0) in acts
+    _print_test(
+        "T4", "генерация действий", "A(s0)",
+        "(-2,3,0) in A; (0,3,0) not in A",
+        f"(-2,3,0)={has_ok}; (0,3,0)={has_bad}",
+        has_ok and not has_bad,
+    )
+    ok_n += 1
 
     solver = BellmanSolver(data, "expectation")
-    assert abs(solver.value(len(data.stages), s0) - 0.0) < 1e-9
-    print("T5 V_terminal(s0)=0: OK")
-    ok += 1
+    v_term = solver.value(len(data.stages), s0)
+    _print_test(
+        "T5", "терминал V(s0)=0", f"stage={len(data.stages)}, s0",
+        "0.0", f"{v_term}", abs(v_term - 0.0) < 1e-9,
+    )
+    ok_n += 1
 
-    assert apply_action(s0, Action(-3, 0, 0), data) is None
-    print("T6 минимум ЦБ1: OK")
-    ok += 1
+    below_min = apply_action(s0, Action(-3, 0, 0), data)
+    _print_test(
+        "T6", "минимум ЦБ1 при продаже", "s0, u=(-3,0,0) → v1=25<30",
+        "None", str(below_min), below_min is None,
+    )
+    ok_n += 1
 
     tiny = tiny_problem()
     s_tiny = BellmanSolver(tiny, "expectation")
@@ -521,10 +605,10 @@ def run_tests(data: ProblemData) -> None:
         best = float("-inf")
         stage = tiny.stages[stage_idx]
         for action in feasible_actions(state, tiny):
-            after = apply_action(state, action, tiny)
-            assert after is not None
+            after_t = apply_action(state, action, tiny)
+            assert after_t is not None
             vals = [
-                full_tree_best(stage_idx + 1, apply_market(after, stage, sc))
+                full_tree_best(stage_idx + 1, apply_market(after_t, stage, sc))
                 for sc in range(3)
             ]
             score = criterion_expectation(vals, stage.probs)
@@ -533,9 +617,13 @@ def run_tests(data: ProblemData) -> None:
         return best
 
     v_bf = full_tree_best(0, tiny.initial)
-    assert abs(v_dp - v_bf) < 1e-6
-    print(f"T7 tiny DP == полный перебор: {v_dp:.4f}: OK")
-    ok += 1
+    _print_test(
+        "T7", "tiny DP == полный перебор", "tiny_problem K=2",
+        "DP==BF, |diff|<1e-6",
+        f"DP={v_dp:.6f}, BF={v_bf:.6f}, diff={abs(v_dp - v_bf):.2e}",
+        abs(v_dp - v_bf) < 1e-6,
+    )
+    ok_n += 1
 
     nz = tiny_problem_nonzero_last()
     assert can_accelerate_last_no_trade(nz) is False
@@ -543,18 +631,111 @@ def run_tests(data: ProblemData) -> None:
     assert s_nz.accelerate_last_no_trade is False
     r_nz = s_nz.solve()
     last_nonzero = any(a.as_tuple() != (0, 0, 0) for a in r_nz.policy_by_state[-1].values())
-    assert last_nonzero
-    print("T8 last-stage ненулевое u + без ускорения: OK")
-    ok += 1
+    _print_test(
+        "T8", "last-stage ненулевое u", "tiny_problem_nonzero_last",
+        "accelerate=False; exists u≠0 на last",
+        f"accelerate={s_nz.accelerate_last_no_trade}; nonzero={last_nonzero}",
+        (not s_nz.accelerate_last_no_trade) and last_nonzero,
+    )
+    ok_n += 1
 
-    assert can_accelerate_last_no_trade(data) is True
-    print("T9 условие ускорения для исходных данных: OK")
-    ok += 1
+    acc = can_accelerate_last_no_trade(data)
+    _print_test(
+        "T9", "условие ускорения исходных данных",
+        "default_problem margins buy/sell all <0 + sample check",
+        "True", str(acc), acc is True,
+    )
+    ok_n += 1
 
-    print(f"Пройдено тестов: {ok}/9")
+    print("\n=== Тесты по методичке §8.3 (адаптация к портфелю) ===")
+
+    z = State(s0.v1, s0.v2, s0.v3, 0)
+    z_acts = feasible_actions(z, data)
+    buys_only = [a for a in z_acts if any(k > 0 for k in a.as_tuple()) and all(k >= 0 for k in a.as_tuple())]
+    _print_test(
+        "T8_3_1", "нулевой кэш → нет чистых покупок",
+        "s=(v1,v2,v3,cash=0)",
+        "|buys_only|=0; (0,0,0) допустимо",
+        f"|A|={len(z_acts)}; buys_only={len(buys_only)}; zero={(Action(0,0,0) in z_acts)}",
+        len(buys_only) == 0 and Action(0, 0, 0) in z_acts,
+    )
+    ok_n += 1
+
+    idp = identity_one_stage()
+    r_id = BellmanSolver(idp, "expectation").solve()
+    _print_test(
+        "T8_3_2", "тождественный рынок → без сделок",
+        "1 этап, все r=1", "u*=(0,0,0); I*=0",
+        f"u={r_id.policy[0].as_tuple()}; I*={r_id.best_income:.6f}",
+        r_id.policy[0].as_tuple() == (0, 0, 0) and abs(r_id.best_income) < 1e-9,
+    )
+    ok_n += 1
+
+    tiny_u = tiny_problem()
+    st = BellmanSolver(tiny_u, "expectation")
+    st.solve()
+    scores = []
+    for a in feasible_actions(tiny_u.initial, tiny_u):
+        after_a = apply_action(tiny_u.initial, a, tiny_u)
+        assert after_a is not None
+        stage = tiny_u.stages[0]
+        vals = [st.value(1, apply_market(after_a, stage, sc)) for sc in range(3)]
+        scores.append((a.as_tuple(), criterion_expectation(vals, stage.probs)))
+    best_sc = max(s for _, s in scores)
+    optima = [u for u, s in scores if abs(s - best_sc) < 1e-9]
+    _print_test(
+        "T8_3_3", "единственность оптимума (tiny)",
+        "tiny A(s0)", "ровно один оптимум u=(2,0,0)",
+        f"optima={optima}, V*={best_sc:.6f}",
+        len(optima) == 1 and optima[0] == (2, 0, 0),
+    )
+    ok_n += 1
+
+    unit0 = int(round(data.packet[0] * (1.0 + data.commission[0])))
+    max_k1 = s0.cash // unit0
+    after_all = apply_action(s0, Action(max_k1, 0, 0), data)
+    _print_test(
+        "T8_3_4", "весь кэш в один актив (ЦБ1)",
+        f"u=({max_k1},0,0), unit={rub(unit0)}",
+        f"допустимо; cash_остаток < unit; v1 увеличен на {max_k1}*25",
+        f"after={format_state(after_all) if after_all else None}; cash_left={after_all.cash if after_all else None}",
+        after_all is not None
+        and after_all.cash < unit0
+        and after_all.v1 == s0.v1 + max_k1 * data.packet[0],
+    )
+    ok_n += 1
+
+    inv_dep = apply_action(s0, Action(0, 0, -4), data)
+    inv_neg_cash_buy = apply_action(s0, Action(100, 0, 0), data)
+    _print_test(
+        "T8_3_5", "недопустимые входы",
+        "u=(0,0,-4) ниже min; u=(100,0,0) нехватка кэша",
+        "оба None",
+        f"(0,0,-4)={inv_dep}; (100,0,0)={inv_neg_cash_buy}",
+        inv_dep is None and inv_neg_cash_buy is None,
+    )
+    ok_n += 1
+
+    s_low = State(to_cents(35), to_cents(880), to_cents(428), to_cents(746))
+    stage2 = data.stages[1]
+    after_neg = apply_market(s_low, stage2, 2)
+    _print_test(
+        "T8_3_6", "после рынка ЦБ1<30 допустимо",
+        f"s={format_state(s_low)}, ξ=негатив этапа2",
+        "ЦБ1=21 (< min=30), состояние допустимо",
+        f"ЦБ1={rub(after_neg.v1)}",
+        after_neg.v1 == to_cents(21),
+    )
+    ok_n += 1
+
+    print(f"Пройдено тестов: {ok_n}")
 
 
-def estimate_complexity(solver: BellmanSolver, n_actions_s0: int) -> None:
+def estimate_complexity(
+    solver: BellmanSolver,
+    n_actions_s0: int,
+    tracemalloc_peak: int | None = None,
+) -> None:
     mem = solver.memory_report()
     print("\n=== Оценка сложности и памяти ===")
     print(f"K={solver.n_stages}, |Ξ|=3, |A(s0)|={n_actions_s0}")
@@ -565,10 +746,21 @@ def estimate_complexity(solver: BellmanSolver, n_actions_s0: int) -> None:
         f"всего закэшированных действий {mem.n_actions_total}"
     )
     print(
-        f"Оценка памяти ≈ {mem.bytes_est} байт (~{mem.bytes_est/1024:.1f} КиБ): "
-        f"values + policy + actions"
+        f"Оценка памяти (формула): ≈ {mem.bytes_est} байт "
+        f"(~{mem.bytes_est / (1024 * 1024):.1f} МиБ): "
+        f"80·n_value + 96·n_policy + 64·n_action_states + 48·n_actions_total"
     )
+    if tracemalloc_peak is not None:
+        print(
+            f"Измерено tracemalloc peak: {tracemalloc_peak} байт "
+            f"(~{tracemalloc_peak / (1024 * 1024):.1f} МиБ)"
+        )
     print("Время O(K·|S|·|A|·|Ξ|)")
+    margins = margins_last_stage_expectation(solver.data)
+    names = ("ЦБ1", "ЦБ2", "Деп")
+    print("Маржинальные приросты last-stage (buy, sell) при E[r]:")
+    for name, (b, s) in zip(names, margins):
+        print(f"  {name}: buy={b:.4f}, sell={s:.4f}")
     print(
         f"Ускорение last-no-trade: {solver.accelerate_last_no_trade}, "
         f"проверок={solver.acceleration_checks}, сбоев={solver.acceleration_failures}"
@@ -594,6 +786,7 @@ def main() -> None:
         "Алгоритм: рекурсия Беллмана с мемоизацией; на последнем этапе полный перебор u; "
         "ускорение E[V4(market(s))] только если доказано и проверяется, что u*=(0,0,0)."
     )
+    print("Tie-break: if score > best_val — при равенстве сохраняется первое u.")
 
     run_tests(data)
 
@@ -603,10 +796,24 @@ def main() -> None:
     print("\n=== Критерий: математическое ожидание ===")
     t0 = time.time()
     solver = BellmanSolver(data, "expectation")
+    print(f"accelerate_last_no_trade={solver.accelerate_last_no_trade}")
+    tracemalloc.start()
     res = solver.solve()
+    _current, peak = tracemalloc.get_traced_memory()
+    tracemalloc.stop()
     print(f"Время счёта: {time.time() - t0:.1f} с")
-    print(f"I* = {res.best_income:.4f} д.е.")
+    print(f"I* = {res.best_income:.5f} д.е.  (≈ {res.best_income:.2f})")
     print(f"E[W_final] = {res.expected_final_wealth:.4f} д.е.")
+
+    best_u, optima, n_acts = solver.uniqueness_at_s0()
+    print("\n--- Единственность A1(s0) среди всех допустимых ---")
+    print(f"|A(s0)|={n_acts}, V*={best_u:.5f}")
+    print(f"число оптимумов={len(optima)}: {[a.as_tuple() for a in optima]}")
+    if len(optima) == 1:
+        print(f"u1*={optima[0].as_tuple()} — ЕДИНСТВЕННЫЙ максимум")
+    for neigh in (Action(22, 0, 0), Action(23, 0, 0), Action(24, 0, 0), Action(0, 0, 0)):
+        sc = solver.score_action_at_stage0(neigh)
+        print(f"  сосед {neigh.as_tuple()}: {'недопустим' if sc is None else f'{sc:.5f}'}")
 
     print("\n--- Политика A_k(s) для достижимых состояний ---")
     for k, mapping in enumerate(res.policy_by_state, start=1):
@@ -625,7 +832,7 @@ def main() -> None:
     for i, st in enumerate(res.path_states):
         print(f"  t={i}: {format_state(st)}")
 
-    estimate_complexity(solver, n_a0)
+    estimate_complexity(solver, n_a0, tracemalloc_peak=peak)
 
     if "--all-criteria" in sys.argv:
         print("\n=== Сравнение критериев ===")
