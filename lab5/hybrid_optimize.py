@@ -1,19 +1,19 @@
 from __future__ import annotations
 
+import argparse
+import heapq
 import math
+import random
 import time
 from dataclasses import dataclass
+from pathlib import Path
 
-import matplotlib.pyplot as plt
-import numpy as np
+
+DEFAULT_BOUNDS = (-5.12, 5.12, -5.12, 5.12)
 
 
 def rastrigin2d(x: float, y: float, a: float = 10.0) -> float:
-    return (
-        2.0 * a
-        + (x * x - a * math.cos(2.0 * math.pi * x))
-        + (y * y - a * math.cos(2.0 * math.pi * y))
-    )
+    return x * x + y * y + 2.0 * a * (math.sin(math.pi * x) ** 2 + math.sin(math.pi * y) ** 2)
 
 
 @dataclass
@@ -27,291 +27,300 @@ class OptResult:
 
 
 class EvalCounter:
-    def __init__(self, fun):
+    def __init__(self, fun, lower_bound=None):
         self.fun = fun
+        self.lower_bound = lower_bound
         self.n = 0
+        self.cache = {}
 
     def __call__(self, x: float, y: float) -> float:
-        self.n += 1
-        return float(self.fun(x, y))
+        key = (x, y)
+        if key not in self.cache:
+            value = float(self.fun(x, y))
+            self.n += 1
+            if not math.isfinite(value):
+                raise ValueError('Функция должна возвращать конечные значения во всей области.')
+            if self.lower_bound is not None and value < self.lower_bound - 1e-12 * max(1.0, abs(self.lower_bound)):
+                raise ValueError('Указанная нижняя граница опровергнута значением функции.')
+            self.cache[key] = value
+        return self.cache[key]
 
 
-def estimate_lipschitz_1d(g, a: float, b: float, n0: int = 128) -> float:
-    n = n0
-    best = 0.0
-    prev = None
-    while n <= 2048:
-        xs = np.linspace(a, b, n)
-        ys = np.array([g(float(t)) for t in xs], dtype=float)
-        dens = np.abs(np.diff(ys) / np.diff(xs))
-        cur = float(np.max(dens)) if dens.size else 0.0
-        best = max(best, cur)
-        if prev is not None and abs(cur - prev) <= 0.01 * max(best, 1e-12):
-            break
-        prev = cur
-        n *= 2
-    if best < 1e-12:
-        best = 1.0
-    return 1.15 * best
+def validate_bounds(bounds):
+    if len(bounds) != 4 or not all(math.isfinite(value) for value in bounds):
+        raise ValueError('Область должна содержать четыре конечных числа.')
+    xmin, xmax, ymin, ymax = bounds
+    if xmin >= xmax or ymin >= ymax:
+        raise ValueError('Нижняя граница каждой координаты должна быть меньше верхней.')
+    if not math.isfinite(xmax - xmin) or not math.isfinite(ymax - ymin):
+        raise ValueError('Ширина области должна быть конечной.')
 
 
-def piyavskii_1d(g, a: float, b: float, eps: float = 1e-4, max_iter: int = 800) -> tuple[float, float]:
-    if a > b:
-        a, b = b, a
-    if abs(b - a) < 1e-15:
-        return a, float(g(a))
-    L = estimate_lipschitz_1d(g, a, b)
-    pts = [(a, float(g(a))), (b, float(g(b)))]
-    best_x, best_f = min(pts, key=lambda p: p[1])
-    for _ in range(max_iter):
-        pts.sort(key=lambda p: p[0])
-        best_char = None
-        best_val = float("inf")
-        for i in range(len(pts) - 1):
-            x1, y1 = pts[i]
-            x2, y2 = pts[i + 1]
-            if x2 - x1 < 1e-15:
-                continue
-            intersection = 0.5 * (x1 + x2) + (y1 - y2) / (2.0 * L)
-            if intersection <= x1 or intersection >= x2:
-                intersection = 0.5 * (x1 + x2)
-            char = 0.5 * (y1 + y2) - 0.5 * L * (x2 - x1)
-            if char < best_val:
-                best_val = char
-                best_char = intersection
-        if best_char is None:
-            break
-        y_new = float(g(best_char))
-        pts.append((best_char, y_new))
-        if y_new < best_f:
-            best_f = y_new
-            best_x = best_char
-        if best_f - best_val <= eps:
-            break
-    return best_x, best_f
-
-
-def nelder_mead_2d(
-    fcount: EvalCounter,
-    x0: float,
-    y0: float,
-    bounds: tuple[float, float, float, float],
-    step: float = 0.35,
-    max_iter: int = 350,
-    alpha: float = 1.0,
-    gamma: float = 2.0,
-    rho: float = 0.5,
-    sigma: float = 0.5,
-) -> tuple[float, float, float]:
+def nelder_mead_2d(fcount, x0, y0, bounds, step=0.35, max_iter=240):
     xmin, xmax, ymin, ymax = bounds
 
-    def clip(x: float, y: float) -> tuple[float, float]:
+    def clip(x, y):
         return min(max(x, xmin), xmax), min(max(y, ymin), ymax)
 
-    def val(p: tuple[float, float]) -> float:
-        return fcount(p[0], p[1])
-
-    p0 = clip(x0, y0)
-    p1 = clip(x0 + step, y0)
-    p2 = clip(x0, y0 + step)
-    simplex = [p0, p1, p2]
-    scores = [val(p) for p in simplex]
-
+    x0, y0 = clip(x0, y0)
+    dx = min(step, 0.2 * (xmax - xmin))
+    dy = min(step, 0.2 * (ymax - ymin))
+    simplex = [
+        (x0, y0),
+        (x0 + dx if x0 + dx <= xmax else x0 - dx, y0),
+        (x0, y0 + dy if y0 + dy <= ymax else y0 - dy),
+    ]
+    values = [fcount(*point) for point in simplex]
     for _ in range(max_iter):
-        order = sorted(range(3), key=lambda i: scores[i])
-        simplex = [simplex[i] for i in order]
-        scores = [scores[i] for i in order]
+        order = sorted(range(3), key=values.__getitem__)
+        simplex = [simplex[index] for index in order]
+        values = [values[index] for index in order]
         best, good, worst = simplex
-        f_best, f_good, f_worst = scores
-        span = math.hypot(best[0] - worst[0], best[1] - worst[1])
-        if span < 1e-10 and abs(f_worst - f_best) < 1e-12:
+        span = max(math.hypot(best[0] - point[0], best[1] - point[1]) for point in simplex[1:])
+        if span <= 1e-9 and values[2] - values[0] <= 1e-13:
             break
-        cx = 0.5 * (best[0] + good[0])
-        cy = 0.5 * (best[1] + good[1])
-        xr = clip(cx + alpha * (cx - worst[0]), cy + alpha * (cy - worst[1]))
-        fr = val(xr)
-        if fr < f_best:
-            xe = clip(cx + gamma * (xr[0] - cx), cy + gamma * (xr[1] - cy))
-            fe = val(xe)
-            if fe < fr:
-                simplex[2], scores[2] = xe, fe
-            else:
-                simplex[2], scores[2] = xr, fr
-        elif fr < f_good:
-            simplex[2], scores[2] = xr, fr
+        cx, cy = 0.5 * (best[0] + good[0]), 0.5 * (best[1] + good[1])
+        reflected = clip(2.0 * cx - worst[0], 2.0 * cy - worst[1])
+        fr = fcount(*reflected)
+        if fr < values[0]:
+            expanded = clip(cx + 2.0 * (reflected[0] - cx), cy + 2.0 * (reflected[1] - cy))
+            fe = fcount(*expanded)
+            simplex[2], values[2] = (expanded, fe) if fe < fr else (reflected, fr)
+        elif fr < values[1]:
+            simplex[2], values[2] = reflected, fr
         else:
-            if fr < f_worst:
-                xc = clip(cx + rho * (xr[0] - cx), cy + rho * (xr[1] - cy))
+            outside = fr < values[2]
+            anchor = reflected if outside else worst
+            contracted = clip(cx + 0.5 * (anchor[0] - cx), cy + 0.5 * (anchor[1] - cy))
+            fc = fcount(*contracted)
+            if fc < (fr if outside else values[2]):
+                simplex[2], values[2] = contracted, fc
             else:
-                xc = clip(cx + rho * (worst[0] - cx), cy + rho * (worst[1] - cy))
-            fc = val(xc)
-            if fc < f_worst:
-                simplex[2], scores[2] = xc, fc
-            else:
-                simplex[1] = clip(
-                    best[0] + sigma * (good[0] - best[0]),
-                    best[1] + sigma * (good[1] - best[1]),
-                )
-                simplex[2] = clip(
-                    best[0] + sigma * (worst[0] - best[0]),
-                    best[1] + sigma * (worst[1] - best[1]),
-                )
-                scores[1] = val(simplex[1])
-                scores[2] = val(simplex[2])
+                for index in (1, 2):
+                    simplex[index] = clip(
+                        best[0] + 0.5 * (simplex[index][0] - best[0]),
+                        best[1] + 0.5 * (simplex[index][1] - best[1]),
+                    )
+                    values[index] = fcount(*simplex[index])
+    index = min(range(3), key=values.__getitem__)
+    return *simplex[index], values[index]
 
-    order = sorted(range(3), key=lambda i: scores[i])
-    bx, by = simplex[order[0]]
-    return bx, by, scores[order[0]]
+
+def piyavskii_candidates(g, a, b, eps=5e-4, max_iter=96, samples=32, count=3):
+    if not a < b:
+        return [(a, float(g(a)))]
+    points = [(a + (b - a) * index / (samples - 1), 0.0) for index in range(samples)]
+    points = [(x, float(g(x))) for x, _ in points]
+    best = min(points, key=lambda point: point[1])
+    slope = max(abs((right[1] - left[1]) / (right[0] - left[0])) for left, right in zip(points, points[1:]))
+    lipschitz = max(2.0 * slope, 1e-12)
+
+    def interval(left, right):
+        lower = 0.5 * (left[1] + right[1] - lipschitz * (right[0] - left[0]))
+        return lower, left, right
+
+    intervals = [interval(left, right) for left, right in zip(points, points[1:])]
+    heapq.heapify(intervals)
+    for _ in range(max_iter):
+        if not intervals:
+            break
+        lower, left, right = heapq.heappop(intervals)
+        if best[1] - lower <= eps:
+            break
+        x = 0.5 * (left[0] + right[0]) + (left[1] - right[1]) / (2.0 * lipschitz)
+        if not left[0] < x < right[0]:
+            x = 0.5 * (left[0] + right[0])
+        if not left[0] < x < right[0]:
+            continue
+        value = float(g(x))
+        point = (x, value)
+        points.append(point)
+        if value < best[1]:
+            best = point
+        observed = max(abs((value - left[1]) / (x - left[0])), abs((right[1] - value) / (right[0] - x)))
+        if 2.0 * observed > lipschitz:
+            lipschitz = 2.0 * observed
+            intervals = [interval(first, last) for _, first, last in intervals]
+            heapq.heapify(intervals)
+        heapq.heappush(intervals, interval(left, point))
+        heapq.heappush(intervals, interval(point, right))
+    candidates = []
+    for point in sorted(points, key=lambda item: item[1]):
+        if all(abs(point[0] - other[0]) > 0.06 * (b - a) for other in candidates):
+            candidates.append(point)
+        if len(candidates) == count:
+            break
+    return candidates
+
+
+def piyavskii_1d(g, a, b, eps=5e-4, max_iter=96):
+    return piyavskii_candidates(g, min(a, b), max(a, b), eps, max_iter, count=1)[0]
+
+
+def section_candidates(fcount, point, direction, bounds, eps, budget, count):
+    x, y, _ = point
+    dx, dy = direction
+    lower, upper = -math.inf, math.inf
+    for coordinate, component, low, high in ((x, dx, *bounds[:2]), (y, dy, *bounds[2:])):
+        if abs(component) > 1e-15:
+            first, last = sorted(((low - coordinate) / component, (high - coordinate) / component))
+            lower, upper = max(lower, first), min(upper, last)
+    if upper - lower < 1e-14:
+        return [point]
+
+    def position(t):
+        return min(max(x + t * dx, bounds[0]), bounds[1]), min(max(y + t * dy, bounds[2]), bounds[3])
+
+    candidates = piyavskii_candidates(lambda t: fcount(*position(t)), lower, upper, eps, budget, count=count)
+    return [(*position(t), value) for t, value in candidates]
 
 
 def hybrid_optimize(
     fun,
-    bounds: tuple[float, float, float, float] = (-5.12, 5.12, -5.12, 5.12),
-    grid: int = 10,
-    top_k: int = 8,
-    angles: int = 6,
-    line_eps: float = 5e-4,
-    local_step: float = 0.45,
-) -> OptResult:
+    bounds=DEFAULT_BOUNDS,
+    grid=10,
+    top_k=8,
+    angles=6,
+    line_eps=5e-4,
+    local_step=0.35,
+    *,
+    lower_bound=None,
+    target_tol=1e-13,
+    seed=0,
+    random_points=32,
+    line_budget=96,
+    strategy='guarded',
+):
+    start = time.perf_counter()
+    validate_bounds(bounds)
+    for value, minimum in ((grid, 2), (top_k, 1), (angles, 1), (random_points, 0), (line_budget, 1)):
+        if isinstance(value, bool) or not isinstance(value, int) or value < minimum:
+            raise ValueError('Неверное целочисленное ограничение поиска.')
+    for value in (line_eps, local_step, target_tol):
+        if not math.isfinite(value) or value <= 0:
+            raise ValueError('Точность и шаг должны быть положительными конечными числами.')
+    if lower_bound is not None and not math.isfinite(lower_bound):
+        raise ValueError('Известная нижняя граница должна быть конечной.')
+    if strategy not in ('multistart', 'axes', 'guarded'):
+        raise ValueError('Неизвестная стратегия поиска.')
+    fcount = EvalCounter(fun, lower_bound)
     xmin, xmax, ymin, ymax = bounds
-    fcount = EvalCounter(fun)
-    t0 = time.perf_counter()
-
-    xs = np.linspace(xmin, xmax, grid)
-    ys = np.linspace(ymin, ymax, grid)
-    seeds: list[tuple[float, float, float]] = []
-    for x in xs:
-        for y in ys:
-            fx = fcount(float(x), float(y))
-            seeds.append((float(x), float(y), fx))
-    seeds.sort(key=lambda t: t[2])
-    seeds = seeds[:top_k]
-
-    refined: list[tuple[float, float, float]] = []
-    for sx, sy, sf in seeds:
-        best_x, best_y, best_f = sx, sy, sf
-        if best_f <= 1e-12:
-            refined.append((best_x, best_y, best_f))
+    points = [
+        (xmin + (xmax - xmin) * i / (grid - 1), ymin + (ymax - ymin) * j / (grid - 1))
+        for i in range(grid) for j in range(grid)
+    ]
+    rng = random.Random(seed)
+    points.extend((rng.uniform(xmin, xmax), rng.uniform(ymin, ymax)) for _ in range(random_points))
+    ranked = sorted([(*point, fcount(*point)) for point in points], key=lambda point: point[2])
+    seeds = []
+    for point in ranked:
+        if all(math.hypot((point[0] - other[0]) / (xmax - xmin), (point[1] - other[1]) / (ymax - ymin)) > 0.06 for other in seeds):
+            seeds.append(point)
+        if len(seeds) == top_k:
             break
-        for k in range(angles):
-            ang = math.pi * k / angles
-            c, s = math.cos(ang), math.sin(ang)
+    best = ranked[0]
 
-            def ray_pos(t: float) -> tuple[float, float]:
-                return sx + t * c, sy + t * s
+    def target_reached():
+        return lower_bound is not None and abs(best[2] - lower_bound) <= target_tol
 
-            cand: list[float] = []
-            if abs(c) > 1e-12:
-                cand.append((xmin - sx) / c)
-                cand.append((xmax - sx) / c)
-            if abs(s) > 1e-12:
-                cand.append((ymin - sy) / s)
-                cand.append((ymax - sy) / s)
-            ts: list[float] = []
-            for val in cand:
-                px, py = ray_pos(val)
-                if xmin - 1e-9 <= px <= xmax + 1e-9 and ymin - 1e-9 <= py <= ymax + 1e-9:
-                    ts.append(val)
-            if len(ts) < 2:
-                continue
-            t_lo, t_hi = min(ts), max(ts)
-            if t_hi - t_lo < 1e-12:
-                continue
+    def polish(point):
+        return nelder_mead_2d(fcount, point[0], point[1], bounds, step=local_step)
 
-            def g(t: float) -> float:
-                px, py = ray_pos(t)
-                px = min(max(px, xmin), xmax)
-                py = min(max(py, ymin), ymax)
-                return fcount(px, py)
-
-            t_star, _ = piyavskii_1d(g, t_lo, t_hi, eps=line_eps, max_iter=250)
-            px, py = ray_pos(t_star)
-            px = min(max(px, xmin), xmax)
-            py = min(max(py, ymin), ymax)
-            fv = fcount(px, py)
-            if fv < best_f:
-                best_x, best_y, best_f = px, py, fv
-            if best_f <= 1e-12:
-                break
-        refined.append((best_x, best_y, best_f))
-        if best_f <= 1e-12:
+    for initial in seeds:
+        if target_reached():
             break
+        candidate = polish(initial)
+        best = min(best, candidate, key=lambda point: point[2])
+        if target_reached():
+            break
+        if strategy == 'multistart':
+            continue
+        for direction in ((1.0, 0.0), (0.0, 1.0)):
+            alternatives = section_candidates(fcount, candidate, direction, bounds, line_eps, line_budget, 1)
+            candidate = min(candidate, *alternatives, key=lambda point: point[2])
+        candidate = polish(candidate)
+        best = min(best, candidate, key=lambda point: point[2])
+        if target_reached():
+            break
+        if strategy == 'guarded':
+            for index in range(angles):
+                angle = math.pi * index / angles
+                direction = math.cos(angle), math.sin(angle)
+                alternatives = section_candidates(fcount, best, direction, bounds, line_eps, line_budget, 3)
+                for alternative in alternatives:
+                    candidate = polish(alternative)
+                    best = min(best, candidate, key=lambda point: point[2])
+                    if target_reached():
+                        break
+                if target_reached():
+                    break
+    status = 'target_reached' if target_reached() else 'search_complete'
+    return OptResult(*best, time.perf_counter() - start, fcount.n, status)
 
-    refined.sort(key=lambda t: t[2])
-    final_candidates = refined[: max(4, top_k // 2)]
 
-    best_x, best_y, best_f = final_candidates[0]
-    if best_f > 1e-12:
-        for sx, sy, _ in final_candidates:
-            lx, ly, lf = nelder_mead_2d(
-                fcount, sx, sy, bounds, step=local_step, max_iter=220
-            )
-            if lf < best_f:
-                best_x, best_y, best_f = lx, ly, lf
-            if best_f <= 1e-12:
-                break
+def save_visualization(fun, result, bounds, path, title):
+    import matplotlib
+    matplotlib.use('Agg')
+    import matplotlib.pyplot as plt
+    import numpy as np
 
-    elapsed = time.perf_counter() - t0
-    status = "ok"
-    if abs(best_x) < 1e-3 and abs(best_y) < 1e-3 and abs(best_f) < 1e-2:
-        status = "near_global"
-    return OptResult(best_x, best_y, best_f, elapsed, fcount.n, status)
-
-
-def save_visualization(
-    fun,
-    result: OptResult,
-    bounds: tuple[float, float, float, float],
-    path: str,
-    title: str,
-) -> None:
     xmin, xmax, ymin, ymax = bounds
-    n = 220
-    xs = np.linspace(xmin, xmax, n)
-    ys = np.linspace(ymin, ymax, n)
-    X, Y = np.meshgrid(xs, ys)
-    Z = np.vectorize(fun)(X, Y)
-
-    fig, ax = plt.subplots(figsize=(7.2, 6.2), dpi=160)
-    cs = ax.contourf(X, Y, Z, levels=40, cmap="viridis")
-    fig.colorbar(cs, ax=ax, shrink=0.86, label="f(x, y)")
-    ax.plot([result.x], [result.y], marker="*", markersize=16, color="red")
-    ax.set_xlabel("x")
-    ax.set_ylabel("y")
-    ax.set_title(title)
-    ax.set_aspect("equal")
+    xs, ys = np.linspace(xmin, xmax, 260), np.linspace(ymin, ymax, 260)
+    xx, yy = np.meshgrid(xs, ys)
+    values = np.array([[fun(float(x), float(y)) for x in xs] for y in ys])
+    fig, axes = plt.subplots(1, 2, figsize=(11.5, 5), dpi=170)
+    contours = axes[0].contourf(xx, yy, values, levels=35, cmap='viridis')
+    fig.colorbar(contours, ax=axes[0], label='f(x, y)', shrink=0.85)
+    axes[0].plot(result.x, result.y, '*', color='#ff7043', markersize=14, markeredgecolor='white', label='Найденная точка')
+    axes[0].legend(loc='upper right')
+    axes[0].set_title('Вся область поиска')
+    radius = 0.08 * min(xmax - xmin, ymax - ymin)
+    zoom_x = np.linspace(max(xmin, result.x - radius), min(xmax, result.x + radius), 180)
+    zoom_y = np.linspace(max(ymin, result.y - radius), min(ymax, result.y + radius), 180)
+    zoom_values = np.array([[fun(float(x), float(y)) for x in zoom_x] for y in zoom_y])
+    axes[1].contourf(zoom_x, zoom_y, zoom_values, levels=35, cmap='viridis')
+    axes[1].plot(result.x, result.y, '*', color='#ff7043', markersize=14, markeredgecolor='white')
+    axes[1].set_title(f'Окрестность результата, f* = {result.f:.3e}')
+    for axis in axes:
+        axis.set(xlabel='x', ylabel='y', aspect='equal')
+    fig.suptitle(title)
     fig.tight_layout()
     fig.savefig(path)
     plt.close(fig)
 
 
-def battle_print(result: OptResult) -> None:
-    print("=" * 64)
-    print("Битва методов оптимизации")
-    print("Гибрид: сечения методом ломаных (Пиявский) и Нелдер-Мид")
-    print("=" * 64)
-    print(f"x* = {result.x:.12g}")
-    print(f"y* = {result.y:.12g}")
-    print(f"f(x*, y*) = {result.f:.12g}")
-    print(f"время = {result.elapsed_sec:.6f} с")
-    print(f"вызовов f = {result.n_eval}")
-    print(f"status = {result.status}")
+def battle_print(result):
+    print('Битва методов оптимизации')
+    print('Соколов Никита Константинович, К3339, поток 1.2')
+    print('Гибрид: сечения Пиявского и локальный поиск Нелдера-Мида')
+    print(f'x* = {result.x:.15g}')
+    print(f'y* = {result.y:.15g}')
+    print(f'f* = {result.f:.15g}')
+    print(f'время поиска = {result.elapsed_sec:.6f} с')
+    print(f'вызовов f = {result.n_eval}')
+    print(f'статус = {result.status}')
 
 
-def main() -> None:
-    bounds = (-5.12, 5.12, -5.12, 5.12)
-    result = hybrid_optimize(rastrigin2d, bounds=bounds)
-    battle_print(result)
-    out = __file__.replace("hybrid_optimize.py", "demo_rastrigin2d.png")
-    save_visualization(
-        rastrigin2d,
-        result,
-        bounds,
-        out,
-        "Растригин 2D: найденная точка гибридного метода",
+def main():
+    parser = argparse.ArgumentParser(description='Битва методов оптимизации, Растригин в двумерной области')
+    parser.add_argument('--bounds', type=float, nargs=4, default=DEFAULT_BOUNDS, metavar=('XMIN', 'XMAX', 'YMIN', 'YMAX'))
+    parser.add_argument('--grid', type=int, default=10)
+    parser.add_argument('--seed', type=int, default=0)
+    parser.add_argument('--strategy', choices=('multistart', 'axes', 'guarded'), default='guarded')
+    parser.add_argument('--no-target', action='store_true')
+    parser.add_argument('--no-plot', action='store_true')
+    args = parser.parse_args()
+    result = hybrid_optimize(
+        rastrigin2d, bounds=args.bounds, grid=args.grid, seed=args.seed,
+        strategy=args.strategy, lower_bound=None if args.no_target else 0.0,
     )
-    print(f"график: {out}")
+    battle_print(result)
+    if not args.no_plot:
+        path = Path(__file__).with_name('demo_rastrigin2d.png')
+        save_visualization(rastrigin2d, result, args.bounds, path, 'Растригин 2D. Сечения Пиявского и Нелдер-Мид')
+        print(f'График сохранён: {path.name}')
+        print('Время поиска не включает импорт графических библиотек и построение графика.')
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     main()
