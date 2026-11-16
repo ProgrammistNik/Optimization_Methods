@@ -1,0 +1,4737 @@
+{
+  "metadata": {
+    "created_utc": "2026-11-16T17:53:36.406154+00:00",
+    "python": "3.9.6 (default, Oct 19 2026, 19:18:13) \n[Clang 21.0.0 (clang-2100.4.1.1)]",
+    "platform": "macOS-26.6.2-arm64-arm-64bit",
+    "machine": "arm64",
+    "numpy": "2.0.2",
+    "optimizer_sha256": "6a09ad21280293d6fa58cbc52f3d6c4723c7896a0a931240b6606b22bbaff358",
+    "defaults": {
+      "mode": "hybrid",
+      "initial_points": 64,
+      "cycles": 8,
+      "annealing_share": 0.55,
+      "final_share": 0.16,
+      "temperature_ratio": 0.05,
+      "cooling_ratio": 1e-07,
+      "tabu_radius": 0.012,
+      "tabu_tenure": 12,
+      "basin_tenure": 4,
+      "local_step": 0.025,
+      "minimum_step": 5e-11
+    },
+    "runs": 30,
+    "max_nfe": 10000,
+    "protocol": "One warmup per configuration, sequential interleaved measured runs, external counter and timer"
+  },
+  "comparison": {
+    "levy13": {
+      "hybrid": {
+        "params": {
+          "mode": "hybrid"
+        },
+        "summary": {
+          "best": 4.2230986371925817e-22,
+          "median": 7.152675174278875e-19,
+          "worst": 6.822300847331021e-18,
+          "success_rate": 1.0,
+          "median_log_error": -12.0,
+          "iqr_log_error": 0.0,
+          "mean_time_s": 0.11560479720000008,
+          "median_time_s": 0.106379958,
+          "mean_nfe": 9123.066666666668
+        },
+        "rows": [
+          {
+            "func": "levy13",
+            "seed": 1,
+            "x1": 1.0000000002352323,
+            "x2": 1.00000000084939,
+            "f": 5.691939550455671e-18,
+            "e": 5.691939550455671e-18,
+            "success": true,
+            "nfe": 9089,
+            "time_s": 0.12262762500000002,
+            "first_success_nfe": 733,
+            "stats": {
+              "sa_uphill": 39,
+              "tabu_uphill": 278,
+              "tabu_rejected": 1359,
+              "aspirations": 65,
+              "basins": 8
+            }
+          },
+          {
+            "func": "levy13",
+            "seed": 2,
+            "x1": 0.9999999998869527,
+            "x2": 0.9999999997763744,
+            "f": 1.1979649047913164e-18,
+            "e": 1.1979649047913164e-18,
+            "success": true,
+            "nfe": 9107,
+            "time_s": 0.13489345899999994,
+            "first_success_nfe": 741,
+            "stats": {
+              "sa_uphill": 63,
+              "tabu_uphill": 290,
+              "tabu_rejected": 1336,
+              "aspirations": 67,
+              "basins": 8
+            }
+          },
+          {
+            "func": "levy13",
+            "seed": 3,
+            "x1": 0.99999999999884,
+            "x2": 1.000000000581382,
+            "f": 3.3812594786716664e-19,
+            "e": 3.3812594786716664e-19,
+            "success": true,
+            "nfe": 9199,
+            "time_s": 0.12155074999999993,
+            "first_success_nfe": 794,
+            "stats": {
+              "sa_uphill": 35,
+              "tabu_uphill": 300,
+              "tabu_rejected": 1496,
+              "aspirations": 68,
+              "basins": 8
+            }
+          },
+          {
+            "func": "levy13",
+            "seed": 4,
+            "x1": 0.9999999997471765,
+            "x2": 0.9999999991490647,
+            "f": 6.46577239054603e-18,
+            "e": 6.46577239054603e-18,
+            "success": true,
+            "nfe": 9085,
+            "time_s": 0.1197547080000001,
+            "first_success_nfe": 742,
+            "stats": {
+              "sa_uphill": 29,
+              "tabu_uphill": 285,
+              "tabu_rejected": 1174,
+              "aspirations": 47,
+              "basins": 8
+            }
+          },
+          {
+            "func": "levy13",
+            "seed": 5,
+            "x1": 1.0000000000108535,
+            "x2": 0.9999999993278248,
+            "f": 4.624007822965939e-19,
+            "e": 4.624007822965939e-19,
+            "success": true,
+            "nfe": 9177,
+            "time_s": 0.11109137499999999,
+            "first_success_nfe": 523,
+            "stats": {
+              "sa_uphill": 33,
+              "tabu_uphill": 306,
+              "tabu_rejected": 1361,
+              "aspirations": 54,
+              "basins": 8
+            }
+          },
+          {
+            "func": "levy13",
+            "seed": 6,
+            "x1": 0.999999999936227,
+            "x2": 1.0000000006852936,
+            "f": 8.349514365937615e-19,
+            "e": 8.349514365937615e-19,
+            "success": true,
+            "nfe": 9155,
+            "time_s": 0.177469667,
+            "first_success_nfe": 754,
+            "stats": {
+              "sa_uphill": 42,
+              "tabu_uphill": 267,
+              "tabu_rejected": 1358,
+              "aspirations": 60,
+              "basins": 8
+            }
+          },
+          {
+            "func": "levy13",
+            "seed": 7,
+            "x1": 1.0000000000067146,
+            "x2": 0.9999999990991135,
+            "f": 8.156464098509413e-19,
+            "e": 8.156464098509413e-19,
+            "success": true,
+            "nfe": 9111,
+            "time_s": 0.15305995800000005,
+            "first_success_nfe": 732,
+            "stats": {
+              "sa_uphill": 53,
+              "tabu_uphill": 296,
+              "tabu_rejected": 1375,
+              "aspirations": 46,
+              "basins": 8
+            }
+          },
+          {
+            "func": "levy13",
+            "seed": 8,
+            "x1": 1.0000000000561045,
+            "x2": 1.0000000007419985,
+            "f": 8.333085432998541e-19,
+            "e": 8.333085432998541e-19,
+            "success": true,
+            "nfe": 9101,
+            "time_s": 0.10689925000000011,
+            "first_success_nfe": 762,
+            "stats": {
+              "sa_uphill": 51,
+              "tabu_uphill": 297,
+              "tabu_rejected": 1320,
+              "aspirations": 63,
+              "basins": 8
+            }
+          },
+          {
+            "func": "levy13",
+            "seed": 9,
+            "x1": 0.999999999951033,
+            "x2": 0.9999999992415844,
+            "f": 7.905771293356818e-19,
+            "e": 7.905771293356818e-19,
+            "success": true,
+            "nfe": 9195,
+            "time_s": 0.13390045800000028,
+            "first_success_nfe": 736,
+            "stats": {
+              "sa_uphill": 47,
+              "tabu_uphill": 264,
+              "tabu_rejected": 1321,
+              "aspirations": 65,
+              "basins": 8
+            }
+          },
+          {
+            "func": "levy13",
+            "seed": 10,
+            "x1": 0.9999999999542553,
+            "x2": 1.0000000002160743,
+            "f": 2.3465772053006114e-19,
+            "e": 2.3465772053006114e-19,
+            "success": true,
+            "nfe": 9105,
+            "time_s": 0.11416395799999979,
+            "first_success_nfe": 629,
+            "stats": {
+              "sa_uphill": 29,
+              "tabu_uphill": 273,
+              "tabu_rejected": 1261,
+              "aspirations": 60,
+              "basins": 8
+            }
+          },
+          {
+            "func": "levy13",
+            "seed": 11,
+            "x1": 0.9999999999689706,
+            "x2": 1.0000000001560707,
+            "f": 1.1084528857262857e-19,
+            "e": 1.1084528857262857e-19,
+            "success": true,
+            "nfe": 9091,
+            "time_s": 0.16526562499999997,
+            "first_success_nfe": 773,
+            "stats": {
+              "sa_uphill": 43,
+              "tabu_uphill": 291,
+              "tabu_rejected": 1384,
+              "aspirations": 61,
+              "basins": 8
+            }
+          },
+          {
+            "func": "levy13",
+            "seed": 12,
+            "x1": 1.0000000001740155,
+            "x2": 1.0000000000168505,
+            "f": 2.720351013047895e-18,
+            "e": 2.720351013047895e-18,
+            "success": true,
+            "nfe": 9051,
+            "time_s": 0.13452283300000012,
+            "first_success_nfe": 623,
+            "stats": {
+              "sa_uphill": 55,
+              "tabu_uphill": 281,
+              "tabu_rejected": 1281,
+              "aspirations": 59,
+              "basins": 8
+            }
+          },
+          {
+            "func": "levy13",
+            "seed": 13,
+            "x1": 1.000000000016744,
+            "x2": 0.9999999992569073,
+            "f": 5.77370363459323e-19,
+            "e": 5.77370363459323e-19,
+            "success": true,
+            "nfe": 9197,
+            "time_s": 0.10586066599999988,
+            "first_success_nfe": 717,
+            "stats": {
+              "sa_uphill": 40,
+              "tabu_uphill": 294,
+              "tabu_rejected": 1398,
+              "aspirations": 67,
+              "basins": 8
+            }
+          },
+          {
+            "func": "levy13",
+            "seed": 14,
+            "x1": 1.0000000000212133,
+            "x2": 1.000000000833822,
+            "f": 7.35681117072694e-19,
+            "e": 7.35681117072694e-19,
+            "success": true,
+            "nfe": 9145,
+            "time_s": 0.1223102909999998,
+            "first_success_nfe": 766,
+            "stats": {
+              "sa_uphill": 35,
+              "tabu_uphill": 294,
+              "tabu_rejected": 1361,
+              "aspirations": 65,
+              "basins": 8
+            }
+          },
+          {
+            "func": "levy13",
+            "seed": 15,
+            "x1": 0.9999999999881499,
+            "x2": 1.0000000006996679,
+            "f": 5.021491607631936e-19,
+            "e": 5.021491607631936e-19,
+            "success": true,
+            "nfe": 9047,
+            "time_s": 0.09873283299999969,
+            "first_success_nfe": 770,
+            "stats": {
+              "sa_uphill": 29,
+              "tabu_uphill": 286,
+              "tabu_rejected": 1294,
+              "aspirations": 58,
+              "basins": 8
+            }
+          },
+          {
+            "func": "levy13",
+            "seed": 16,
+            "x1": 0.9999999999302212,
+            "x2": 1.0000000007325571,
+            "f": 9.7401295037047e-19,
+            "e": 9.7401295037047e-19,
+            "success": true,
+            "nfe": 9187,
+            "time_s": 0.09757250000000006,
+            "first_success_nfe": 764,
+            "stats": {
+              "sa_uphill": 46,
+              "tabu_uphill": 290,
+              "tabu_rejected": 1421,
+              "aspirations": 70,
+              "basins": 8
+            }
+          },
+          {
+            "func": "levy13",
+            "seed": 17,
+            "x1": 1.0000000000985576,
+            "x2": 0.9999999999607212,
+            "f": 8.740805540736465e-19,
+            "e": 8.740805540736465e-19,
+            "success": true,
+            "nfe": 9065,
+            "time_s": 0.09493912499999979,
+            "first_success_nfe": 731,
+            "stats": {
+              "sa_uphill": 57,
+              "tabu_uphill": 286,
+              "tabu_rejected": 1307,
+              "aspirations": 49,
+              "basins": 8
+            }
+          },
+          {
+            "func": "levy13",
+            "seed": 18,
+            "x1": 0.9999999999723403,
+            "x2": 0.9999999995087343,
+            "f": 3.1006426250441747e-19,
+            "e": 3.1006426250441747e-19,
+            "success": true,
+            "nfe": 9253,
+            "time_s": 0.10382537500000044,
+            "first_success_nfe": 800,
+            "stats": {
+              "sa_uphill": 48,
+              "tabu_uphill": 274,
+              "tabu_rejected": 1347,
+              "aspirations": 75,
+              "basins": 8
+            }
+          },
+          {
+            "func": "levy13",
+            "seed": 19,
+            "x1": 0.9999999999995133,
+            "x2": 0.9999999996153477,
+            "f": 1.4797867633128877e-19,
+            "e": 1.4797867633128877e-19,
+            "success": true,
+            "nfe": 9169,
+            "time_s": 0.15755795799999994,
+            "first_success_nfe": 777,
+            "stats": {
+              "sa_uphill": 54,
+              "tabu_uphill": 276,
+              "tabu_rejected": 1321,
+              "aspirations": 61,
+              "basins": 8
+            }
+          },
+          {
+            "func": "levy13",
+            "seed": 20,
+            "x1": 0.9999999999964455,
+            "x2": 0.9999999992927417,
+            "f": 5.01349165000015e-19,
+            "e": 5.01349165000015e-19,
+            "success": true,
+            "nfe": 9161,
+            "time_s": 0.11797570899999954,
+            "first_success_nfe": 506,
+            "stats": {
+              "sa_uphill": 32,
+              "tabu_uphill": 276,
+              "tabu_rejected": 1454,
+              "aspirations": 59,
+              "basins": 8
+            }
+          },
+          {
+            "func": "levy13",
+            "seed": 21,
+            "x1": 0.9999999999936584,
+            "x2": 1.0000000001724807,
+            "f": 3.3361980772211614e-20,
+            "e": 3.3361980772211614e-20,
+            "success": true,
+            "nfe": 9111,
+            "time_s": 0.0946632919999999,
+            "first_success_nfe": 792,
+            "stats": {
+              "sa_uphill": 58,
+              "tabu_uphill": 285,
+              "tabu_rejected": 1403,
+              "aspirations": 57,
+              "basins": 8
+            }
+          },
+          {
+            "func": "levy13",
+            "seed": 22,
+            "x1": 1.000000000087514,
+            "x2": 1.000000000083073,
+            "f": 6.94853917783081e-19,
+            "e": 6.94853917783081e-19,
+            "success": true,
+            "nfe": 9041,
+            "time_s": 0.10570229100000006,
+            "first_success_nfe": 1807,
+            "stats": {
+              "sa_uphill": 32,
+              "tabu_uphill": 296,
+              "tabu_rejected": 1440,
+              "aspirations": 42,
+              "basins": 8
+            }
+          },
+          {
+            "func": "levy13",
+            "seed": 23,
+            "x1": 0.999999999942542,
+            "x2": 0.9999999992261994,
+            "f": 8.95323346683966e-19,
+            "e": 8.95323346683966e-19,
+            "success": true,
+            "nfe": 9145,
+            "time_s": 0.09821958400000064,
+            "first_success_nfe": 792,
+            "stats": {
+              "sa_uphill": 43,
+              "tabu_uphill": 286,
+              "tabu_rejected": 1395,
+              "aspirations": 61,
+              "basins": 8
+            }
+          },
+          {
+            "func": "levy13",
+            "seed": 24,
+            "x1": 0.9999999997295994,
+            "x2": 0.9999999994955182,
+            "f": 6.822300847331021e-18,
+            "e": 6.822300847331021e-18,
+            "success": true,
+            "nfe": 9041,
+            "time_s": 0.09338333400000032,
+            "first_success_nfe": 759,
+            "stats": {
+              "sa_uphill": 43,
+              "tabu_uphill": 307,
+              "tabu_rejected": 1325,
+              "aspirations": 55,
+              "basins": 8
+            }
+          },
+          {
+            "func": "levy13",
+            "seed": 25,
+            "x1": 0.9999999999865956,
+            "x2": 1.0000000005859828,
+            "f": 3.595155899135833e-19,
+            "e": 3.595155899135833e-19,
+            "success": true,
+            "nfe": 9245,
+            "time_s": 0.09267825000000052,
+            "first_success_nfe": 432,
+            "stats": {
+              "sa_uphill": 29,
+              "tabu_uphill": 296,
+              "tabu_rejected": 1463,
+              "aspirations": 69,
+              "basins": 8
+            }
+          },
+          {
+            "func": "levy13",
+            "seed": 26,
+            "x1": 1.000000000106784,
+            "x2": 0.9999999991750634,
+            "f": 1.7047925592949e-18,
+            "e": 1.7047925592949e-18,
+            "success": true,
+            "nfe": 9153,
+            "time_s": 0.09749420799999875,
+            "first_success_nfe": 814,
+            "stats": {
+              "sa_uphill": 32,
+              "tabu_uphill": 265,
+              "tabu_rejected": 1218,
+              "aspirations": 59,
+              "basins": 8
+            }
+          },
+          {
+            "func": "levy13",
+            "seed": 27,
+            "x1": 0.9999999999106652,
+            "x2": 1.0000000002087326,
+            "f": 7.604492186089563e-19,
+            "e": 7.604492186089563e-19,
+            "success": true,
+            "nfe": 9011,
+            "time_s": 0.09746087500000122,
+            "first_success_nfe": 733,
+            "stats": {
+              "sa_uphill": 41,
+              "tabu_uphill": 293,
+              "tabu_rejected": 1389,
+              "aspirations": 49,
+              "basins": 8
+            }
+          },
+          {
+            "func": "levy13",
+            "seed": 28,
+            "x1": 1.0000000000020464,
+            "x2": 1.0000000000067963,
+            "f": 4.2230986371925817e-22,
+            "e": 4.2230986371925817e-22,
+            "success": true,
+            "nfe": 9023,
+            "time_s": 0.09853283300000015,
+            "first_success_nfe": 737,
+            "stats": {
+              "sa_uphill": 28,
+              "tabu_uphill": 294,
+              "tabu_rejected": 1264,
+              "aspirations": 48,
+              "basins": 8
+            }
+          },
+          {
+            "func": "levy13",
+            "seed": 29,
+            "x1": 0.9999999999873488,
+            "x2": 1.0000000005219363,
+            "f": 2.86794454995833e-19,
+            "e": 2.86794454995833e-19,
+            "success": true,
+            "nfe": 9163,
+            "time_s": 0.09754208400000053,
+            "first_success_nfe": 705,
+            "stats": {
+              "sa_uphill": 46,
+              "tabu_uphill": 293,
+              "tabu_rejected": 1415,
+              "aspirations": 62,
+              "basins": 8
+            }
+          },
+          {
+            "func": "levy13",
+            "seed": 30,
+            "x1": 1.0000000000304254,
+            "x2": 0.9999999997122817,
+            "f": 1.659350159264955e-19,
+            "e": 1.659350159264955e-19,
+            "success": true,
+            "nfe": 9069,
+            "time_s": 0.0984930420000012,
+            "first_success_nfe": 757,
+            "stats": {
+              "sa_uphill": 34,
+              "tabu_uphill": 287,
+              "tabu_rejected": 1378,
+              "aspirations": 52,
+              "basins": 8
+            }
+          }
+        ]
+      },
+      "sa": {
+        "params": {
+          "mode": "sa"
+        },
+        "summary": {
+          "best": 6.767341158931223e-18,
+          "median": 1.744801712895878e-16,
+          "worst": 5.975349303390067e-16,
+          "success_rate": 1.0,
+          "median_log_error": -12.0,
+          "iqr_log_error": 0.0,
+          "mean_time_s": 0.11056300559999996,
+          "median_time_s": 0.1046161670000001,
+          "mean_nfe": 10000.0
+        },
+        "rows": [
+          {
+            "func": "levy13",
+            "seed": 1,
+            "x1": 0.9999999988630055,
+            "x2": 1.000000010534288,
+            "f": 2.2709494452143206e-16,
+            "e": 2.2709494452143206e-16,
+            "success": true,
+            "nfe": 10000,
+            "time_s": 0.11719187499999995,
+            "first_success_nfe": 5236,
+            "stats": {
+              "sa_uphill": 59,
+              "tabu_uphill": 0,
+              "tabu_rejected": 0,
+              "aspirations": 0,
+              "basins": 0
+            }
+          },
+          {
+            "func": "levy13",
+            "seed": 2,
+            "x1": 1.0000000018608368,
+            "x2": 1.0000000111821805,
+            "f": 4.3608441590007173e-16,
+            "e": 4.3608441590007173e-16,
+            "success": true,
+            "nfe": 10000,
+            "time_s": 0.11992616600000006,
+            "first_success_nfe": 8700,
+            "stats": {
+              "sa_uphill": 90,
+              "tabu_uphill": 0,
+              "tabu_rejected": 0,
+              "aspirations": 0,
+              "basins": 0
+            }
+          },
+          {
+            "func": "levy13",
+            "seed": 3,
+            "x1": 1.0000000006560406,
+            "x2": 1.0000000020803395,
+            "f": 4.2988134871220596e-17,
+            "e": 4.2988134871220596e-17,
+            "success": true,
+            "nfe": 10000,
+            "time_s": 0.11848929200000002,
+            "first_success_nfe": 1091,
+            "stats": {
+              "sa_uphill": 60,
+              "tabu_uphill": 0,
+              "tabu_rejected": 0,
+              "aspirations": 0,
+              "basins": 0
+            }
+          },
+          {
+            "func": "levy13",
+            "seed": 4,
+            "x1": 0.999999998618712,
+            "x2": 1.0000000162262666,
+            "f": 4.346766884016394e-16,
+            "e": 4.346766884016394e-16,
+            "success": true,
+            "nfe": 10000,
+            "time_s": 0.1305522079999999,
+            "first_success_nfe": 8691,
+            "stats": {
+              "sa_uphill": 53,
+              "tabu_uphill": 0,
+              "tabu_rejected": 0,
+              "aspirations": 0,
+              "basins": 0
+            }
+          },
+          {
+            "func": "levy13",
+            "seed": 5,
+            "x1": 0.999999998980929,
+            "x2": 1.000000004676311,
+            "f": 1.1515316379191152e-16,
+            "e": 1.1515316379191152e-16,
+            "success": true,
+            "nfe": 10000,
+            "time_s": 0.09568066700000011,
+            "first_success_nfe": 3114,
+            "stats": {
+              "sa_uphill": 64,
+              "tabu_uphill": 0,
+              "tabu_rejected": 0,
+              "aspirations": 0,
+              "basins": 0
+            }
+          },
+          {
+            "func": "levy13",
+            "seed": 6,
+            "x1": 1.000000001257293,
+            "x2": 0.9999999786566498,
+            "f": 5.975349303390067e-16,
+            "e": 5.975349303390067e-16,
+            "success": true,
+            "nfe": 10000,
+            "time_s": 0.1594752500000003,
+            "first_success_nfe": 8761,
+            "stats": {
+              "sa_uphill": 82,
+              "tabu_uphill": 0,
+              "tabu_rejected": 0,
+              "aspirations": 0,
+              "basins": 0
+            }
+          },
+          {
+            "func": "levy13",
+            "seed": 7,
+            "x1": 1.0000000006126193,
+            "x2": 1.000000006778114,
+            "f": 7.965490640170049e-17,
+            "e": 7.965490640170049e-17,
+            "success": true,
+            "nfe": 10000,
+            "time_s": 0.14276491700000005,
+            "first_success_nfe": 8718,
+            "stats": {
+              "sa_uphill": 88,
+              "tabu_uphill": 0,
+              "tabu_rejected": 0,
+              "aspirations": 0,
+              "basins": 0
+            }
+          },
+          {
+            "func": "levy13",
+            "seed": 8,
+            "x1": 0.9999999997527915,
+            "x2": 0.9999999930542991,
+            "f": 5.3732241772743674e-17,
+            "e": 5.3732241772743674e-17,
+            "success": true,
+            "nfe": 10000,
+            "time_s": 0.1149929580000002,
+            "first_success_nfe": 8758,
+            "stats": {
+              "sa_uphill": 73,
+              "tabu_uphill": 0,
+              "tabu_rejected": 0,
+              "aspirations": 0,
+              "basins": 0
+            }
+          },
+          {
+            "func": "levy13",
+            "seed": 9,
+            "x1": 0.9999999998521965,
+            "x2": 0.9999999895873337,
+            "f": 1.1038595819960014e-16,
+            "e": 1.1038595819960014e-16,
+            "success": true,
+            "nfe": 10000,
+            "time_s": 0.1155570410000002,
+            "first_success_nfe": 6869,
+            "stats": {
+              "sa_uphill": 86,
+              "tabu_uphill": 0,
+              "tabu_rejected": 0,
+              "aspirations": 0,
+              "basins": 0
+            }
+          },
+          {
+            "func": "levy13",
+            "seed": 10,
+            "x1": 0.9999999985398471,
+            "x2": 0.9999999889534887,
+            "f": 3.1353958722011515e-16,
+            "e": 3.1353958722011515e-16,
+            "success": true,
+            "nfe": 10000,
+            "time_s": 0.13987704199999929,
+            "first_success_nfe": 6156,
+            "stats": {
+              "sa_uphill": 58,
+              "tabu_uphill": 0,
+              "tabu_rejected": 0,
+              "aspirations": 0,
+              "basins": 0
+            }
+          },
+          {
+            "func": "levy13",
+            "seed": 11,
+            "x1": 0.9999999995645865,
+            "x2": 1.000000001752543,
+            "f": 2.010114848882794e-17,
+            "e": 2.010114848882794e-17,
+            "success": true,
+            "nfe": 10000,
+            "time_s": 0.11814850000000021,
+            "first_success_nfe": 2094,
+            "stats": {
+              "sa_uphill": 77,
+              "tabu_uphill": 0,
+              "tabu_rejected": 0,
+              "aspirations": 0,
+              "basins": 0
+            }
+          },
+          {
+            "func": "levy13",
+            "seed": 12,
+            "x1": 1.0000000002744773,
+            "x2": 1.000000000004487,
+            "f": 6.767341158931223e-18,
+            "e": 6.767341158931223e-18,
+            "success": true,
+            "nfe": 10000,
+            "time_s": 0.12924541699999992,
+            "first_success_nfe": 1106,
+            "stats": {
+              "sa_uphill": 84,
+              "tabu_uphill": 0,
+              "tabu_rejected": 0,
+              "aspirations": 0,
+              "basins": 0
+            }
+          },
+          {
+            "func": "levy13",
+            "seed": 13,
+            "x1": 1.0000000005472955,
+            "x2": 0.9999999910447972,
+            "f": 1.0710158176829869e-16,
+            "e": 1.0710158176829869e-16,
+            "success": true,
+            "nfe": 10000,
+            "time_s": 0.10027820799999976,
+            "first_success_nfe": 8511,
+            "stats": {
+              "sa_uphill": 75,
+              "tabu_uphill": 0,
+              "tabu_rejected": 0,
+              "aspirations": 0,
+              "basins": 0
+            }
+          },
+          {
+            "func": "levy13",
+            "seed": 14,
+            "x1": 1.0000000017741701,
+            "x2": 0.999999983451815,
+            "f": 5.565872729814686e-16,
+            "e": 5.565872729814686e-16,
+            "success": true,
+            "nfe": 10000,
+            "time_s": 0.0983144170000001,
+            "first_success_nfe": 8704,
+            "stats": {
+              "sa_uphill": 84,
+              "tabu_uphill": 0,
+              "tabu_rejected": 0,
+              "aspirations": 0,
+              "basins": 0
+            }
+          },
+          {
+            "func": "levy13",
+            "seed": 15,
+            "x1": 1.0000000010968453,
+            "x2": 1.0000000043233275,
+            "f": 1.2675860084174098e-16,
+            "e": 1.2675860084174098e-16,
+            "success": true,
+            "nfe": 10000,
+            "time_s": 0.10443333400000032,
+            "first_success_nfe": 6064,
+            "stats": {
+              "sa_uphill": 50,
+              "tabu_uphill": 0,
+              "tabu_rejected": 0,
+              "aspirations": 0,
+              "basins": 0
+            }
+          },
+          {
+            "func": "levy13",
+            "seed": 16,
+            "x1": 1.000000000455131,
+            "x2": 1.0000000135546792,
+            "f": 2.023363572716898e-16,
+            "e": 2.023363572716898e-16,
+            "success": true,
+            "nfe": 10000,
+            "time_s": 0.08751641699999979,
+            "first_success_nfe": 7199,
+            "stats": {
+              "sa_uphill": 83,
+              "tabu_uphill": 0,
+              "tabu_rejected": 0,
+              "aspirations": 0,
+              "basins": 0
+            }
+          },
+          {
+            "func": "levy13",
+            "seed": 17,
+            "x1": 0.9999999986597246,
+            "x2": 1.0000000145841188,
+            "f": 3.7405518518667337e-16,
+            "e": 3.7405518518667337e-16,
+            "success": true,
+            "nfe": 10000,
+            "time_s": 0.08833595900000013,
+            "first_success_nfe": 6251,
+            "stats": {
+              "sa_uphill": 112,
+              "tabu_uphill": 0,
+              "tabu_rejected": 0,
+              "aspirations": 0,
+              "basins": 0
+            }
+          },
+          {
+            "func": "levy13",
+            "seed": 18,
+            "x1": 0.9999999988525605,
+            "x2": 1.0000000035981067,
+            "f": 1.3121343857724579e-16,
+            "e": 1.3121343857724579e-16,
+            "success": true,
+            "nfe": 10000,
+            "time_s": 0.13306258300000007,
+            "first_success_nfe": 5269,
+            "stats": {
+              "sa_uphill": 94,
+              "tabu_uphill": 0,
+              "tabu_rejected": 0,
+              "aspirations": 0,
+              "basins": 0
+            }
+          },
+          {
+            "func": "levy13",
+            "seed": 19,
+            "x1": 0.9999999992126014,
+            "x2": 1.000000018222691,
+            "f": 3.8775856116489007e-16,
+            "e": 3.8775856116489007e-16,
+            "success": true,
+            "nfe": 10000,
+            "time_s": 0.1359698749999998,
+            "first_success_nfe": 8215,
+            "stats": {
+              "sa_uphill": 79,
+              "tabu_uphill": 0,
+              "tabu_rejected": 0,
+              "aspirations": 0,
+              "basins": 0
+            }
+          },
+          {
+            "func": "levy13",
+            "seed": 20,
+            "x1": 0.9999999996142606,
+            "x2": 1.0000000034542147,
+            "f": 2.5297314378644207e-17,
+            "e": 2.5297314378644207e-17,
+            "success": true,
+            "nfe": 10000,
+            "time_s": 0.10689437499999954,
+            "first_success_nfe": 8658,
+            "stats": {
+              "sa_uphill": 79,
+              "tabu_uphill": 0,
+              "tabu_rejected": 0,
+              "aspirations": 0,
+              "basins": 0
+            }
+          },
+          {
+            "func": "levy13",
+            "seed": 21,
+            "x1": 0.9999999984577528,
+            "x2": 0.9999999994829558,
+            "f": 2.1392193037082604e-16,
+            "e": 2.1392193037082604e-16,
+            "success": true,
+            "nfe": 10000,
+            "time_s": 0.10197649999999925,
+            "first_success_nfe": 2088,
+            "stats": {
+              "sa_uphill": 95,
+              "tabu_uphill": 0,
+              "tabu_rejected": 0,
+              "aspirations": 0,
+              "basins": 0
+            }
+          },
+          {
+            "func": "levy13",
+            "seed": 22,
+            "x1": 1.0000000019247217,
+            "x2": 0.9999999951982463,
+            "f": 3.5582367533054614e-16,
+            "e": 3.5582367533054614e-16,
+            "success": true,
+            "nfe": 10000,
+            "time_s": 0.09193133299999978,
+            "first_success_nfe": 1036,
+            "stats": {
+              "sa_uphill": 64,
+              "tabu_uphill": 0,
+              "tabu_rejected": 0,
+              "aspirations": 0,
+              "basins": 0
+            }
+          },
+          {
+            "func": "levy13",
+            "seed": 23,
+            "x1": 0.9999999986013286,
+            "x2": 1.0000000041581494,
+            "f": 1.930160573055689e-16,
+            "e": 1.930160573055689e-16,
+            "success": true,
+            "nfe": 10000,
+            "time_s": 0.10479899999999986,
+            "first_success_nfe": 1766,
+            "stats": {
+              "sa_uphill": 81,
+              "tabu_uphill": 0,
+              "tabu_rejected": 0,
+              "aspirations": 0,
+              "basins": 0
+            }
+          },
+          {
+            "func": "levy13",
+            "seed": 24,
+            "x1": 1.0000000008374759,
+            "x2": 0.9999999879022088,
+            "f": 2.093577543439507e-16,
+            "e": 2.093577543439507e-16,
+            "success": true,
+            "nfe": 10000,
+            "time_s": 0.09588966700000157,
+            "first_success_nfe": 8709,
+            "stats": {
+              "sa_uphill": 66,
+              "tabu_uphill": 0,
+              "tabu_rejected": 0,
+              "aspirations": 0,
+              "basins": 0
+            }
+          },
+          {
+            "func": "levy13",
+            "seed": 25,
+            "x1": 1.0000000008325927,
+            "x2": 0.9999999816872123,
+            "f": 3.976268281898709e-16,
+            "e": 3.976268281898709e-16,
+            "success": true,
+            "nfe": 10000,
+            "time_s": 0.09621362500000075,
+            "first_success_nfe": 8752,
+            "stats": {
+              "sa_uphill": 71,
+              "tabu_uphill": 0,
+              "tabu_rejected": 0,
+              "aspirations": 0,
+              "basins": 0
+            }
+          },
+          {
+            "func": "levy13",
+            "seed": 26,
+            "x1": 0.9999999992680699,
+            "x2": 0.9999999895366649,
+            "f": 1.5760336488782686e-16,
+            "e": 1.5760336488782686e-16,
+            "success": true,
+            "nfe": 10000,
+            "time_s": 0.09161691599999955,
+            "first_success_nfe": 4058,
+            "stats": {
+              "sa_uphill": 68,
+              "tabu_uphill": 0,
+              "tabu_rejected": 0,
+              "aspirations": 0,
+              "basins": 0
+            }
+          },
+          {
+            "func": "levy13",
+            "seed": 27,
+            "x1": 0.9999999995250537,
+            "x2": 0.9999999930132297,
+            "f": 6.907746582727626e-17,
+            "e": 6.907746582727626e-17,
+            "success": true,
+            "nfe": 10000,
+            "time_s": 0.09289679199999945,
+            "first_success_nfe": 8744,
+            "stats": {
+              "sa_uphill": 71,
+              "tabu_uphill": 0,
+              "tabu_rejected": 0,
+              "aspirations": 0,
+              "basins": 0
+            }
+          },
+          {
+            "func": "levy13",
+            "seed": 28,
+            "x1": 0.9999999991546371,
+            "x2": 0.9999999891143077,
+            "f": 1.8269174089349021e-16,
+            "e": 1.8269174089349021e-16,
+            "success": true,
+            "nfe": 10000,
+            "time_s": 0.09476554199999931,
+            "first_success_nfe": 8725,
+            "stats": {
+              "sa_uphill": 61,
+              "tabu_uphill": 0,
+              "tabu_rejected": 0,
+              "aspirations": 0,
+              "basins": 0
+            }
+          },
+          {
+            "func": "levy13",
+            "seed": 29,
+            "x1": 0.9999999995806057,
+            "x2": 1.0000000055942433,
+            "f": 4.7095271780531625e-17,
+            "e": 4.7095271780531625e-17,
+            "success": true,
+            "nfe": 10000,
+            "time_s": 0.09333941699999926,
+            "first_success_nfe": 8753,
+            "stats": {
+              "sa_uphill": 66,
+              "tabu_uphill": 0,
+              "tabu_rejected": 0,
+              "aspirations": 0,
+              "basins": 0
+            }
+          },
+          {
+            "func": "levy13",
+            "seed": 30,
+            "x1": 0.9999999990818296,
+            "x2": 0.9999999904846657,
+            "f": 1.6626860168568538e-16,
+            "e": 1.6626860168568538e-16,
+            "success": true,
+            "nfe": 10000,
+            "time_s": 0.09675487500000024,
+            "first_success_nfe": 5203,
+            "stats": {
+              "sa_uphill": 68,
+              "tabu_uphill": 0,
+              "tabu_rejected": 0,
+              "aspirations": 0,
+              "basins": 0
+            }
+          }
+        ]
+      },
+      "tabu": {
+        "params": {
+          "mode": "tabu"
+        },
+        "summary": {
+          "best": 8.467418941393593e-21,
+          "median": 1.910116024268347e-19,
+          "worst": 1.8510216192057354e-18,
+          "success_rate": 1.0,
+          "median_log_error": -12.0,
+          "iqr_log_error": 0.0,
+          "mean_time_s": 0.11664557640000002,
+          "median_time_s": 0.11289220849999992,
+          "mean_nfe": 8784.9
+        },
+        "rows": [
+          {
+            "func": "levy13",
+            "seed": 1,
+            "x1": 0.9999999999587921,
+            "x2": 1.0000000001767777,
+            "f": 1.837843059186837e-19,
+            "e": 1.837843059186837e-19,
+            "success": true,
+            "nfe": 8796,
+            "time_s": 0.10902170900000008,
+            "first_success_nfe": 1334,
+            "stats": {
+              "sa_uphill": 0,
+              "tabu_uphill": 485,
+              "tabu_rejected": 1540,
+              "aspirations": 94,
+              "basins": 8
+            }
+          },
+          {
+            "func": "levy13",
+            "seed": 2,
+            "x1": 1.0000000000028582,
+            "x2": 0.9999999998214992,
+            "f": 3.259625853247187e-20,
+            "e": 3.259625853247187e-20,
+            "success": true,
+            "nfe": 8555,
+            "time_s": 0.11976833399999998,
+            "first_success_nfe": 1372,
+            "stats": {
+              "sa_uphill": 0,
+              "tabu_uphill": 479,
+              "tabu_rejected": 1477,
+              "aspirations": 88,
+              "basins": 8
+            }
+          },
+          {
+            "func": "levy13",
+            "seed": 3,
+            "x1": 0.9999999999795222,
+            "x2": 1.0000000002774811,
+            "f": 1.1466403813492875e-19,
+            "e": 1.1466403813492875e-19,
+            "success": true,
+            "nfe": 8717,
+            "time_s": 0.13021941699999995,
+            "first_success_nfe": 1272,
+            "stats": {
+              "sa_uphill": 0,
+              "tabu_uphill": 478,
+              "tabu_rejected": 1373,
+              "aspirations": 99,
+              "basins": 8
+            }
+          },
+          {
+            "func": "levy13",
+            "seed": 4,
+            "x1": 1.0000000000322888,
+            "x2": 0.9999999992166693,
+            "f": 7.072568785021309e-19,
+            "e": 7.072568785021309e-19,
+            "success": true,
+            "nfe": 8875,
+            "time_s": 0.10697654199999995,
+            "first_success_nfe": 298,
+            "stats": {
+              "sa_uphill": 0,
+              "tabu_uphill": 458,
+              "tabu_rejected": 1672,
+              "aspirations": 116,
+              "basins": 8
+            }
+          },
+          {
+            "func": "levy13",
+            "seed": 5,
+            "x1": 1.0000000000419877,
+            "x2": 1.0000000001738876,
+            "f": 1.8859732244033852e-19,
+            "e": 1.8859732244033852e-19,
+            "success": true,
+            "nfe": 8875,
+            "time_s": 0.10550341700000043,
+            "first_success_nfe": 1297,
+            "stats": {
+              "sa_uphill": 0,
+              "tabu_uphill": 506,
+              "tabu_rejected": 1716,
+              "aspirations": 129,
+              "basins": 8
+            }
+          },
+          {
+            "func": "levy13",
+            "seed": 6,
+            "x1": 0.9999999999050004,
+            "x2": 1.0000000001743299,
+            "f": 8.4106733996390465e-19,
+            "e": 8.4106733996390465e-19,
+            "success": true,
+            "nfe": 8673,
+            "time_s": 0.12826870899999987,
+            "first_success_nfe": 1322,
+            "stats": {
+              "sa_uphill": 0,
+              "tabu_uphill": 481,
+              "tabu_rejected": 1456,
+              "aspirations": 95,
+              "basins": 8
+            }
+          },
+          {
+            "func": "levy13",
+            "seed": 7,
+            "x1": 0.999999999963233,
+            "x2": 1.000000000089166,
+            "f": 1.2937947343158816e-19,
+            "e": 1.2937947343158816e-19,
+            "success": true,
+            "nfe": 8845,
+            "time_s": 0.14122583300000002,
+            "first_success_nfe": 292,
+            "stats": {
+              "sa_uphill": 0,
+              "tabu_uphill": 477,
+              "tabu_rejected": 1509,
+              "aspirations": 110,
+              "basins": 8
+            }
+          },
+          {
+            "func": "levy13",
+            "seed": 8,
+            "x1": 1.000000000094257,
+            "x2": 1.000000000698833,
+            "f": 1.2864214570596908e-18,
+            "e": 1.2864214570596908e-18,
+            "success": true,
+            "nfe": 8875,
+            "time_s": 0.11382495799999992,
+            "first_success_nfe": 339,
+            "stats": {
+              "sa_uphill": 0,
+              "tabu_uphill": 474,
+              "tabu_rejected": 1471,
+              "aspirations": 120,
+              "basins": 8
+            }
+          },
+          {
+            "func": "levy13",
+            "seed": 9,
+            "x1": 0.9999999999905214,
+            "x2": 0.9999999999800799,
+            "f": 8.467418941393593e-21,
+            "e": 8.467418941393593e-21,
+            "success": true,
+            "nfe": 8811,
+            "time_s": 0.12546866700000026,
+            "first_success_nfe": 284,
+            "stats": {
+              "sa_uphill": 0,
+              "tabu_uphill": 495,
+              "tabu_rejected": 1543,
+              "aspirations": 107,
+              "basins": 8
+            }
+          },
+          {
+            "func": "levy13",
+            "seed": 10,
+            "x1": 1.0000000001260378,
+            "x2": 1.000000000651216,
+            "f": 1.8510216192057354e-18,
+            "e": 1.8510216192057354e-18,
+            "success": true,
+            "nfe": 8875,
+            "time_s": 0.17457329199999982,
+            "first_success_nfe": 1346,
+            "stats": {
+              "sa_uphill": 0,
+              "tabu_uphill": 486,
+              "tabu_rejected": 1553,
+              "aspirations": 134,
+              "basins": 8
+            }
+          },
+          {
+            "func": "levy13",
+            "seed": 11,
+            "x1": 0.999999999944233,
+            "x2": 0.9999999996552731,
+            "f": 3.9819208182815563e-19,
+            "e": 3.9819208182815563e-19,
+            "success": true,
+            "nfe": 8594,
+            "time_s": 0.1909578329999997,
+            "first_success_nfe": 252,
+            "stats": {
+              "sa_uphill": 0,
+              "tabu_uphill": 484,
+              "tabu_rejected": 1423,
+              "aspirations": 87,
+              "basins": 8
+            }
+          },
+          {
+            "func": "levy13",
+            "seed": 12,
+            "x1": 1.0000000000390017,
+            "x2": 0.9999999997622222,
+            "f": 1.9317531716594682e-19,
+            "e": 1.9317531716594682e-19,
+            "success": true,
+            "nfe": 8799,
+            "time_s": 0.12220670799999933,
+            "first_success_nfe": 252,
+            "stats": {
+              "sa_uphill": 0,
+              "tabu_uphill": 489,
+              "tabu_rejected": 1513,
+              "aspirations": 120,
+              "basins": 8
+            }
+          },
+          {
+            "func": "levy13",
+            "seed": 13,
+            "x1": 0.9999999999763602,
+            "x2": 1.0000000001717062,
+            "f": 7.968166499636897e-20,
+            "e": 7.968166499636897e-20,
+            "success": true,
+            "nfe": 8843,
+            "time_s": 0.1066382499999996,
+            "first_success_nfe": 2404,
+            "stats": {
+              "sa_uphill": 0,
+              "tabu_uphill": 494,
+              "tabu_rejected": 1625,
+              "aspirations": 109,
+              "basins": 8
+            }
+          },
+          {
+            "func": "levy13",
+            "seed": 14,
+            "x1": 0.9999999999772768,
+            "x2": 1.0000000000082991,
+            "f": 4.64503659280655e-20,
+            "e": 4.64503659280655e-20,
+            "success": true,
+            "nfe": 8807,
+            "time_s": 0.1159715410000004,
+            "first_success_nfe": 350,
+            "stats": {
+              "sa_uphill": 0,
+              "tabu_uphill": 472,
+              "tabu_rejected": 1452,
+              "aspirations": 103,
+              "basins": 8
+            }
+          },
+          {
+            "func": "levy13",
+            "seed": 15,
+            "x1": 0.9999999999763887,
+            "x2": 1.0000000005756267,
+            "f": 3.8142389878956844e-19,
+            "e": 3.8142389878956844e-19,
+            "success": true,
+            "nfe": 8768,
+            "time_s": 0.13781337500000035,
+            "first_success_nfe": 376,
+            "stats": {
+              "sa_uphill": 0,
+              "tabu_uphill": 480,
+              "tabu_rejected": 1557,
+              "aspirations": 124,
+              "basins": 8
+            }
+          },
+          {
+            "func": "levy13",
+            "seed": 16,
+            "x1": 0.999999999976378,
+            "x2": 1.0000000001954774,
+            "f": 8.833484601840541e-20,
+            "e": 8.833484601840541e-20,
+            "success": true,
+            "nfe": 8820,
+            "time_s": 0.09773124999999983,
+            "first_success_nfe": 368,
+            "stats": {
+              "sa_uphill": 0,
+              "tabu_uphill": 461,
+              "tabu_rejected": 1516,
+              "aspirations": 124,
+              "basins": 8
+            }
+          },
+          {
+            "func": "levy13",
+            "seed": 17,
+            "x1": 1.0000000000624496,
+            "x2": 1.0000000008539764,
+            "f": 1.0795931664521863e-18,
+            "e": 1.0795931664521863e-18,
+            "success": true,
+            "nfe": 8875,
+            "time_s": 0.09837512499999956,
+            "first_success_nfe": 1323,
+            "stats": {
+              "sa_uphill": 0,
+              "tabu_uphill": 498,
+              "tabu_rejected": 1593,
+              "aspirations": 101,
+              "basins": 8
+            }
+          },
+          {
+            "func": "levy13",
+            "seed": 18,
+            "x1": 0.9999999999388383,
+            "x2": 1.0000000002971774,
+            "f": 4.243348273064283e-19,
+            "e": 4.243348273064283e-19,
+            "success": true,
+            "nfe": 8752,
+            "time_s": 0.1043257500000001,
+            "first_success_nfe": 315,
+            "stats": {
+              "sa_uphill": 0,
+              "tabu_uphill": 471,
+              "tabu_rejected": 1397,
+              "aspirations": 90,
+              "basins": 8
+            }
+          },
+          {
+            "func": "levy13",
+            "seed": 19,
+            "x1": 1.00000000002699,
+            "x2": 0.9999999994477555,
+            "f": 3.704085128074995e-19,
+            "e": 3.704085128074995e-19,
+            "success": true,
+            "nfe": 8769,
+            "time_s": 0.11244229199999989,
+            "first_success_nfe": 337,
+            "stats": {
+              "sa_uphill": 0,
+              "tabu_uphill": 482,
+              "tabu_rejected": 1456,
+              "aspirations": 94,
+              "basins": 8
+            }
+          },
+          {
+            "func": "levy13",
+            "seed": 20,
+            "x1": 0.9999999999993854,
+            "x2": 1.0000000004618457,
+            "f": 2.1333536288242056e-19,
+            "e": 2.1333536288242056e-19,
+            "success": true,
+            "nfe": 8865,
+            "time_s": 0.10358612499999964,
+            "first_success_nfe": 225,
+            "stats": {
+              "sa_uphill": 0,
+              "tabu_uphill": 499,
+              "tabu_rejected": 1726,
+              "aspirations": 122,
+              "basins": 8
+            }
+          },
+          {
+            "func": "levy13",
+            "seed": 21,
+            "x1": 1.0000000000196625,
+            "x2": 1.0000000004060219,
+            "f": 1.9958184952717853e-19,
+            "e": 1.9958184952717853e-19,
+            "success": true,
+            "nfe": 8875,
+            "time_s": 0.11334212499999996,
+            "first_success_nfe": 289,
+            "stats": {
+              "sa_uphill": 0,
+              "tabu_uphill": 478,
+              "tabu_rejected": 1612,
+              "aspirations": 113,
+              "basins": 8
+            }
+          },
+          {
+            "func": "levy13",
+            "seed": 22,
+            "x1": 0.9999999999724096,
+            "x2": 0.9999999999695302,
+            "f": 6.930739425358492e-20,
+            "e": 6.930739425358492e-20,
+            "success": true,
+            "nfe": 8763,
+            "time_s": 0.12214033399999913,
+            "first_success_nfe": 270,
+            "stats": {
+              "sa_uphill": 0,
+              "tabu_uphill": 490,
+              "tabu_rejected": 1483,
+              "aspirations": 107,
+              "basins": 8
+            }
+          },
+          {
+            "func": "levy13",
+            "seed": 23,
+            "x1": 0.9999999999788951,
+            "x2": 1.0000000003857945,
+            "f": 1.888478876877226e-19,
+            "e": 1.888478876877226e-19,
+            "success": true,
+            "nfe": 8838,
+            "time_s": 0.11517679200000153,
+            "first_success_nfe": 248,
+            "stats": {
+              "sa_uphill": 0,
+              "tabu_uphill": 495,
+              "tabu_rejected": 1519,
+              "aspirations": 88,
+              "basins": 8
+            }
+          },
+          {
+            "func": "levy13",
+            "seed": 24,
+            "x1": 0.999999999958467,
+            "x2": 1.0000000003873488,
+            "f": 3.049894789012981e-19,
+            "e": 3.049894789012981e-19,
+            "success": true,
+            "nfe": 8815,
+            "time_s": 0.09729349999999926,
+            "first_success_nfe": 1222,
+            "stats": {
+              "sa_uphill": 0,
+              "tabu_uphill": 476,
+              "tabu_rejected": 1486,
+              "aspirations": 113,
+              "basins": 8
+            }
+          },
+          {
+            "func": "levy13",
+            "seed": 25,
+            "x1": 0.9999999999850484,
+            "x2": 1.000000000113804,
+            "f": 3.303201257854237e-20,
+            "e": 3.303201257854237e-20,
+            "success": true,
+            "nfe": 8751,
+            "time_s": 0.09364179099999959,
+            "first_success_nfe": 287,
+            "stats": {
+              "sa_uphill": 0,
+              "tabu_uphill": 503,
+              "tabu_rejected": 1505,
+              "aspirations": 95,
+              "basins": 8
+            }
+          },
+          {
+            "func": "levy13",
+            "seed": 26,
+            "x1": 0.9999999999947757,
+            "x2": 1.0000000002291731,
+            "f": 5.497193828150076e-20,
+            "e": 5.497193828150076e-20,
+            "success": true,
+            "nfe": 8536,
+            "time_s": 0.09942891600000081,
+            "first_success_nfe": 2416,
+            "stats": {
+              "sa_uphill": 0,
+              "tabu_uphill": 504,
+              "tabu_rejected": 1513,
+              "aspirations": 101,
+              "basins": 8
+            }
+          },
+          {
+            "func": "levy13",
+            "seed": 27,
+            "x1": 1.000000000009889,
+            "x2": 1.0000000002522587,
+            "f": 7.241874657442509e-20,
+            "e": 7.241874657442509e-20,
+            "success": true,
+            "nfe": 8875,
+            "time_s": 0.09894524999999987,
+            "first_success_nfe": 266,
+            "stats": {
+              "sa_uphill": 0,
+              "tabu_uphill": 467,
+              "tabu_rejected": 1451,
+              "aspirations": 101,
+              "basins": 8
+            }
+          },
+          {
+            "func": "levy13",
+            "seed": 28,
+            "x1": 1.0000000000091411,
+            "x2": 1.0000000003565859,
+            "f": 1.3465937332065186e-19,
+            "e": 1.3465937332065186e-19,
+            "success": true,
+            "nfe": 8836,
+            "time_s": 0.10072779100000062,
+            "first_success_nfe": 1507,
+            "stats": {
+              "sa_uphill": 0,
+              "tabu_uphill": 493,
+              "tabu_rejected": 1629,
+              "aspirations": 118,
+              "basins": 8
+            }
+          },
+          {
+            "func": "levy13",
+            "seed": 29,
+            "x1": 0.9999999999266347,
+            "x2": 0.9999999998329159,
+            "f": 5.1140626666352525e-19,
+            "e": 5.1140626666352525e-19,
+            "success": true,
+            "nfe": 8619,
+            "time_s": 0.09789016600000089,
+            "first_success_nfe": 305,
+            "stats": {
+              "sa_uphill": 0,
+              "tabu_uphill": 467,
+              "tabu_rejected": 1413,
+              "aspirations": 110,
+              "basins": 8
+            }
+          },
+          {
+            "func": "levy13",
+            "seed": 30,
+            "x1": 1.000000000098309,
+            "x2": 0.9999999993635562,
+            "f": 1.2731988882115989e-18,
+            "e": 1.2731988882115989e-18,
+            "success": true,
+            "nfe": 8850,
+            "time_s": 0.11588150000000041,
+            "first_success_nfe": 338,
+            "stats": {
+              "sa_uphill": 0,
+              "tabu_uphill": 496,
+              "tabu_rejected": 1372,
+              "aspirations": 96,
+              "basins": 8
+            }
+          }
+        ]
+      }
+    }
+  },
+  "step_sensitivity": {
+    "1e-06": {
+      "params": {
+        "local_step": 1e-06
+      },
+      "summary": {
+        "best": 3.169733311181413e-20,
+        "median": 7.40668065005512e-05,
+        "worst": 0.002317555214817853,
+        "success_rate": 0.5333333333333333,
+        "median_log_error": -4.132146948159086,
+        "iqr_log_error": 1.4674448579362216,
+        "mean_time_s": 0.11023030133333327,
+        "median_time_s": 0.10545668700000022,
+        "mean_nfe": 9945.233333333334
+      },
+      "rows": [
+        {
+          "func": "levy13",
+          "seed": 1,
+          "x1": 1.0000000000115623,
+          "x2": 0.9875875610280165,
+          "f": 0.0001550038477994758,
+          "e": 0.0001550038477994758,
+          "success": false,
+          "nfe": 10000,
+          "time_s": 0.106535292,
+          "first_success_nfe": null,
+          "stats": {
+            "sa_uphill": 34,
+            "tabu_uphill": 4,
+            "tabu_rejected": 1624,
+            "aspirations": 0,
+            "basins": 8
+          }
+        },
+        {
+          "func": "levy13",
+          "seed": 2,
+          "x1": 1.0000000000034142,
+          "x2": 1.0000000001750724,
+          "f": 3.169733311181413e-20,
+          "e": 3.169733311181413e-20,
+          "success": true,
+          "nfe": 9079,
+          "time_s": 0.08984629099999997,
+          "first_success_nfe": 696,
+          "stats": {
+            "sa_uphill": 45,
+            "tabu_uphill": 28,
+            "tabu_rejected": 1514,
+            "aspirations": 5,
+            "basins": 8
+          }
+        },
+        {
+          "func": "levy13",
+          "seed": 3,
+          "x1": 1.0000000000321272,
+          "x2": 1.0165833934426516,
+          "f": 0.0002779838977661923,
+          "e": 0.0002779838977661923,
+          "success": false,
+          "nfe": 10000,
+          "time_s": 0.10704975000000005,
+          "first_success_nfe": null,
+          "stats": {
+            "sa_uphill": 33,
+            "tabu_uphill": 3,
+            "tabu_rejected": 1639,
+            "aspirations": 0,
+            "basins": 8
+          }
+        },
+        {
+          "func": "levy13",
+          "seed": 4,
+          "x1": 0.9999974095159718,
+          "x2": 1.0099938179201153,
+          "f": 0.00010027029099669372,
+          "e": 0.00010027029099669372,
+          "success": false,
+          "nfe": 10000,
+          "time_s": 0.10531545799999975,
+          "first_success_nfe": null,
+          "stats": {
+            "sa_uphill": 32,
+            "tabu_uphill": 2,
+            "tabu_rejected": 1654,
+            "aspirations": 0,
+            "basins": 8
+          }
+        },
+        {
+          "func": "levy13",
+          "seed": 5,
+          "x1": 1.0000000008471197,
+          "x2": 0.9966571872298715,
+          "f": 1.1179326048970714e-05,
+          "e": 1.1179326048970714e-05,
+          "success": true,
+          "nfe": 10000,
+          "time_s": 0.10723379200000016,
+          "first_success_nfe": 523,
+          "stats": {
+            "sa_uphill": 24,
+            "tabu_uphill": 4,
+            "tabu_rejected": 1743,
+            "aspirations": 0,
+            "basins": 8
+          }
+        },
+        {
+          "func": "levy13",
+          "seed": 6,
+          "x1": 0.999999999954218,
+          "x2": 1.0013045889663115,
+          "f": 1.7020667232981821e-06,
+          "e": 1.7020667232981821e-06,
+          "success": true,
+          "nfe": 10000,
+          "time_s": 0.10804233300000021,
+          "first_success_nfe": 8541,
+          "stats": {
+            "sa_uphill": 38,
+            "tabu_uphill": 3,
+            "tabu_rejected": 1723,
+            "aspirations": 0,
+            "basins": 8
+          }
+        },
+        {
+          "func": "levy13",
+          "seed": 7,
+          "x1": 0.9999988816250589,
+          "x2": 1.0140750223500206,
+          "f": 0.00019965170500948259,
+          "e": 0.00019965170500948259,
+          "success": false,
+          "nfe": 10000,
+          "time_s": 0.10007795800000041,
+          "first_success_nfe": null,
+          "stats": {
+            "sa_uphill": 45,
+            "tabu_uphill": 6,
+            "tabu_rejected": 1629,
+            "aspirations": 0,
+            "basins": 8
+          }
+        },
+        {
+          "func": "levy13",
+          "seed": 8,
+          "x1": 1.0000001646356864,
+          "x2": 0.9891299706157817,
+          "f": 0.00011870785101919077,
+          "e": 0.00011870785101919077,
+          "success": false,
+          "nfe": 10000,
+          "time_s": 0.10021991599999946,
+          "first_success_nfe": null,
+          "stats": {
+            "sa_uphill": 39,
+            "tabu_uphill": 5,
+            "tabu_rejected": 1632,
+            "aspirations": 1,
+            "basins": 8
+          }
+        },
+        {
+          "func": "levy13",
+          "seed": 9,
+          "x1": 0.9999999801300969,
+          "x2": 1.0462768207089574,
+          "f": 0.002317555214817853,
+          "e": 0.002317555214817853,
+          "success": false,
+          "nfe": 10000,
+          "time_s": 0.10073316700000046,
+          "first_success_nfe": null,
+          "stats": {
+            "sa_uphill": 48,
+            "tabu_uphill": 5,
+            "tabu_rejected": 1603,
+            "aspirations": 0,
+            "basins": 8
+          }
+        },
+        {
+          "func": "levy13",
+          "seed": 10,
+          "x1": 0.999999578431872,
+          "x2": 0.9982159369555781,
+          "f": 3.183296838931241e-06,
+          "e": 3.183296838931241e-06,
+          "success": true,
+          "nfe": 10000,
+          "time_s": 0.10357575000000008,
+          "first_success_nfe": 629,
+          "stats": {
+            "sa_uphill": 34,
+            "tabu_uphill": 6,
+            "tabu_rejected": 1741,
+            "aspirations": 0,
+            "basins": 8
+          }
+        },
+        {
+          "func": "levy13",
+          "seed": 11,
+          "x1": 1.0000000000008153,
+          "x2": 1.0000000005138645,
+          "f": 2.641164420307229e-19,
+          "e": 2.641164420307229e-19,
+          "success": true,
+          "nfe": 9659,
+          "time_s": 0.09489204200000056,
+          "first_success_nfe": 2914,
+          "stats": {
+            "sa_uphill": 42,
+            "tabu_uphill": 38,
+            "tabu_rejected": 1630,
+            "aspirations": 10,
+            "basins": 8
+          }
+        },
+        {
+          "func": "levy13",
+          "seed": 12,
+          "x1": 1.0000000011142376,
+          "x2": 0.9967610082895391,
+          "f": 1.0495411793774451e-05,
+          "e": 1.0495411793774451e-05,
+          "success": true,
+          "nfe": 10000,
+          "time_s": 0.10064204099999952,
+          "first_success_nfe": 623,
+          "stats": {
+            "sa_uphill": 50,
+            "tabu_uphill": 5,
+            "tabu_rejected": 1702,
+            "aspirations": 0,
+            "basins": 8
+          }
+        },
+        {
+          "func": "levy13",
+          "seed": 13,
+          "x1": 0.9999997056094436,
+          "x2": 1.0078298534831518,
+          "f": 6.145487331253993e-05,
+          "e": 6.145487331253993e-05,
+          "success": true,
+          "nfe": 10000,
+          "time_s": 0.10378029199999972,
+          "first_success_nfe": 9460,
+          "stats": {
+            "sa_uphill": 42,
+            "tabu_uphill": 6,
+            "tabu_rejected": 1742,
+            "aspirations": 1,
+            "basins": 8
+          }
+        },
+        {
+          "func": "levy13",
+          "seed": 14,
+          "x1": 1.000334042541379,
+          "x2": 1.006839104261763,
+          "f": 5.6883324033006025e-05,
+          "e": 5.6883324033006025e-05,
+          "success": true,
+          "nfe": 10000,
+          "time_s": 0.15802899999999998,
+          "first_success_nfe": 9781,
+          "stats": {
+            "sa_uphill": 43,
+            "tabu_uphill": 2,
+            "tabu_rejected": 1674,
+            "aspirations": 0,
+            "basins": 8
+          }
+        },
+        {
+          "func": "levy13",
+          "seed": 15,
+          "x1": 1.0000000000317186,
+          "x2": 1.0117865630258613,
+          "f": 0.0001396835944874337,
+          "e": 0.0001396835944874337,
+          "success": false,
+          "nfe": 10000,
+          "time_s": 0.11039104199999983,
+          "first_success_nfe": null,
+          "stats": {
+            "sa_uphill": 28,
+            "tabu_uphill": 3,
+            "tabu_rejected": 1649,
+            "aspirations": 0,
+            "basins": 8
+          }
+        },
+        {
+          "func": "levy13",
+          "seed": 16,
+          "x1": 1.0000000000352767,
+          "x2": 0.9827667270060747,
+          "f": 0.00030045412737307473,
+          "e": 0.00030045412737307473,
+          "success": false,
+          "nfe": 10000,
+          "time_s": 0.11581379199999908,
+          "first_success_nfe": null,
+          "stats": {
+            "sa_uphill": 45,
+            "tabu_uphill": 3,
+            "tabu_rejected": 1721,
+            "aspirations": 0,
+            "basins": 8
+          }
+        },
+        {
+          "func": "levy13",
+          "seed": 17,
+          "x1": 0.9999999999945111,
+          "x2": 0.9952021207163355,
+          "f": 2.3040559058970832e-05,
+          "e": 2.3040559058970832e-05,
+          "success": true,
+          "nfe": 10000,
+          "time_s": 0.10176029099999973,
+          "first_success_nfe": 877,
+          "stats": {
+            "sa_uphill": 61,
+            "tabu_uphill": 6,
+            "tabu_rejected": 1528,
+            "aspirations": 0,
+            "basins": 8
+          }
+        },
+        {
+          "func": "levy13",
+          "seed": 18,
+          "x1": 1.0000000002564775,
+          "x2": 0.9845828108282451,
+          "f": 0.0002399131429388516,
+          "e": 0.0002399131429388516,
+          "success": false,
+          "nfe": 10000,
+          "time_s": 0.16370983300000042,
+          "first_success_nfe": null,
+          "stats": {
+            "sa_uphill": 53,
+            "tabu_uphill": 3,
+            "tabu_rejected": 1766,
+            "aspirations": 1,
+            "basins": 8
+          }
+        },
+        {
+          "func": "levy13",
+          "seed": 19,
+          "x1": 0.9999999999948805,
+          "x2": 0.9910286106301918,
+          "f": 8.074129641330833e-05,
+          "e": 8.074129641330833e-05,
+          "success": true,
+          "nfe": 10000,
+          "time_s": 0.12806554099999978,
+          "first_success_nfe": 9492,
+          "stats": {
+            "sa_uphill": 47,
+            "tabu_uphill": 5,
+            "tabu_rejected": 1618,
+            "aspirations": 1,
+            "basins": 8
+          }
+        },
+        {
+          "func": "levy13",
+          "seed": 20,
+          "x1": 1.0000000001847749,
+          "x2": 1.0000000005127685,
+          "f": 3.329762194575886e-18,
+          "e": 3.329762194575886e-18,
+          "success": true,
+          "nfe": 9619,
+          "time_s": 0.09683995800000034,
+          "first_success_nfe": 506,
+          "stats": {
+            "sa_uphill": 35,
+            "tabu_uphill": 30,
+            "tabu_rejected": 1693,
+            "aspirations": 8,
+            "basins": 8
+          }
+        },
+        {
+          "func": "levy13",
+          "seed": 21,
+          "x1": 0.9999999999758842,
+          "x2": 1.001148330111171,
+          "f": 1.318730690850515e-06,
+          "e": 1.318730690850515e-06,
+          "success": true,
+          "nfe": 10000,
+          "time_s": 0.10200308399999969,
+          "first_success_nfe": 6998,
+          "stats": {
+            "sa_uphill": 47,
+            "tabu_uphill": 5,
+            "tabu_rejected": 1696,
+            "aspirations": 1,
+            "basins": 8
+          }
+        },
+        {
+          "func": "levy13",
+          "seed": 22,
+          "x1": 0.9999999999941007,
+          "x2": 1.0006968260929696,
+          "f": 4.855759118048461e-07,
+          "e": 4.855759118048461e-07,
+          "success": true,
+          "nfe": 10000,
+          "time_s": 0.10779679200000025,
+          "first_success_nfe": 1638,
+          "stats": {
+            "sa_uphill": 31,
+            "tabu_uphill": 4,
+            "tabu_rejected": 1556,
+            "aspirations": 0,
+            "basins": 8
+          }
+        },
+        {
+          "func": "levy13",
+          "seed": 23,
+          "x1": 0.9999999999883329,
+          "x2": 0.9918015781314189,
+          "f": 6.739231658779409e-05,
+          "e": 6.739231658779409e-05,
+          "success": true,
+          "nfe": 10000,
+          "time_s": 0.11203654200000024,
+          "first_success_nfe": 9102,
+          "stats": {
+            "sa_uphill": 40,
+            "tabu_uphill": 3,
+            "tabu_rejected": 1562,
+            "aspirations": 0,
+            "basins": 8
+          }
+        },
+        {
+          "func": "levy13",
+          "seed": 24,
+          "x1": 0.9999999999730527,
+          "x2": 1.0029201810262212,
+          "f": 8.530327676655305e-06,
+          "e": 8.530327676655305e-06,
+          "success": true,
+          "nfe": 10000,
+          "time_s": 0.151897374999999,
+          "first_success_nfe": 7982,
+          "stats": {
+            "sa_uphill": 35,
+            "tabu_uphill": 4,
+            "tabu_rejected": 1706,
+            "aspirations": 2,
+            "basins": 8
+          }
+        },
+        {
+          "func": "levy13",
+          "seed": 25,
+          "x1": 1.0000000056073173,
+          "x2": 0.9978655009404935,
+          "f": 4.556905678631095e-06,
+          "e": 4.556905678631095e-06,
+          "success": true,
+          "nfe": 10000,
+          "time_s": 0.11404516700000045,
+          "first_success_nfe": 432,
+          "stats": {
+            "sa_uphill": 29,
+            "tabu_uphill": 4,
+            "tabu_rejected": 1603,
+            "aspirations": 0,
+            "basins": 8
+          }
+        },
+        {
+          "func": "levy13",
+          "seed": 26,
+          "x1": 1.0000002841762452,
+          "x2": 1.0119977845437091,
+          "f": 0.00014476331293220636,
+          "e": 0.00014476331293220636,
+          "success": false,
+          "nfe": 10000,
+          "time_s": 0.10559791600000068,
+          "first_success_nfe": null,
+          "stats": {
+            "sa_uphill": 47,
+            "tabu_uphill": 4,
+            "tabu_rejected": 1677,
+            "aspirations": 1,
+            "basins": 8
+          }
+        },
+        {
+          "func": "levy13",
+          "seed": 27,
+          "x1": 0.9999988225308787,
+          "x2": 0.9875145056316583,
+          "f": 0.00015684509019414826,
+          "e": 0.00015684509019414826,
+          "success": false,
+          "nfe": 10000,
+          "time_s": 0.10810274999999869,
+          "first_success_nfe": null,
+          "stats": {
+            "sa_uphill": 32,
+            "tabu_uphill": 6,
+            "tabu_rejected": 1624,
+            "aspirations": 0,
+            "basins": 8
+          }
+        },
+        {
+          "func": "levy13",
+          "seed": 28,
+          "x1": 0.9999983722903689,
+          "x2": 0.982132733826413,
+          "f": 0.0003232459549292534,
+          "e": 0.0003232459549292534,
+          "success": false,
+          "nfe": 10000,
+          "time_s": 0.10392054099999903,
+          "first_success_nfe": null,
+          "stats": {
+            "sa_uphill": 28,
+            "tabu_uphill": 4,
+            "tabu_rejected": 1596,
+            "aspirations": 0,
+            "basins": 8
+          }
+        },
+        {
+          "func": "levy13",
+          "seed": 29,
+          "x1": 1.0000000000239204,
+          "x2": 1.0104562143256643,
+          "f": 0.00010980364778304584,
+          "e": 0.00010980364778304584,
+          "success": false,
+          "nfe": 10000,
+          "time_s": 0.09923891700000098,
+          "first_success_nfe": null,
+          "stats": {
+            "sa_uphill": 52,
+            "tabu_uphill": 4,
+            "tabu_rejected": 1610,
+            "aspirations": 0,
+            "basins": 8
+          }
+        },
+        {
+          "func": "levy13",
+          "seed": 30,
+          "x1": 1.0000000000048264,
+          "x2": 0.9859003916086237,
+          "f": 0.00020035510690208505,
+          "e": 0.00020035510690208505,
+          "success": false,
+          "nfe": 10000,
+          "time_s": 0.09971641699999978,
+          "first_success_nfe": null,
+          "stats": {
+            "sa_uphill": 36,
+            "tabu_uphill": 7,
+            "tabu_rejected": 1610,
+            "aspirations": 0,
+            "basins": 8
+          }
+        }
+      ]
+    },
+    "0.0001": {
+      "params": {
+        "local_step": 0.0001
+      },
+      "summary": {
+        "best": 5.104526195118786e-21,
+        "median": 4.569396083550001e-19,
+        "worst": 9.300392257479685e-18,
+        "success_rate": 1.0,
+        "median_log_error": -12.0,
+        "iqr_log_error": 0.0,
+        "mean_time_s": 0.10131221943333334,
+        "median_time_s": 0.09309381250000048,
+        "mean_nfe": 8947.2
+      },
+      "rows": [
+        {
+          "func": "levy13",
+          "seed": 1,
+          "x1": 1.0000000002097096,
+          "x2": 1.0000000004859206,
+          "f": 4.186517285298894e-18,
+          "e": 4.186517285298894e-18,
+          "success": true,
+          "nfe": 9035,
+          "time_s": 0.09074224999999991,
+          "first_success_nfe": 668,
+          "stats": {
+            "sa_uphill": 34,
+            "tabu_uphill": 139,
+            "tabu_rejected": 1389,
+            "aspirations": 32,
+            "basins": 8
+          }
+        },
+        {
+          "func": "levy13",
+          "seed": 2,
+          "x1": 1.0000000000098463,
+          "x2": 1.0000000001759375,
+          "f": 3.96628021536316e-20,
+          "e": 3.96628021536316e-20,
+          "success": true,
+          "nfe": 8915,
+          "time_s": 0.09206183300000004,
+          "first_success_nfe": 638,
+          "stats": {
+            "sa_uphill": 45,
+            "tabu_uphill": 147,
+            "tabu_rejected": 1453,
+            "aspirations": 31,
+            "basins": 8
+          }
+        },
+        {
+          "func": "levy13",
+          "seed": 3,
+          "x1": 1.0000000000436486,
+          "x2": 0.9999999994713313,
+          "f": 4.50628448422723e-19,
+          "e": 4.50628448422723e-19,
+          "success": true,
+          "nfe": 8961,
+          "time_s": 0.09502079199999991,
+          "first_success_nfe": 689,
+          "stats": {
+            "sa_uphill": 33,
+            "tabu_uphill": 117,
+            "tabu_rejected": 1430,
+            "aspirations": 27,
+            "basins": 8
+          }
+        },
+        {
+          "func": "levy13",
+          "seed": 4,
+          "x1": 1.0000000000043112,
+          "x2": 0.9999999998036593,
+          "f": 4.021922646805891e-20,
+          "e": 4.021922646805891e-20,
+          "success": true,
+          "nfe": 8995,
+          "time_s": 0.09685495799999977,
+          "first_success_nfe": 739,
+          "stats": {
+            "sa_uphill": 30,
+            "tabu_uphill": 168,
+            "tabu_rejected": 1543,
+            "aspirations": 39,
+            "basins": 8
+          }
+        },
+        {
+          "func": "levy13",
+          "seed": 5,
+          "x1": 0.9999999998711928,
+          "x2": 0.9999999993877147,
+          "f": 1.8652287076770494e-18,
+          "e": 1.8652287076770494e-18,
+          "success": true,
+          "nfe": 8957,
+          "time_s": 0.09265354199999987,
+          "first_success_nfe": 523,
+          "stats": {
+            "sa_uphill": 24,
+            "tabu_uphill": 139,
+            "tabu_rejected": 1439,
+            "aspirations": 28,
+            "basins": 8
+          }
+        },
+        {
+          "func": "levy13",
+          "seed": 6,
+          "x1": 0.9999999999671676,
+          "x2": 1.0000000003824194,
+          "f": 2.4307457157354653e-19,
+          "e": 2.4307457157354653e-19,
+          "success": true,
+          "nfe": 8975,
+          "time_s": 0.091212042,
+          "first_success_nfe": 679,
+          "stats": {
+            "sa_uphill": 41,
+            "tabu_uphill": 138,
+            "tabu_rejected": 1416,
+            "aspirations": 30,
+            "basins": 8
+          }
+        },
+        {
+          "func": "levy13",
+          "seed": 7,
+          "x1": 0.9999999999559694,
+          "x2": 0.9999999998403553,
+          "f": 1.9963240633973632e-19,
+          "e": 1.9963240633973632e-19,
+          "success": true,
+          "nfe": 8923,
+          "time_s": 0.0927144590000002,
+          "first_success_nfe": 679,
+          "stats": {
+            "sa_uphill": 45,
+            "tabu_uphill": 147,
+            "tabu_rejected": 1429,
+            "aspirations": 26,
+            "basins": 8
+          }
+        },
+        {
+          "func": "levy13",
+          "seed": 8,
+          "x1": 1.000000000086894,
+          "x2": 0.9999999995637676,
+          "f": 8.685398013840708e-19,
+          "e": 8.685398013840708e-19,
+          "success": true,
+          "nfe": 8931,
+          "time_s": 0.0865990830000003,
+          "first_success_nfe": 678,
+          "stats": {
+            "sa_uphill": 38,
+            "tabu_uphill": 189,
+            "tabu_rejected": 1468,
+            "aspirations": 38,
+            "basins": 8
+          }
+        },
+        {
+          "func": "levy13",
+          "seed": 9,
+          "x1": 0.999999999966299,
+          "x2": 0.9999999996741433,
+          "f": 2.0820423061523344e-19,
+          "e": 2.0820423061523344e-19,
+          "success": true,
+          "nfe": 9007,
+          "time_s": 0.08994849999999932,
+          "first_success_nfe": 839,
+          "stats": {
+            "sa_uphill": 50,
+            "tabu_uphill": 145,
+            "tabu_rejected": 1449,
+            "aspirations": 36,
+            "basins": 8
+          }
+        },
+        {
+          "func": "levy13",
+          "seed": 10,
+          "x1": 1.0000000000367884,
+          "x2": 0.9999999993243573,
+          "f": 5.780621029364694e-19,
+          "e": 5.780621029364694e-19,
+          "success": true,
+          "nfe": 8887,
+          "time_s": 0.0869629999999999,
+          "first_success_nfe": 629,
+          "stats": {
+            "sa_uphill": 33,
+            "tabu_uphill": 140,
+            "tabu_rejected": 1581,
+            "aspirations": 33,
+            "basins": 8
+          }
+        },
+        {
+          "func": "levy13",
+          "seed": 11,
+          "x1": 0.9999999999925357,
+          "x2": 0.9999999999900115,
+          "f": 5.104526195118786e-21,
+          "e": 5.104526195118786e-21,
+          "success": true,
+          "nfe": 8939,
+          "time_s": 0.08640729199999964,
+          "first_success_nfe": 679,
+          "stats": {
+            "sa_uphill": 42,
+            "tabu_uphill": 176,
+            "tabu_rejected": 1504,
+            "aspirations": 45,
+            "basins": 8
+          }
+        },
+        {
+          "func": "levy13",
+          "seed": 12,
+          "x1": 0.9999999999051532,
+          "x2": 1.0000000000661284,
+          "f": 8.124459228970172e-19,
+          "e": 8.124459228970172e-19,
+          "success": true,
+          "nfe": 8921,
+          "time_s": 0.08644362500000025,
+          "first_success_nfe": 623,
+          "stats": {
+            "sa_uphill": 49,
+            "tabu_uphill": 142,
+            "tabu_rejected": 1405,
+            "aspirations": 24,
+            "basins": 8
+          }
+        },
+        {
+          "func": "levy13",
+          "seed": 13,
+          "x1": 1.0000000000679776,
+          "x2": 0.9999999995066204,
+          "f": 6.585061435381544e-19,
+          "e": 6.585061435381544e-19,
+          "success": true,
+          "nfe": 8947,
+          "time_s": 0.08833133300000018,
+          "first_success_nfe": 788,
+          "stats": {
+            "sa_uphill": 41,
+            "tabu_uphill": 145,
+            "tabu_rejected": 1459,
+            "aspirations": 34,
+            "basins": 8
+          }
+        },
+        {
+          "func": "levy13",
+          "seed": 14,
+          "x1": 0.9999999999582698,
+          "x2": 0.9999999996624176,
+          "f": 2.7038676760419814e-19,
+          "e": 2.7038676760419814e-19,
+          "success": true,
+          "nfe": 8911,
+          "time_s": 0.14090979099999945,
+          "first_success_nfe": 647,
+          "stats": {
+            "sa_uphill": 46,
+            "tabu_uphill": 148,
+            "tabu_rejected": 1434,
+            "aspirations": 28,
+            "basins": 8
+          }
+        },
+        {
+          "func": "levy13",
+          "seed": 15,
+          "x1": 0.9999999997997211,
+          "x2": 0.9999999991745909,
+          "f": 4.2843843451346265e-18,
+          "e": 4.2843843451346265e-18,
+          "success": true,
+          "nfe": 8979,
+          "time_s": 0.0940149589999999,
+          "first_success_nfe": 669,
+          "stats": {
+            "sa_uphill": 27,
+            "tabu_uphill": 154,
+            "tabu_rejected": 1370,
+            "aspirations": 44,
+            "basins": 8
+          }
+        },
+        {
+          "func": "levy13",
+          "seed": 16,
+          "x1": 0.9999999999992824,
+          "x2": 0.9999999996180424,
+          "f": 1.4593786703020853e-19,
+          "e": 1.4593786703020853e-19,
+          "success": true,
+          "nfe": 8919,
+          "time_s": 0.11942400000000042,
+          "first_success_nfe": 688,
+          "stats": {
+            "sa_uphill": 45,
+            "tabu_uphill": 156,
+            "tabu_rejected": 1450,
+            "aspirations": 39,
+            "basins": 8
+          }
+        },
+        {
+          "func": "levy13",
+          "seed": 17,
+          "x1": 1.0000000000057607,
+          "x2": 0.9999999990501678,
+          "f": 9.051622547828796e-19,
+          "e": 9.051622547828796e-19,
+          "success": true,
+          "nfe": 8845,
+          "time_s": 0.08860862500000088,
+          "first_success_nfe": 644,
+          "stats": {
+            "sa_uphill": 62,
+            "tabu_uphill": 172,
+            "tabu_rejected": 1303,
+            "aspirations": 32,
+            "basins": 8
+          }
+        },
+        {
+          "func": "levy13",
+          "seed": 18,
+          "x1": 0.9999999999489244,
+          "x2": 1.0000000001490488,
+          "f": 2.56548149212529e-19,
+          "e": 2.56548149212529e-19,
+          "success": true,
+          "nfe": 9025,
+          "time_s": 0.11906691599999952,
+          "first_success_nfe": 758,
+          "stats": {
+            "sa_uphill": 54,
+            "tabu_uphill": 144,
+            "tabu_rejected": 1465,
+            "aspirations": 35,
+            "basins": 8
+          }
+        },
+        {
+          "func": "levy13",
+          "seed": 19,
+          "x1": 0.9999999999844285,
+          "x2": 1.000000000664432,
+          "f": 4.632507682872772e-19,
+          "e": 4.632507682872772e-19,
+          "success": true,
+          "nfe": 9055,
+          "time_s": 0.10525370800000111,
+          "first_success_nfe": 748,
+          "stats": {
+            "sa_uphill": 48,
+            "tabu_uphill": 156,
+            "tabu_rejected": 1454,
+            "aspirations": 48,
+            "basins": 8
+          }
+        },
+        {
+          "func": "levy13",
+          "seed": 20,
+          "x1": 1.0000000000027303,
+          "x2": 1.0000000007142145,
+          "f": 5.107718894552846e-19,
+          "e": 5.107718894552846e-19,
+          "success": true,
+          "nfe": 8889,
+          "time_s": 0.09859891700000034,
+          "first_success_nfe": 506,
+          "stats": {
+            "sa_uphill": 35,
+            "tabu_uphill": 118,
+            "tabu_rejected": 1533,
+            "aspirations": 19,
+            "basins": 8
+          }
+        },
+        {
+          "func": "levy13",
+          "seed": 21,
+          "x1": 0.99999999999023,
+          "x2": 1.0000000007080274,
+          "f": 5.098769246505487e-19,
+          "e": 5.098769246505487e-19,
+          "success": true,
+          "nfe": 8929,
+          "time_s": 0.09381195899999994,
+          "first_success_nfe": 749,
+          "stats": {
+            "sa_uphill": 46,
+            "tabu_uphill": 124,
+            "tabu_rejected": 1421,
+            "aspirations": 33,
+            "basins": 8
+          }
+        },
+        {
+          "func": "levy13",
+          "seed": 22,
+          "x1": 1.0000000000502425,
+          "x2": 0.9999999998828919,
+          "f": 2.404627166253266e-19,
+          "e": 2.404627166253266e-19,
+          "success": true,
+          "nfe": 8863,
+          "time_s": 0.09044287500000081,
+          "first_success_nfe": 1638,
+          "stats": {
+            "sa_uphill": 31,
+            "tabu_uphill": 127,
+            "tabu_rejected": 1384,
+            "aspirations": 21,
+            "basins": 8
+          }
+        },
+        {
+          "func": "levy13",
+          "seed": 23,
+          "x1": 0.9999999999589537,
+          "x2": 0.9999999996059366,
+          "f": 3.066251190767582e-19,
+          "e": 3.066251190767582e-19,
+          "success": true,
+          "nfe": 8959,
+          "time_s": 0.17094137499999995,
+          "first_success_nfe": 768,
+          "stats": {
+            "sa_uphill": 41,
+            "tabu_uphill": 126,
+            "tabu_rejected": 1416,
+            "aspirations": 30,
+            "basins": 8
+          }
+        },
+        {
+          "func": "levy13",
+          "seed": 24,
+          "x1": 1.000000000068603,
+          "x2": 1.000000000705617,
+          "f": 9.206502913011284e-19,
+          "e": 9.206502913011284e-19,
+          "success": true,
+          "nfe": 8893,
+          "time_s": 0.12739470799999886,
+          "first_success_nfe": 668,
+          "stats": {
+            "sa_uphill": 35,
+            "tabu_uphill": 165,
+            "tabu_rejected": 1532,
+            "aspirations": 42,
+            "basins": 8
+          }
+        },
+        {
+          "func": "levy13",
+          "seed": 25,
+          "x1": 1.000000000003725,
+          "x2": 1.0000000007877858,
+          "f": 6.218529400773504e-19,
+          "e": 6.218529400773504e-19,
+          "success": true,
+          "nfe": 8855,
+          "time_s": 0.10111137500000034,
+          "first_success_nfe": 432,
+          "stats": {
+            "sa_uphill": 29,
+            "tabu_uphill": 142,
+            "tabu_rejected": 1443,
+            "aspirations": 40,
+            "basins": 8
+          }
+        },
+        {
+          "func": "levy13",
+          "seed": 26,
+          "x1": 0.9999999999950582,
+          "x2": 0.9999999994999076,
+          "f": 2.5228620720732525e-19,
+          "e": 2.5228620720732525e-19,
+          "success": true,
+          "nfe": 8899,
+          "time_s": 0.10273054199999976,
+          "first_success_nfe": 818,
+          "stats": {
+            "sa_uphill": 47,
+            "tabu_uphill": 116,
+            "tabu_rejected": 1458,
+            "aspirations": 19,
+            "basins": 8
+          }
+        },
+        {
+          "func": "levy13",
+          "seed": 27,
+          "x1": 0.9999999996904503,
+          "x2": 0.9999999991674553,
+          "f": 9.300392257479685e-18,
+          "e": 9.300392257479685e-18,
+          "success": true,
+          "nfe": 8943,
+          "time_s": 0.14122387499999967,
+          "first_success_nfe": 668,
+          "stats": {
+            "sa_uphill": 31,
+            "tabu_uphill": 129,
+            "tabu_rejected": 1393,
+            "aspirations": 33,
+            "basins": 8
+          }
+        },
+        {
+          "func": "levy13",
+          "seed": 28,
+          "x1": 0.9999999999897575,
+          "x2": 0.9999999995778559,
+          "f": 1.8762915329905623e-19,
+          "e": 1.8762915329905623e-19,
+          "success": true,
+          "nfe": 9075,
+          "time_s": 0.08881429100000027,
+          "first_success_nfe": 828,
+          "stats": {
+            "sa_uphill": 28,
+            "tabu_uphill": 123,
+            "tabu_rejected": 1492,
+            "aspirations": 31,
+            "basins": 8
+          }
+        },
+        {
+          "func": "levy13",
+          "seed": 29,
+          "x1": 1.0000000000132463,
+          "x2": 1.0000000006510703,
+          "f": 4.396539775654202e-19,
+          "e": 4.396539775654202e-19,
+          "success": true,
+          "nfe": 8973,
+          "time_s": 0.08759279199999881,
+          "first_success_nfe": 739,
+          "stats": {
+            "sa_uphill": 47,
+            "tabu_uphill": 112,
+            "tabu_rejected": 1483,
+            "aspirations": 22,
+            "basins": 8
+          }
+        },
+        {
+          "func": "levy13",
+          "seed": 30,
+          "x1": 1.000000000071612,
+          "x2": 1.0000000002795701,
+          "f": 5.388134154802411e-19,
+          "e": 5.388134154802411e-19,
+          "success": true,
+          "nfe": 9011,
+          "time_s": 0.09347316600000077,
+          "first_success_nfe": 719,
+          "stats": {
+            "sa_uphill": 37,
+            "tabu_uphill": 137,
+            "tabu_rejected": 1459,
+            "aspirations": 41,
+            "basins": 8
+          }
+        }
+      ]
+    },
+    "0.0025": {
+      "params": {
+        "local_step": 0.0025
+      },
+      "summary": {
+        "best": 3.6860175680427625e-21,
+        "median": 4.075053815800573e-19,
+        "worst": 8.992124202895306e-18,
+        "success_rate": 1.0,
+        "median_log_error": -12.0,
+        "iqr_log_error": 0.0,
+        "mean_time_s": 0.0997607709,
+        "median_time_s": 0.09216560399999985,
+        "mean_nfe": 9038.733333333334
+      },
+      "rows": [
+        {
+          "func": "levy13",
+          "seed": 1,
+          "x1": 0.9999999999405205,
+          "x2": 1.0000000000468177,
+          "f": 3.1998108233829256e-19,
+          "e": 3.1998108233829256e-19,
+          "success": true,
+          "nfe": 8965,
+          "time_s": 0.090628084,
+          "first_success_nfe": 685,
+          "stats": {
+            "sa_uphill": 34,
+            "tabu_uphill": 255,
+            "tabu_rejected": 1356,
+            "aspirations": 63,
+            "basins": 8
+          }
+        },
+        {
+          "func": "levy13",
+          "seed": 2,
+          "x1": 1.0000000000189058,
+          "x2": 0.999999999874678,
+          "f": 4.78120053523246e-20,
+          "e": 4.78120053523246e-20,
+          "success": true,
+          "nfe": 9069,
+          "time_s": 0.09308520900000006,
+          "first_success_nfe": 701,
+          "stats": {
+            "sa_uphill": 45,
+            "tabu_uphill": 269,
+            "tabu_rejected": 1407,
+            "aspirations": 59,
+            "basins": 8
+          }
+        },
+        {
+          "func": "levy13",
+          "seed": 3,
+          "x1": 0.9999999998925801,
+          "x2": 1.000000000475037,
+          "f": 1.2621696507666107e-18,
+          "e": 1.2621696507666107e-18,
+          "success": true,
+          "nfe": 8975,
+          "time_s": 0.08948883299999988,
+          "first_success_nfe": 706,
+          "stats": {
+            "sa_uphill": 33,
+            "tabu_uphill": 250,
+            "tabu_rejected": 1429,
+            "aspirations": 57,
+            "basins": 8
+          }
+        },
+        {
+          "func": "levy13",
+          "seed": 4,
+          "x1": 0.9999999998766125,
+          "x2": 0.9999999997256168,
+          "f": 1.4428499384832005e-18,
+          "e": 1.4428499384832005e-18,
+          "success": true,
+          "nfe": 9081,
+          "time_s": 0.09065199999999995,
+          "first_success_nfe": 741,
+          "stats": {
+            "sa_uphill": 30,
+            "tabu_uphill": 250,
+            "tabu_rejected": 1407,
+            "aspirations": 63,
+            "basins": 8
+          }
+        },
+        {
+          "func": "levy13",
+          "seed": 5,
+          "x1": 1.0000000000313225,
+          "x2": 1.0000000004949428,
+          "f": 3.330966286134836e-19,
+          "e": 3.330966286134836e-19,
+          "success": true,
+          "nfe": 9063,
+          "time_s": 0.09316929199999979,
+          "first_success_nfe": 523,
+          "stats": {
+            "sa_uphill": 25,
+            "tabu_uphill": 244,
+            "tabu_rejected": 1375,
+            "aspirations": 54,
+            "basins": 8
+          }
+        },
+        {
+          "func": "levy13",
+          "seed": 6,
+          "x1": 0.9999999999923475,
+          "x2": 0.9999999998324061,
+          "f": 3.334816224632646e-20,
+          "e": 3.334816224632646e-20,
+          "success": true,
+          "nfe": 8965,
+          "time_s": 0.09137783399999977,
+          "first_success_nfe": 739,
+          "stats": {
+            "sa_uphill": 42,
+            "tabu_uphill": 247,
+            "tabu_rejected": 1385,
+            "aspirations": 65,
+            "basins": 8
+          }
+        },
+        {
+          "func": "levy13",
+          "seed": 7,
+          "x1": 1.0000000001633573,
+          "x2": 0.999999999749976,
+          "f": 2.4595824326592968e-18,
+          "e": 2.4595824326592968e-18,
+          "success": true,
+          "nfe": 9077,
+          "time_s": 0.09046454199999987,
+          "first_success_nfe": 657,
+          "stats": {
+            "sa_uphill": 59,
+            "tabu_uphill": 249,
+            "tabu_rejected": 1405,
+            "aspirations": 79,
+            "basins": 8
+          }
+        },
+        {
+          "func": "levy13",
+          "seed": 8,
+          "x1": 0.9999999999759375,
+          "x2": 0.9999999997419806,
+          "f": 1.1858412293421036e-19,
+          "e": 1.1858412293421036e-19,
+          "success": true,
+          "nfe": 8991,
+          "time_s": 0.08792795799999986,
+          "first_success_nfe": 714,
+          "stats": {
+            "sa_uphill": 42,
+            "tabu_uphill": 261,
+            "tabu_rejected": 1433,
+            "aspirations": 56,
+            "basins": 8
+          }
+        },
+        {
+          "func": "levy13",
+          "seed": 9,
+          "x1": 1.0000000000014637,
+          "x2": 0.9999999999408935,
+          "f": 3.6860175680427625e-21,
+          "e": 3.6860175680427625e-21,
+          "success": true,
+          "nfe": 8999,
+          "time_s": 0.09240133299999975,
+          "first_success_nfe": 641,
+          "stats": {
+            "sa_uphill": 48,
+            "tabu_uphill": 260,
+            "tabu_rejected": 1294,
+            "aspirations": 53,
+            "basins": 8
+          }
+        },
+        {
+          "func": "levy13",
+          "seed": 10,
+          "x1": 1.000000000085679,
+          "x2": 1.0000000002387637,
+          "f": 7.164129995396967e-19,
+          "e": 7.164129995396967e-19,
+          "success": true,
+          "nfe": 9073,
+          "time_s": 0.09035233400000031,
+          "first_success_nfe": 629,
+          "stats": {
+            "sa_uphill": 35,
+            "tabu_uphill": 252,
+            "tabu_rejected": 1379,
+            "aspirations": 57,
+            "basins": 8
+          }
+        },
+        {
+          "func": "levy13",
+          "seed": 11,
+          "x1": 0.9999999999315872,
+          "x2": 1.000000000345885,
+          "f": 5.400519623147181e-19,
+          "e": 5.400519623147181e-19,
+          "success": true,
+          "nfe": 9087,
+          "time_s": 0.08743699999999954,
+          "first_success_nfe": 713,
+          "stats": {
+            "sa_uphill": 42,
+            "tabu_uphill": 246,
+            "tabu_rejected": 1404,
+            "aspirations": 76,
+            "basins": 8
+          }
+        },
+        {
+          "func": "levy13",
+          "seed": 12,
+          "x1": 0.9999999999917897,
+          "x2": 0.9999999995166853,
+          "f": 2.3964823220003834e-19,
+          "e": 2.3964823220003834e-19,
+          "success": true,
+          "nfe": 9037,
+          "time_s": 0.0897140830000005,
+          "first_success_nfe": 623,
+          "stats": {
+            "sa_uphill": 48,
+            "tabu_uphill": 236,
+            "tabu_rejected": 1365,
+            "aspirations": 54,
+            "basins": 8
+          }
+        },
+        {
+          "func": "levy13",
+          "seed": 13,
+          "x1": 0.9999999999158575,
+          "x2": 1.0000000003826663,
+          "f": 7.824016290259387e-19,
+          "e": 7.824016290259387e-19,
+          "success": true,
+          "nfe": 8965,
+          "time_s": 0.08760708400000006,
+          "first_success_nfe": 640,
+          "stats": {
+            "sa_uphill": 41,
+            "tabu_uphill": 245,
+            "tabu_rejected": 1428,
+            "aspirations": 61,
+            "basins": 8
+          }
+        },
+        {
+          "func": "levy13",
+          "seed": 14,
+          "x1": 0.9999999999693561,
+          "x2": 1.0000000002522196,
+          "f": 1.4796665574736874e-19,
+          "e": 1.4796665574736874e-19,
+          "success": true,
+          "nfe": 9053,
+          "time_s": 0.11927987500000015,
+          "first_success_nfe": 700,
+          "stats": {
+            "sa_uphill": 44,
+            "tabu_uphill": 246,
+            "tabu_rejected": 1413,
+            "aspirations": 81,
+            "basins": 8
+          }
+        },
+        {
+          "func": "levy13",
+          "seed": 15,
+          "x1": 1.000000000168269,
+          "x2": 0.9999999994363726,
+          "f": 2.8610603946068616e-18,
+          "e": 2.8610603946068616e-18,
+          "success": true,
+          "nfe": 9057,
+          "time_s": 0.09603954200000064,
+          "first_success_nfe": 744,
+          "stats": {
+            "sa_uphill": 29,
+            "tabu_uphill": 250,
+            "tabu_rejected": 1323,
+            "aspirations": 57,
+            "basins": 8
+          }
+        },
+        {
+          "func": "levy13",
+          "seed": 16,
+          "x1": 0.9999999999959428,
+          "x2": 1.0000000003373337,
+          "f": 1.1527265899190887e-19,
+          "e": 1.1527265899190887e-19,
+          "success": true,
+          "nfe": 8989,
+          "time_s": 0.12387333300000059,
+          "first_success_nfe": 709,
+          "stats": {
+            "sa_uphill": 45,
+            "tabu_uphill": 261,
+            "tabu_rejected": 1370,
+            "aspirations": 65,
+            "basins": 8
+          }
+        },
+        {
+          "func": "levy13",
+          "seed": 17,
+          "x1": 1.0000000000430767,
+          "x2": 1.0000000006189502,
+          "f": 5.497810433688921e-19,
+          "e": 5.497810433688921e-19,
+          "success": true,
+          "nfe": 9077,
+          "time_s": 0.09110362500000058,
+          "first_success_nfe": 695,
+          "stats": {
+            "sa_uphill": 52,
+            "tabu_uphill": 274,
+            "tabu_rejected": 1348,
+            "aspirations": 69,
+            "basins": 8
+          }
+        },
+        {
+          "func": "levy13",
+          "seed": 18,
+          "x1": 0.9999999999763531,
+          "x2": 1.0000000007034515,
+          "f": 5.450731034042856e-19,
+          "e": 5.450731034042856e-19,
+          "success": true,
+          "nfe": 9063,
+          "time_s": 0.14868908300000072,
+          "first_success_nfe": 669,
+          "stats": {
+            "sa_uphill": 56,
+            "tabu_uphill": 257,
+            "tabu_rejected": 1462,
+            "aspirations": 67,
+            "basins": 8
+          }
+        },
+        {
+          "func": "levy13",
+          "seed": 19,
+          "x1": 1.0000000000140759,
+          "x2": 1.0000000005828547,
+          "f": 3.575167539431308e-19,
+          "e": 3.575167539431308e-19,
+          "success": true,
+          "nfe": 9049,
+          "time_s": 0.0908408749999996,
+          "first_success_nfe": 669,
+          "stats": {
+            "sa_uphill": 51,
+            "tabu_uphill": 247,
+            "tabu_rejected": 1387,
+            "aspirations": 67,
+            "basins": 8
+          }
+        },
+        {
+          "func": "levy13",
+          "seed": 20,
+          "x1": 1.0000000000086189,
+          "x2": 1.0000000007404743,
+          "f": 5.549749651761333e-19,
+          "e": 5.549749651761333e-19,
+          "success": true,
+          "nfe": 9009,
+          "time_s": 0.09192987499999994,
+          "first_success_nfe": 506,
+          "stats": {
+            "sa_uphill": 36,
+            "tabu_uphill": 247,
+            "tabu_rejected": 1484,
+            "aspirations": 59,
+            "basins": 8
+          }
+        },
+        {
+          "func": "levy13",
+          "seed": 21,
+          "x1": 0.9999999999682547,
+          "x2": 1.000000000300549,
+          "f": 1.8085335766057473e-19,
+          "e": 1.8085335766057473e-19,
+          "success": true,
+          "nfe": 9095,
+          "time_s": 0.09589908400000091,
+          "first_success_nfe": 670,
+          "stats": {
+            "sa_uphill": 48,
+            "tabu_uphill": 256,
+            "tabu_rejected": 1291,
+            "aspirations": 58,
+            "basins": 8
+          }
+        },
+        {
+          "func": "levy13",
+          "seed": 22,
+          "x1": 0.9999999999508464,
+          "x2": 0.9999999996127258,
+          "f": 3.6700888147520696e-19,
+          "e": 3.6700888147520696e-19,
+          "success": true,
+          "nfe": 9089,
+          "time_s": 0.13058208300000018,
+          "first_success_nfe": 1638,
+          "stats": {
+            "sa_uphill": 34,
+            "tabu_uphill": 273,
+            "tabu_rejected": 1434,
+            "aspirations": 63,
+            "basins": 8
+          }
+        },
+        {
+          "func": "levy13",
+          "seed": 23,
+          "x1": 0.9999999999573479,
+          "x2": 1.0000000003891643,
+          "f": 3.1486106002710787e-19,
+          "e": 3.1486106002710787e-19,
+          "success": true,
+          "nfe": 8991,
+          "time_s": 0.09608483399999912,
+          "first_success_nfe": 742,
+          "stats": {
+            "sa_uphill": 43,
+            "tabu_uphill": 254,
+            "tabu_rejected": 1405,
+            "aspirations": 59,
+            "basins": 8
+          }
+        },
+        {
+          "func": "levy13",
+          "seed": 24,
+          "x1": 0.9999999996920366,
+          "x2": 0.9999999993123598,
+          "f": 8.992124202895306e-18,
+          "e": 8.992124202895306e-18,
+          "success": true,
+          "nfe": 9063,
+          "time_s": 0.16795433300000084,
+          "first_success_nfe": 745,
+          "stats": {
+            "sa_uphill": 35,
+            "tabu_uphill": 237,
+            "tabu_rejected": 1439,
+            "aspirations": 74,
+            "basins": 8
+          }
+        },
+        {
+          "func": "levy13",
+          "seed": 25,
+          "x1": 1.0000000000743814,
+          "x2": 1.0000000005802683,
+          "f": 8.336844042590679e-19,
+          "e": 8.336844042590679e-19,
+          "success": true,
+          "nfe": 9059,
+          "time_s": 0.09296970800000004,
+          "first_success_nfe": 432,
+          "stats": {
+            "sa_uphill": 33,
+            "tabu_uphill": 257,
+            "tabu_rejected": 1415,
+            "aspirations": 72,
+            "basins": 8
+          }
+        },
+        {
+          "func": "levy13",
+          "seed": 26,
+          "x1": 0.9999999999687077,
+          "x2": 0.9999999999920242,
+          "f": 8.802273104878857e-20,
+          "e": 8.802273104878857e-20,
+          "success": true,
+          "nfe": 9115,
+          "time_s": 0.10431841599999991,
+          "first_success_nfe": 753,
+          "stats": {
+            "sa_uphill": 47,
+            "tabu_uphill": 249,
+            "tabu_rejected": 1424,
+            "aspirations": 63,
+            "basins": 8
+          }
+        },
+        {
+          "func": "levy13",
+          "seed": 27,
+          "x1": 1.0000000000257572,
+          "x2": 1.0000000001610072,
+          "f": 8.551663705540416e-20,
+          "e": 8.551663705540416e-20,
+          "success": true,
+          "nfe": 9059,
+          "time_s": 0.09640341599999935,
+          "first_success_nfe": 656,
+          "stats": {
+            "sa_uphill": 35,
+            "tabu_uphill": 263,
+            "tabu_rejected": 1407,
+            "aspirations": 64,
+            "basins": 8
+          }
+        },
+        {
+          "func": "levy13",
+          "seed": 28,
+          "x1": 0.9999999999941771,
+          "x2": 0.9999999993329496,
+          "f": 4.480018816849076e-19,
+          "e": 4.480018816849076e-19,
+          "success": true,
+          "nfe": 9035,
+          "time_s": 0.08833704199999914,
+          "first_success_nfe": 640,
+          "stats": {
+            "sa_uphill": 36,
+            "tabu_uphill": 278,
+            "tabu_rejected": 1469,
+            "aspirations": 65,
+            "basins": 8
+          }
+        },
+        {
+          "func": "levy13",
+          "seed": 29,
+          "x1": 1.0000000001139409,
+          "x2": 1.0000000002923635,
+          "f": 1.2516508345905211e-18,
+          "e": 1.2516508345905211e-18,
+          "success": true,
+          "nfe": 9063,
+          "time_s": 0.08783524999999948,
+          "first_success_nfe": 668,
+          "stats": {
+            "sa_uphill": 47,
+            "tabu_uphill": 227,
+            "tabu_rejected": 1357,
+            "aspirations": 78,
+            "basins": 8
+          }
+        },
+        {
+          "func": "levy13",
+          "seed": 30,
+          "x1": 0.9999999998631957,
+          "x2": 1.0000000000279652,
+          "f": 1.6819240380338403e-18,
+          "e": 1.6819240380338403e-18,
+          "success": true,
+          "nfe": 8949,
+          "time_s": 0.09637716699999999,
+          "first_success_nfe": 668,
+          "stats": {
+            "sa_uphill": 38,
+            "tabu_uphill": 257,
+            "tabu_rejected": 1310,
+            "aspirations": 55,
+            "basins": 8
+          }
+        }
+      ]
+    },
+    "0.025": {
+      "params": {
+        "local_step": 0.025
+      },
+      "summary": {
+        "best": 4.2230986371925817e-22,
+        "median": 7.152675174278875e-19,
+        "worst": 6.822300847331021e-18,
+        "success_rate": 1.0,
+        "median_log_error": -12.0,
+        "iqr_log_error": 0.0,
+        "mean_time_s": 0.09536106243333349,
+        "median_time_s": 0.09002699999999986,
+        "mean_nfe": 9123.066666666668
+      },
+      "rows": [
+        {
+          "func": "levy13",
+          "seed": 1,
+          "x1": 1.0000000002352323,
+          "x2": 1.00000000084939,
+          "f": 5.691939550455671e-18,
+          "e": 5.691939550455671e-18,
+          "success": true,
+          "nfe": 9089,
+          "time_s": 0.089591792,
+          "first_success_nfe": 733,
+          "stats": {
+            "sa_uphill": 39,
+            "tabu_uphill": 278,
+            "tabu_rejected": 1359,
+            "aspirations": 65,
+            "basins": 8
+          }
+        },
+        {
+          "func": "levy13",
+          "seed": 2,
+          "x1": 0.9999999998869527,
+          "x2": 0.9999999997763744,
+          "f": 1.1979649047913164e-18,
+          "e": 1.1979649047913164e-18,
+          "success": true,
+          "nfe": 9107,
+          "time_s": 0.09000258299999997,
+          "first_success_nfe": 741,
+          "stats": {
+            "sa_uphill": 63,
+            "tabu_uphill": 290,
+            "tabu_rejected": 1336,
+            "aspirations": 67,
+            "basins": 8
+          }
+        },
+        {
+          "func": "levy13",
+          "seed": 3,
+          "x1": 0.99999999999884,
+          "x2": 1.000000000581382,
+          "f": 3.3812594786716664e-19,
+          "e": 3.3812594786716664e-19,
+          "success": true,
+          "nfe": 9199,
+          "time_s": 0.08920679199999992,
+          "first_success_nfe": 794,
+          "stats": {
+            "sa_uphill": 35,
+            "tabu_uphill": 300,
+            "tabu_rejected": 1496,
+            "aspirations": 68,
+            "basins": 8
+          }
+        },
+        {
+          "func": "levy13",
+          "seed": 4,
+          "x1": 0.9999999997471765,
+          "x2": 0.9999999991490647,
+          "f": 6.46577239054603e-18,
+          "e": 6.46577239054603e-18,
+          "success": true,
+          "nfe": 9085,
+          "time_s": 0.09562766700000003,
+          "first_success_nfe": 742,
+          "stats": {
+            "sa_uphill": 29,
+            "tabu_uphill": 285,
+            "tabu_rejected": 1174,
+            "aspirations": 47,
+            "basins": 8
+          }
+        },
+        {
+          "func": "levy13",
+          "seed": 5,
+          "x1": 1.0000000000108535,
+          "x2": 0.9999999993278248,
+          "f": 4.624007822965939e-19,
+          "e": 4.624007822965939e-19,
+          "success": true,
+          "nfe": 9177,
+          "time_s": 0.08996787500000014,
+          "first_success_nfe": 523,
+          "stats": {
+            "sa_uphill": 33,
+            "tabu_uphill": 306,
+            "tabu_rejected": 1361,
+            "aspirations": 54,
+            "basins": 8
+          }
+        },
+        {
+          "func": "levy13",
+          "seed": 6,
+          "x1": 0.999999999936227,
+          "x2": 1.0000000006852936,
+          "f": 8.349514365937615e-19,
+          "e": 8.349514365937615e-19,
+          "success": true,
+          "nfe": 9155,
+          "time_s": 0.09005141699999974,
+          "first_success_nfe": 754,
+          "stats": {
+            "sa_uphill": 42,
+            "tabu_uphill": 267,
+            "tabu_rejected": 1358,
+            "aspirations": 60,
+            "basins": 8
+          }
+        },
+        {
+          "func": "levy13",
+          "seed": 7,
+          "x1": 1.0000000000067146,
+          "x2": 0.9999999990991135,
+          "f": 8.156464098509413e-19,
+          "e": 8.156464098509413e-19,
+          "success": true,
+          "nfe": 9111,
+          "time_s": 0.0895379580000002,
+          "first_success_nfe": 732,
+          "stats": {
+            "sa_uphill": 53,
+            "tabu_uphill": 296,
+            "tabu_rejected": 1375,
+            "aspirations": 46,
+            "basins": 8
+          }
+        },
+        {
+          "func": "levy13",
+          "seed": 8,
+          "x1": 1.0000000000561045,
+          "x2": 1.0000000007419985,
+          "f": 8.333085432998541e-19,
+          "e": 8.333085432998541e-19,
+          "success": true,
+          "nfe": 9101,
+          "time_s": 0.08887237500000023,
+          "first_success_nfe": 762,
+          "stats": {
+            "sa_uphill": 51,
+            "tabu_uphill": 297,
+            "tabu_rejected": 1320,
+            "aspirations": 63,
+            "basins": 8
+          }
+        },
+        {
+          "func": "levy13",
+          "seed": 9,
+          "x1": 0.999999999951033,
+          "x2": 0.9999999992415844,
+          "f": 7.905771293356818e-19,
+          "e": 7.905771293356818e-19,
+          "success": true,
+          "nfe": 9195,
+          "time_s": 0.09167366700000024,
+          "first_success_nfe": 736,
+          "stats": {
+            "sa_uphill": 47,
+            "tabu_uphill": 264,
+            "tabu_rejected": 1321,
+            "aspirations": 65,
+            "basins": 8
+          }
+        },
+        {
+          "func": "levy13",
+          "seed": 10,
+          "x1": 0.9999999999542553,
+          "x2": 1.0000000002160743,
+          "f": 2.3465772053006114e-19,
+          "e": 2.3465772053006114e-19,
+          "success": true,
+          "nfe": 9105,
+          "time_s": 0.08976212500000003,
+          "first_success_nfe": 629,
+          "stats": {
+            "sa_uphill": 29,
+            "tabu_uphill": 273,
+            "tabu_rejected": 1261,
+            "aspirations": 60,
+            "basins": 8
+          }
+        },
+        {
+          "func": "levy13",
+          "seed": 11,
+          "x1": 0.9999999999689706,
+          "x2": 1.0000000001560707,
+          "f": 1.1084528857262857e-19,
+          "e": 1.1084528857262857e-19,
+          "success": true,
+          "nfe": 9091,
+          "time_s": 0.08868300000000051,
+          "first_success_nfe": 773,
+          "stats": {
+            "sa_uphill": 43,
+            "tabu_uphill": 291,
+            "tabu_rejected": 1384,
+            "aspirations": 61,
+            "basins": 8
+          }
+        },
+        {
+          "func": "levy13",
+          "seed": 12,
+          "x1": 1.0000000001740155,
+          "x2": 1.0000000000168505,
+          "f": 2.720351013047895e-18,
+          "e": 2.720351013047895e-18,
+          "success": true,
+          "nfe": 9051,
+          "time_s": 0.08773937499999995,
+          "first_success_nfe": 623,
+          "stats": {
+            "sa_uphill": 55,
+            "tabu_uphill": 281,
+            "tabu_rejected": 1281,
+            "aspirations": 59,
+            "basins": 8
+          }
+        },
+        {
+          "func": "levy13",
+          "seed": 13,
+          "x1": 1.000000000016744,
+          "x2": 0.9999999992569073,
+          "f": 5.77370363459323e-19,
+          "e": 5.77370363459323e-19,
+          "success": true,
+          "nfe": 9197,
+          "time_s": 0.08895933400000011,
+          "first_success_nfe": 717,
+          "stats": {
+            "sa_uphill": 40,
+            "tabu_uphill": 294,
+            "tabu_rejected": 1398,
+            "aspirations": 67,
+            "basins": 8
+          }
+        },
+        {
+          "func": "levy13",
+          "seed": 14,
+          "x1": 1.0000000000212133,
+          "x2": 1.000000000833822,
+          "f": 7.35681117072694e-19,
+          "e": 7.35681117072694e-19,
+          "success": true,
+          "nfe": 9145,
+          "time_s": 0.1067800830000003,
+          "first_success_nfe": 766,
+          "stats": {
+            "sa_uphill": 35,
+            "tabu_uphill": 294,
+            "tabu_rejected": 1361,
+            "aspirations": 65,
+            "basins": 8
+          }
+        },
+        {
+          "func": "levy13",
+          "seed": 15,
+          "x1": 0.9999999999881499,
+          "x2": 1.0000000006996679,
+          "f": 5.021491607631936e-19,
+          "e": 5.021491607631936e-19,
+          "success": true,
+          "nfe": 9047,
+          "time_s": 0.08914191700000007,
+          "first_success_nfe": 770,
+          "stats": {
+            "sa_uphill": 29,
+            "tabu_uphill": 286,
+            "tabu_rejected": 1294,
+            "aspirations": 58,
+            "basins": 8
+          }
+        },
+        {
+          "func": "levy13",
+          "seed": 16,
+          "x1": 0.9999999999302212,
+          "x2": 1.0000000007325571,
+          "f": 9.7401295037047e-19,
+          "e": 9.7401295037047e-19,
+          "success": true,
+          "nfe": 9187,
+          "time_s": 0.09211099999999917,
+          "first_success_nfe": 764,
+          "stats": {
+            "sa_uphill": 46,
+            "tabu_uphill": 290,
+            "tabu_rejected": 1421,
+            "aspirations": 70,
+            "basins": 8
+          }
+        },
+        {
+          "func": "levy13",
+          "seed": 17,
+          "x1": 1.0000000000985576,
+          "x2": 0.9999999999607212,
+          "f": 8.740805540736465e-19,
+          "e": 8.740805540736465e-19,
+          "success": true,
+          "nfe": 9065,
+          "time_s": 0.09235445800000086,
+          "first_success_nfe": 731,
+          "stats": {
+            "sa_uphill": 57,
+            "tabu_uphill": 286,
+            "tabu_rejected": 1307,
+            "aspirations": 49,
+            "basins": 8
+          }
+        },
+        {
+          "func": "levy13",
+          "seed": 18,
+          "x1": 0.9999999999723403,
+          "x2": 0.9999999995087343,
+          "f": 3.1006426250441747e-19,
+          "e": 3.1006426250441747e-19,
+          "success": true,
+          "nfe": 9253,
+          "time_s": 0.09979208300000053,
+          "first_success_nfe": 800,
+          "stats": {
+            "sa_uphill": 48,
+            "tabu_uphill": 274,
+            "tabu_rejected": 1347,
+            "aspirations": 75,
+            "basins": 8
+          }
+        },
+        {
+          "func": "levy13",
+          "seed": 19,
+          "x1": 0.9999999999995133,
+          "x2": 0.9999999996153477,
+          "f": 1.4797867633128877e-19,
+          "e": 1.4797867633128877e-19,
+          "success": true,
+          "nfe": 9169,
+          "time_s": 0.09977070800000121,
+          "first_success_nfe": 777,
+          "stats": {
+            "sa_uphill": 54,
+            "tabu_uphill": 276,
+            "tabu_rejected": 1321,
+            "aspirations": 61,
+            "basins": 8
+          }
+        },
+        {
+          "func": "levy13",
+          "seed": 20,
+          "x1": 0.9999999999964455,
+          "x2": 0.9999999992927417,
+          "f": 5.01349165000015e-19,
+          "e": 5.01349165000015e-19,
+          "success": true,
+          "nfe": 9161,
+          "time_s": 0.09519595799999969,
+          "first_success_nfe": 506,
+          "stats": {
+            "sa_uphill": 32,
+            "tabu_uphill": 276,
+            "tabu_rejected": 1454,
+            "aspirations": 59,
+            "basins": 8
+          }
+        },
+        {
+          "func": "levy13",
+          "seed": 21,
+          "x1": 0.9999999999936584,
+          "x2": 1.0000000001724807,
+          "f": 3.3361980772211614e-20,
+          "e": 3.3361980772211614e-20,
+          "success": true,
+          "nfe": 9111,
+          "time_s": 0.08988558300000093,
+          "first_success_nfe": 792,
+          "stats": {
+            "sa_uphill": 58,
+            "tabu_uphill": 285,
+            "tabu_rejected": 1403,
+            "aspirations": 57,
+            "basins": 8
+          }
+        },
+        {
+          "func": "levy13",
+          "seed": 22,
+          "x1": 1.000000000087514,
+          "x2": 1.000000000083073,
+          "f": 6.94853917783081e-19,
+          "e": 6.94853917783081e-19,
+          "success": true,
+          "nfe": 9041,
+          "time_s": 0.13216108299999973,
+          "first_success_nfe": 1807,
+          "stats": {
+            "sa_uphill": 32,
+            "tabu_uphill": 296,
+            "tabu_rejected": 1440,
+            "aspirations": 42,
+            "basins": 8
+          }
+        },
+        {
+          "func": "levy13",
+          "seed": 23,
+          "x1": 0.999999999942542,
+          "x2": 0.9999999992261994,
+          "f": 8.95323346683966e-19,
+          "e": 8.95323346683966e-19,
+          "success": true,
+          "nfe": 9145,
+          "time_s": 0.10622058299999892,
+          "first_success_nfe": 792,
+          "stats": {
+            "sa_uphill": 43,
+            "tabu_uphill": 286,
+            "tabu_rejected": 1395,
+            "aspirations": 61,
+            "basins": 8
+          }
+        },
+        {
+          "func": "levy13",
+          "seed": 24,
+          "x1": 0.9999999997295994,
+          "x2": 0.9999999994955182,
+          "f": 6.822300847331021e-18,
+          "e": 6.822300847331021e-18,
+          "success": true,
+          "nfe": 9041,
+          "time_s": 0.10741216599999959,
+          "first_success_nfe": 759,
+          "stats": {
+            "sa_uphill": 43,
+            "tabu_uphill": 307,
+            "tabu_rejected": 1325,
+            "aspirations": 55,
+            "basins": 8
+          }
+        },
+        {
+          "func": "levy13",
+          "seed": 25,
+          "x1": 0.9999999999865956,
+          "x2": 1.0000000005859828,
+          "f": 3.595155899135833e-19,
+          "e": 3.595155899135833e-19,
+          "success": true,
+          "nfe": 9245,
+          "time_s": 0.12141375000000032,
+          "first_success_nfe": 432,
+          "stats": {
+            "sa_uphill": 29,
+            "tabu_uphill": 296,
+            "tabu_rejected": 1463,
+            "aspirations": 69,
+            "basins": 8
+          }
+        },
+        {
+          "func": "levy13",
+          "seed": 26,
+          "x1": 1.000000000106784,
+          "x2": 0.9999999991750634,
+          "f": 1.7047925592949e-18,
+          "e": 1.7047925592949e-18,
+          "success": true,
+          "nfe": 9153,
+          "time_s": 0.09622241599999981,
+          "first_success_nfe": 814,
+          "stats": {
+            "sa_uphill": 32,
+            "tabu_uphill": 265,
+            "tabu_rejected": 1218,
+            "aspirations": 59,
+            "basins": 8
+          }
+        },
+        {
+          "func": "levy13",
+          "seed": 27,
+          "x1": 0.9999999999106652,
+          "x2": 1.0000000002087326,
+          "f": 7.604492186089563e-19,
+          "e": 7.604492186089563e-19,
+          "success": true,
+          "nfe": 9011,
+          "time_s": 0.09703804200000121,
+          "first_success_nfe": 733,
+          "stats": {
+            "sa_uphill": 41,
+            "tabu_uphill": 293,
+            "tabu_rejected": 1389,
+            "aspirations": 49,
+            "basins": 8
+          }
+        },
+        {
+          "func": "levy13",
+          "seed": 28,
+          "x1": 1.0000000000020464,
+          "x2": 1.0000000000067963,
+          "f": 4.2230986371925817e-22,
+          "e": 4.2230986371925817e-22,
+          "success": true,
+          "nfe": 9023,
+          "time_s": 0.08839112500000113,
+          "first_success_nfe": 737,
+          "stats": {
+            "sa_uphill": 28,
+            "tabu_uphill": 294,
+            "tabu_rejected": 1264,
+            "aspirations": 48,
+            "basins": 8
+          }
+        },
+        {
+          "func": "levy13",
+          "seed": 29,
+          "x1": 0.9999999999873488,
+          "x2": 1.0000000005219363,
+          "f": 2.86794454995833e-19,
+          "e": 2.86794454995833e-19,
+          "success": true,
+          "nfe": 9163,
+          "time_s": 0.08935395800000023,
+          "first_success_nfe": 705,
+          "stats": {
+            "sa_uphill": 46,
+            "tabu_uphill": 293,
+            "tabu_rejected": 1415,
+            "aspirations": 62,
+            "basins": 8
+          }
+        },
+        {
+          "func": "levy13",
+          "seed": 30,
+          "x1": 1.0000000000304254,
+          "x2": 0.9999999997122817,
+          "f": 1.659350159264955e-19,
+          "e": 1.659350159264955e-19,
+          "success": true,
+          "nfe": 9069,
+          "time_s": 0.08791100000000007,
+          "first_success_nfe": 757,
+          "stats": {
+            "sa_uphill": 34,
+            "tabu_uphill": 287,
+            "tabu_rejected": 1378,
+            "aspirations": 52,
+            "basins": 8
+          }
+        }
+      ]
+    },
+    "0.25": {
+      "params": {
+        "local_step": 0.25
+      },
+      "summary": {
+        "best": 1.8706831847556337e-21,
+        "median": 1.5723635501530155e-19,
+        "worst": 1.2998391056748692e-18,
+        "success_rate": 1.0,
+        "median_log_error": -12.0,
+        "iqr_log_error": 0.0,
+        "mean_time_s": 0.09808560280000002,
+        "median_time_s": 0.09358368699999886,
+        "mean_nfe": 9225.2
+      },
+      "rows": [
+        {
+          "func": "levy13",
+          "seed": 1,
+          "x1": 1.0000000000226095,
+          "x2": 1.0000000001307878,
+          "f": 6.302383060296456e-20,
+          "e": 6.302383060296456e-20,
+          "success": true,
+          "nfe": 9215,
+          "time_s": 0.09200962499999998,
+          "first_success_nfe": 768,
+          "stats": {
+            "sa_uphill": 40,
+            "tabu_uphill": 285,
+            "tabu_rejected": 1123,
+            "aspirations": 65,
+            "basins": 8
+          }
+        },
+        {
+          "func": "levy13",
+          "seed": 2,
+          "x1": 1.0000000000315623,
+          "x2": 1.0000000004839968,
+          "f": 3.237354847568805e-19,
+          "e": 3.237354847568805e-19,
+          "success": true,
+          "nfe": 9369,
+          "time_s": 0.0943767499999999,
+          "first_success_nfe": 802,
+          "stats": {
+            "sa_uphill": 65,
+            "tabu_uphill": 295,
+            "tabu_rejected": 1209,
+            "aspirations": 80,
+            "basins": 8
+          }
+        },
+        {
+          "func": "levy13",
+          "seed": 3,
+          "x1": 1.0000000000336335,
+          "x2": 0.9999999995648672,
+          "f": 2.90953642554838e-19,
+          "e": 2.90953642554838e-19,
+          "success": true,
+          "nfe": 9229,
+          "time_s": 0.09669695799999989,
+          "first_success_nfe": 835,
+          "stats": {
+            "sa_uphill": 36,
+            "tabu_uphill": 296,
+            "tabu_rejected": 1102,
+            "aspirations": 53,
+            "basins": 8
+          }
+        },
+        {
+          "func": "levy13",
+          "seed": 4,
+          "x1": 1.000000000000128,
+          "x2": 1.0000000002122142,
+          "f": 4.5036356540534144e-20,
+          "e": 4.5036356540534144e-20,
+          "success": true,
+          "nfe": 9153,
+          "time_s": 0.10184545899999975,
+          "first_success_nfe": 892,
+          "stats": {
+            "sa_uphill": 24,
+            "tabu_uphill": 317,
+            "tabu_rejected": 1059,
+            "aspirations": 44,
+            "basins": 8
+          }
+        },
+        {
+          "func": "levy13",
+          "seed": 5,
+          "x1": 0.9999999999397797,
+          "x2": 1.0000000002711182,
+          "f": 3.9925861873867564e-19,
+          "e": 3.9925861873867564e-19,
+          "success": true,
+          "nfe": 9267,
+          "time_s": 0.09467408400000021,
+          "first_success_nfe": 523,
+          "stats": {
+            "sa_uphill": 34,
+            "tabu_uphill": 291,
+            "tabu_rejected": 1116,
+            "aspirations": 64,
+            "basins": 8
+          }
+        },
+        {
+          "func": "levy13",
+          "seed": 6,
+          "x1": 0.9999999999832081,
+          "x2": 0.9999999995683737,
+          "f": 2.1162930785431542e-19,
+          "e": 2.1162930785431542e-19,
+          "success": true,
+          "nfe": 9183,
+          "time_s": 0.09095287500000016,
+          "first_success_nfe": 791,
+          "stats": {
+            "sa_uphill": 41,
+            "tabu_uphill": 312,
+            "tabu_rejected": 1092,
+            "aspirations": 45,
+            "basins": 8
+          }
+        },
+        {
+          "func": "levy13",
+          "seed": 7,
+          "x1": 1.0000000000010338,
+          "x2": 0.9999999997507008,
+          "f": 6.224610890611934e-20,
+          "e": 6.224610890611934e-20,
+          "success": true,
+          "nfe": 9199,
+          "time_s": 0.08964141699999972,
+          "first_success_nfe": 769,
+          "stats": {
+            "sa_uphill": 47,
+            "tabu_uphill": 277,
+            "tabu_rejected": 1325,
+            "aspirations": 64,
+            "basins": 8
+          }
+        },
+        {
+          "func": "levy13",
+          "seed": 8,
+          "x1": 1.0000000000360671,
+          "x2": 0.9999999998089422,
+          "f": 1.5335297820400294e-19,
+          "e": 1.5335297820400294e-19,
+          "success": true,
+          "nfe": 9283,
+          "time_s": 0.09081491700000033,
+          "first_success_nfe": 808,
+          "stats": {
+            "sa_uphill": 36,
+            "tabu_uphill": 285,
+            "tabu_rejected": 1302,
+            "aspirations": 76,
+            "basins": 8
+          }
+        },
+        {
+          "func": "levy13",
+          "seed": 9,
+          "x1": 0.9999999999975611,
+          "x2": 1.0000000003912817,
+          "f": 1.536356723434476e-19,
+          "e": 1.536356723434476e-19,
+          "success": true,
+          "nfe": 9129,
+          "time_s": 0.09066062499999994,
+          "first_success_nfe": 824,
+          "stats": {
+            "sa_uphill": 44,
+            "tabu_uphill": 283,
+            "tabu_rejected": 1173,
+            "aspirations": 57,
+            "basins": 8
+          }
+        },
+        {
+          "func": "levy13",
+          "seed": 10,
+          "x1": 1.0000000000137117,
+          "x2": 0.9999999999846345,
+          "f": 1.7124396476780363e-20,
+          "e": 1.7124396476780363e-20,
+          "success": true,
+          "nfe": 9275,
+          "time_s": 0.09180408400000051,
+          "first_success_nfe": 629,
+          "stats": {
+            "sa_uphill": 25,
+            "tabu_uphill": 297,
+            "tabu_rejected": 1089,
+            "aspirations": 58,
+            "basins": 8
+          }
+        },
+        {
+          "func": "levy13",
+          "seed": 11,
+          "x1": 1.0000000000297682,
+          "x2": 1.0000000004866028,
+          "f": 3.163808617399188e-19,
+          "e": 3.163808617399188e-19,
+          "success": true,
+          "nfe": 9169,
+          "time_s": 0.08955824999999962,
+          "first_success_nfe": 819,
+          "stats": {
+            "sa_uphill": 47,
+            "tabu_uphill": 299,
+            "tabu_rejected": 1161,
+            "aspirations": 54,
+            "basins": 8
+          }
+        },
+        {
+          "func": "levy13",
+          "seed": 12,
+          "x1": 1.0000000000287166,
+          "x2": 0.9999999999430553,
+          "f": 7.731721058679388e-20,
+          "e": 7.731721058679388e-20,
+          "success": true,
+          "nfe": 9127,
+          "time_s": 0.09005700000000072,
+          "first_success_nfe": 623,
+          "stats": {
+            "sa_uphill": 44,
+            "tabu_uphill": 289,
+            "tabu_rejected": 1133,
+            "aspirations": 49,
+            "basins": 8
+          }
+        },
+        {
+          "func": "levy13",
+          "seed": 13,
+          "x1": 1.0000000000168043,
+          "x2": 1.000000000154122,
+          "f": 4.9118966535826835e-20,
+          "e": 4.9118966535826835e-20,
+          "success": true,
+          "nfe": 9211,
+          "time_s": 0.09135024999999963,
+          "first_success_nfe": 678,
+          "stats": {
+            "sa_uphill": 37,
+            "tabu_uphill": 297,
+            "tabu_rejected": 1081,
+            "aspirations": 51,
+            "basins": 8
+          }
+        },
+        {
+          "func": "levy13",
+          "seed": 14,
+          "x1": 0.999999999970342,
+          "x2": 0.9999999997909885,
+          "f": 1.22697259967946e-19,
+          "e": 1.22697259967946e-19,
+          "success": true,
+          "nfe": 9233,
+          "time_s": 0.0914022499999998,
+          "first_success_nfe": 761,
+          "stats": {
+            "sa_uphill": 54,
+            "tabu_uphill": 289,
+            "tabu_rejected": 1055,
+            "aspirations": 54,
+            "basins": 8
+          }
+        },
+        {
+          "func": "levy13",
+          "seed": 15,
+          "x1": 1.0000000000139053,
+          "x2": 0.9999999998242934,
+          "f": 4.824128096027169e-20,
+          "e": 4.824128096027169e-20,
+          "success": true,
+          "nfe": 9261,
+          "time_s": 0.0932448749999999,
+          "first_success_nfe": 825,
+          "stats": {
+            "sa_uphill": 32,
+            "tabu_uphill": 284,
+            "tabu_rejected": 1190,
+            "aspirations": 67,
+            "basins": 8
+          }
+        },
+        {
+          "func": "levy13",
+          "seed": 16,
+          "x1": 1.0000000000067715,
+          "x2": 0.9999999998840572,
+          "f": 1.7561428080817203e-20,
+          "e": 1.7561428080817203e-20,
+          "success": true,
+          "nfe": 9421,
+          "time_s": 0.12762916700000027,
+          "first_success_nfe": 801,
+          "stats": {
+            "sa_uphill": 41,
+            "tabu_uphill": 303,
+            "tabu_rejected": 1131,
+            "aspirations": 71,
+            "basins": 8
+          }
+        },
+        {
+          "func": "levy13",
+          "seed": 17,
+          "x1": 0.9999999999236202,
+          "x2": 0.9999999999476632,
+          "f": 5.267766843070739e-19,
+          "e": 5.267766843070739e-19,
+          "success": true,
+          "nfe": 9323,
+          "time_s": 0.09477904199999898,
+          "first_success_nfe": 835,
+          "stats": {
+            "sa_uphill": 50,
+            "tabu_uphill": 302,
+            "tabu_rejected": 1124,
+            "aspirations": 53,
+            "basins": 8
+          }
+        },
+        {
+          "func": "levy13",
+          "seed": 18,
+          "x1": 0.9999999999894058,
+          "x2": 1.0000000002142073,
+          "f": 5.596655724737193e-20,
+          "e": 5.596655724737193e-20,
+          "success": true,
+          "nfe": 9183,
+          "time_s": 0.09886620800000046,
+          "first_success_nfe": 820,
+          "stats": {
+            "sa_uphill": 60,
+            "tabu_uphill": 287,
+            "tabu_rejected": 1011,
+            "aspirations": 52,
+            "basins": 8
+          }
+        },
+        {
+          "func": "levy13",
+          "seed": 19,
+          "x1": 1.0000000000128502,
+          "x2": 1.0000000002465157,
+          "f": 7.560271502749953e-20,
+          "e": 7.560271502749953e-20,
+          "success": true,
+          "nfe": 9191,
+          "time_s": 0.09881270800000053,
+          "first_success_nfe": 752,
+          "stats": {
+            "sa_uphill": 58,
+            "tabu_uphill": 288,
+            "tabu_rejected": 1159,
+            "aspirations": 62,
+            "basins": 8
+          }
+        },
+        {
+          "func": "levy13",
+          "seed": 20,
+          "x1": 1.000000000024034,
+          "x2": 1.0000000003802398,
+          "f": 1.964691676604391e-19,
+          "e": 1.964691676604391e-19,
+          "success": true,
+          "nfe": 9219,
+          "time_s": 0.09324933300000104,
+          "first_success_nfe": 506,
+          "stats": {
+            "sa_uphill": 38,
+            "tabu_uphill": 298,
+            "tabu_rejected": 1073,
+            "aspirations": 55,
+            "basins": 8
+          }
+        },
+        {
+          "func": "levy13",
+          "seed": 21,
+          "x1": 1.0000000000045617,
+          "x2": 1.0000000000012221,
+          "f": 1.8706831847556337e-21,
+          "e": 1.8706831847556337e-21,
+          "success": true,
+          "nfe": 9259,
+          "time_s": 0.09444891699999935,
+          "first_success_nfe": 872,
+          "stats": {
+            "sa_uphill": 52,
+            "tabu_uphill": 280,
+            "tabu_rejected": 1115,
+            "aspirations": 62,
+            "basins": 8
+          }
+        },
+        {
+          "func": "levy13",
+          "seed": 22,
+          "x1": 1.0000000000054943,
+          "x2": 1.00000000039765,
+          "f": 1.608370376871555e-19,
+          "e": 1.608370376871555e-19,
+          "success": true,
+          "nfe": 9267,
+          "time_s": 0.09480079200000091,
+          "first_success_nfe": 852,
+          "stats": {
+            "sa_uphill": 26,
+            "tabu_uphill": 278,
+            "tabu_rejected": 1042,
+            "aspirations": 58,
+            "basins": 8
+          }
+        },
+        {
+          "func": "levy13",
+          "seed": 23,
+          "x1": 0.9999999999536158,
+          "x2": 1.0000000002358647,
+          "f": 2.48894061908982e-19,
+          "e": 2.48894061908982e-19,
+          "success": true,
+          "nfe": 9139,
+          "time_s": 0.18431687500000038,
+          "first_success_nfe": 801,
+          "stats": {
+            "sa_uphill": 38,
+            "tabu_uphill": 286,
+            "tabu_rejected": 1046,
+            "aspirations": 59,
+            "basins": 8
+          }
+        },
+        {
+          "func": "levy13",
+          "seed": 24,
+          "x1": 0.9999999999973337,
+          "x2": 1.0000000004896759,
+          "f": 2.404210940056075e-19,
+          "e": 2.404210940056075e-19,
+          "success": true,
+          "nfe": 9173,
+          "time_s": 0.09676262500000021,
+          "first_success_nfe": 796,
+          "stats": {
+            "sa_uphill": 39,
+            "tabu_uphill": 303,
+            "tabu_rejected": 1088,
+            "aspirations": 60,
+            "basins": 8
+          }
+        },
+        {
+          "func": "levy13",
+          "seed": 25,
+          "x1": 1.000000000001748,
+          "x2": 1.000000000418101,
+          "f": 1.7508297124104377e-19,
+          "e": 1.7508297124104377e-19,
+          "success": true,
+          "nfe": 9149,
+          "time_s": 0.10612854100000035,
+          "first_success_nfe": 432,
+          "stats": {
+            "sa_uphill": 21,
+            "tabu_uphill": 304,
+            "tabu_rejected": 1009,
+            "aspirations": 51,
+            "basins": 8
+          }
+        },
+        {
+          "func": "levy13",
+          "seed": 26,
+          "x1": 0.9999999999910294,
+          "x2": 0.999999999541334,
+          "f": 2.1760300397048536e-19,
+          "e": 2.1760300397048536e-19,
+          "success": true,
+          "nfe": 9233,
+          "time_s": 0.09612883299999986,
+          "first_success_nfe": 889,
+          "stats": {
+            "sa_uphill": 39,
+            "tabu_uphill": 286,
+            "tabu_rejected": 1169,
+            "aspirations": 64,
+            "basins": 8
+          }
+        },
+        {
+          "func": "levy13",
+          "seed": 27,
+          "x1": 1.00000000010958,
+          "x2": 0.9999999995296545,
+          "f": 1.2998391056748692e-18,
+          "e": 1.2998391056748692e-18,
+          "success": true,
+          "nfe": 9203,
+          "time_s": 0.09336208299999882,
+          "first_success_nfe": 768,
+          "stats": {
+            "sa_uphill": 26,
+            "tabu_uphill": 290,
+            "tabu_rejected": 1056,
+            "aspirations": 61,
+            "basins": 8
+          }
+        },
+        {
+          "func": "levy13",
+          "seed": 28,
+          "x1": 0.9999999999350422,
+          "x2": 0.9999999995926316,
+          "f": 5.449730983095134e-19,
+          "e": 5.449730983095134e-19,
+          "success": true,
+          "nfe": 9227,
+          "time_s": 0.0938052909999989,
+          "first_success_nfe": 814,
+          "stats": {
+            "sa_uphill": 41,
+            "tabu_uphill": 294,
+            "tabu_rejected": 1168,
+            "aspirations": 59,
+            "basins": 8
+          }
+        },
+        {
+          "func": "levy13",
+          "seed": 29,
+          "x1": 0.9999999999694182,
+          "x2": 0.9999999998934488,
+          "f": 9.536303491209214e-20,
+          "e": 9.536303491209214e-20,
+          "success": true,
+          "nfe": 9149,
+          "time_s": 0.08911512500000107,
+          "first_success_nfe": 810,
+          "stats": {
+            "sa_uphill": 39,
+            "tabu_uphill": 282,
+            "tabu_rejected": 1104,
+            "aspirations": 51,
+            "basins": 8
+          }
+        },
+        {
+          "func": "levy13",
+          "seed": 30,
+          "x1": 1.0000000000022915,
+          "x2": 1.000000000445846,
+          "f": 1.9925034278224796e-19,
+          "e": 1.9925034278224796e-19,
+          "success": true,
+          "nfe": 9317,
+          "time_s": 0.09127312499999896,
+          "first_success_nfe": 838,
+          "stats": {
+            "sa_uphill": 32,
+            "tabu_uphill": 293,
+            "tabu_rejected": 1133,
+            "aspirations": 66,
+            "basins": 8
+          }
+        }
+      ]
+    }
+  }
+}
